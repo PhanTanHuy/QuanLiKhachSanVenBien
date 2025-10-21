@@ -1,15 +1,14 @@
+require('dotenv').config(); 
 const express = require('express');
+require('./configs/database'); 
+
+
 const app = express();
-
-// Middleware để parse JSON
 app.use(express.json());
-
-// Test route
+// connectDB(); 
 app.get('/', (req, res) => {
-    res.send('Server đang chạy!');
+    res.send('Server và Database đang chạy!');
 });
-
-// Khai báo port
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server chạy trên http://localhost:${PORT}`);
