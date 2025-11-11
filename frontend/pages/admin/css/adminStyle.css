@@ -99,24 +99,6 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ===== FOOTER ===== */
-.footer {
-  background: #4A2C0A;
-  color: #fff;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 25px 15px;
-}
-.footer-section h4 {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-.footer-section p {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 /* ===== OPTIONAL ===== */
 /* Chỉnh responsive đơn giản */
 @media (max-width: 768px) {

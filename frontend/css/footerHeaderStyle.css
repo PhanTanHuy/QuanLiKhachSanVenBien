@@ -1,0 +1,16 @@
+.footer {
+  background: #4A2C0A;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 25px 15px;
+}
+.footer-section h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.6;
+}
