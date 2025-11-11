@@ -4,15 +4,14 @@ async function loadLayout() {
   const footerContainer = document.getElementById('footer-container');
 
   if (headerContainer) {
-    const headerHtml = await fetch('frontend/pages/admin/components/header.html').then(res => res.text());
+    const headerHtml = await fetch('/pages/admin/components/header.html').then(res => res.text());
     headerContainer.innerHTML = headerHtml;
   }
 
   if (footerContainer) {
-    const footerHtml = await fetch('frontend/components/footer.html').then(res => res.text());
+    const footerHtml = await fetch('/components/footer.html').then(res => res.text());
     footerContainer.innerHTML = footerHtml;
   }
 }
 
-// Gọi khi trang load
 window.addEventListener('DOMContentLoaded', loadLayout);
