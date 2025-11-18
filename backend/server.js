@@ -4,12 +4,18 @@ require('./configs/database');
 const path = require('path'); 
 const homeRoutes = require('./routes/homeRoutes');
 const adminRoutes = require('./routes/admin/adminRoutes');
+const authRoute = require('./routes/authRoute.js');
+const cookiesParser = require('cookie-parser');
+
+
 
 const app = express();
 app.use(express.json());
+app.use(cookiesParser());
 //load aset
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/admin', adminRoutes);
+app.use("/api/auth", authRoute);
 
 const PORT = 3000;
 app.listen(PORT, () => {
