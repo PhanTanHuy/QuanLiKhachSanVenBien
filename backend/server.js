@@ -6,7 +6,8 @@ const homeRoutes = require('./routes/homeRoutes');
 const adminRoutes = require('./routes/admin/adminRoutes');
 const authRoute = require('./routes/authRoute.js');
 const cookiesParser = require('cookie-parser');
-
+const { protectedRoute } = require('./middlewares/authMiddleware.js');
+const userRpute = require('./routes/userRpute.js');
 
 
 const app = express();
@@ -15,7 +16,11 @@ app.use(cookiesParser());
 //load aset
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/admin', adminRoutes);
+
 app.use("/api/auth", authRoute);
+//private routes
+app.use(protectedRoute)
+app.use("/api/users", userRpute)
 
 const PORT = 3000;
 app.listen(PORT, () => {
