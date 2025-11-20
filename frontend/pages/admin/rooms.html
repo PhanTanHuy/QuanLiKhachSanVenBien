@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
+  <link rel="stylesheet" href="/pages/admin/css/roomStyle.css">
   <script src="/pages/admin/js/adminLayout.js" defer></script>
+  <script type="module" src="/pages/admin/js/rooms.js" defer></script>
 
 </head>
 
@@ -13,38 +15,140 @@
 <body>
 
   <div id="header-container"></div>
-  <h1>Trang Rooms</h1>
-  <!-- ===== MAIN CONTENT =====
-  <main class="dashboard">
-    <div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
-      <button>🔍</button>
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-container">
+      <div class="search-wrapper">
+          <div class="search-bar">
+              <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <input id="searchInput" type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
+              <span id="openFilter" class="icon-right"><i class="fa-solid fa-filter"></i></span>
+          </div>
+      </div>
+       <!-- Sort buttons va them phong -->
+      <div class="top-bar">
+          <div class="sort-bar">
+              <button data-sort="price">Giá ↑↓</button>
+              <button data-sort="type">Loại phòng</button>
+              <button data-sort="status">Tình trạng</button>
+          </div>
+
+          <button id="addRoomBtn" class="add-room-btn">+ Thêm phòng</button>
+      </div>
+
+
+      <!-- Room list render output -->
+      <div id="roomList" class="room-list">
+          <!-- JS sẽ render danh sách phòng ở đây -->
+      </div>
+  </main>
+  <!-- FILTER POPUP -->
+  <div id="filterPopup" class="filter-popup">
+      <div class="filter-content">
+          <h3>Bộ lọc phòng</h3>
+
+          <label>Giá tối đa:</label>
+          <input id="filterPrice" type="number" placeholder="VD: 500000">
+
+          <label>Loại phòng:</label>
+          <select id="filterType">
+              <option value="">-- Tất cả --</option>
+          </select>
+
+          <label>Trạng thái:</label>
+          <select id="filterStatus">
+              <option value="">-- Tất cả --</option>
+          </select>
+
+          <div class="filter-footer">
+              <button id="applyFilter">Áp dụng</button>
+              <button id="closeFilter">Đóng</button>
+          </div>
+      </div>
+  </div>
+  <!-- POPUP THÊM PHÒNG -->
+  <div id="addRoomPopup" class="add-popup">
+    <div class="add-popup-content">
+        <h3>Thêm phòng mới</h3>
+
+        <div class="form-horizontal">
+
+            <div class="left-section">
+                <label>Số phòng:</label>
+                <input id="newRoomId" type="text">
+
+                <label>Loại phòng:</label>
+                <select id="newRoomType"></select>
+
+                <label>Giá:</label>
+                <input id="newRoomPrice" type="number">
+
+                <label>Trạng thái:</label>
+                <select id="newRoomStatus"></select>
+
+                <label>Mô tả:</label>
+                <textarea id="newRoomDesc"></textarea>
+            </div>
+
+            <div class="right-section">
+                <label>Ảnh phòng:</label>
+                <div class="image-upload-area" id="imageUploadArea">
+                    <p>Kéo & thả ảnh vào đây hoặc click để chọn</p>
+                    <img id="previewImage" src="" alt="" style="display:none;">
+                    <input id="newRoomImg" type="file" accept="image/*" hidden>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-btns">
+            <button id="saveNewRoom">Lưu</button>
+            <button id="closeAddRoom">Đóng</button>
+        </div>
     </div>
+</div>
 
-    <section class="stats-grid">
-      <div class="card"><h3>Rooms</h3><p>201</p></div>
-      <div class="card"><h3>Dịch vụ</h3><p>56</p></div>
-      <div class="card"><h3>Khách hàng</h3><p>5614</p></div>
-      <div class="card"><h3>Doanh thu</h3><p>1256</p></div>
-      <div class="card"><h3>Phòng trống</h3><p>25643</p></div>
-      <div class="card"><h3>Đang ở</h3><p>1463</p></div>
-    </section>
+<!-- POPUP CHI TIẾT / CHỈNH SỬA PHÒNG -->
+  <div id="editRoomPopup" class="add-popup">
+    <div class="add-popup-content">
+      <h3>Chi tiết phòng</h3>
 
-    <section class="charts-grid">
-      <div class="chart-card">
-        <h3>Thống kê doanh thu 2023</h3>
-        <canvas id="revenueChart"></canvas>
+      <div class="form-horizontal">
+
+        <div class="left-section">
+            <label>Mã phòng:</label>
+            <input id="editRoomId" type="text" disabled>
+
+            <label>Loại phòng:</label>
+            <select id="editRoomType"></select>
+
+            <label>Giá:</label>
+            <input id="editRoomPrice" type="number">
+
+            <label>Trạng thái:</label>
+            <select id="editRoomStatus"></select>
+
+            <label>Mô tả:</label>
+            <textarea id="editRoomDesc"></textarea>
+        </div>
+
+        <div class="right-section">
+            <label>Ảnh phòng:</label>
+            <div class="image-upload-area" id="editImageUploadArea">
+                <p>Kéo & thả ảnh vào đây hoặc click để chọn</p>
+                <img id="editPreviewImage" src="" alt="" style="display:block; width:100%; max-height:300px;">
+                <input id="editRoomImg" type="file" accept="image/*" hidden>
+            </div>
+        </div>
+
       </div>
-      <div class="chart-card">
-        <h3>Hoạt động người dùng</h3>
-        <canvas id="userActivity"></canvas>
+
+      <div class="footer-btns">
+          <button id="saveEditRoom">Lưu thay đổi</button>
+          <button id="deleteRoomBtn" style="background:#ff4d4f; color:white;">Xóa phòng</button>
+          <button id="closeEditRoom">Đóng</button>
       </div>
-      <div class="chart-card">
-        <h3>Profit & Loss 2023</h3>
-        <canvas id="profitChart"></canvas>
-      </div>
-    </section>
-  </main> -->
+    </div>
+  </div>
 
 
   <div id="footer-container">
