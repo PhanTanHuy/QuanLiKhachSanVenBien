@@ -14,3 +14,18 @@
   font-size: 14px;
   line-height: 1.6;
 }
+.footer-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.footer-icons p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-icons i {
+    font-size: 20px;
+}

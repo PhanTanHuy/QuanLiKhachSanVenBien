@@ -15,37 +15,41 @@
   <div id="header-container"></div>
 
   <!-- ===== MAIN CONTENT ===== -->
-  <main class="dashboard">
+  <main class="main-container">
     <!-- Ô tìm kiếm -->
-    <div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
-      <button>🔍</button>
+    <div class="search-wrapper">
+        <div class="search-bar">
+            <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
+            <span class="icon-right"><i class="fa-solid fa-filter"></i></span>
+        </div>
     </div>
+
 
     <!-- Thống kê nhanh -->
     <section class="stats-grid">
-      <div class="card"><h3>Rooms</h3><p>201</p></div>
-      <div class="card"><h3>Dịch vụ</h3><p>56</p></div>
-      <div class="card"><h3>Khách hàng</h3><p>5614</p></div>
-      <div class="card"><h3>Doanh thu</h3><p>1256</p></div>
-      <div class="card"><h3>Phòng trống</h3><p>25643</p></div>
-      <div class="card"><h3>Đang ở</h3><p>1463</p></div>
+      <div class="card"><h3>Số lượng phòng</h3><p>201</p></div>
+      <div class="card"><h3>Phòng trống</h3><p>56</p></div>
+      <div class="card"><h3>Phòng đã đặt cọc</h3><p>5614</p></div>
+      <div class="card"><h3>Phòng đang được ở</h3><p>1256</p></div>
+      <div class="card"><h3>Phòng đang bảo trì</h3><p>25643</p></div>
+      <!-- <div class="card"><h3>Đang ở</h3><p>1463</p></div> -->
     </section>
 
     <!-- Biểu đồ -->
     <section class="charts-grid">
       <div class="chart-card">
-        <h3>Thống kê doanh thu 2023</h3>
+        <h3>Doanh thu 2025</h3>
         <canvas id="revenueChart"></canvas>
       </div>
       <div class="chart-card">
-        <h3>Hoạt động người dùng</h3>
+        <h3>Lượt đặt phòng 2025 </h3>
         <canvas id="userActivity"></canvas>
       </div>
-      <div class="chart-card">
+      <!-- <div class="chart-card">
         <h3>Profit & Loss 2023</h3>
         <canvas id="profitChart"></canvas>
-      </div>
+      </div> -->
     </section>
   </main>
 
