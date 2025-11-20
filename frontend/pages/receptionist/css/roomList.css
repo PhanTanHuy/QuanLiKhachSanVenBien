@@ -1,0 +1,86 @@
+body {
+  background-color: #f6e8d6;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* CSS top-container */
+.search-wrapper {
+  background-color: #5b3102;
+  border-radius: 12px;
+}
+
+.search-box {
+  background-color: #f2efec;
+  border-radius: 12px;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.search-box i {
+  color: #000000;
+}
+
+/* CSS Room Filter  */
+
+.filter-item {
+  font-size: 16px;
+  color: #4b2f16;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 4px;
+  opacity: 0.85;
+}
+
+.filter-item:hover {
+  opacity: 1;
+}
+
+.filter-item.active {
+  font-weight: 600;
+  opacity: 1;
+}
+
+.filter-item.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: #4b2f16;
+  border-radius: 2px;
+}
+
+/* CSS Room Card */
+.room-card {
+    color: #4b2f16;;
+}
+.divider {
+  height: 1px;
+  background-color: #4b2f16;
+  opacity: 0.5;
+}
+.room-ready-btn {
+  background-color: #77ff4f;
+  border-radius: 20px;
+}
+.room-clean-btn {
+  background-color: #ff4800;
+  border-radius: 20px;
+}
+
+.room-ready-btn:hover {
+  background-color: #4b2f16;
+  opacity: 0.5;
+  color: #fff;
+}
+.room-clean-btn:hover {
+  background-color: #4b2f16;
+  opacity: 0.5;
+  color: #fff;
+}
+
+

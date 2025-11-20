@@ -1,0 +1,72 @@
+body {
+  background-color: #f7e8d8;
+  
+}
+
+.header-bar {
+  background-color: #5b3407;
+  color: #fff;
+  padding: 18px 25px;
+  border-radius: 8px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.profile-container {
+  background-color: #f2e8db;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Avatar */
+.avatar-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background-color: #a9a29a;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.img-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-wrapper i {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 22px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+/* Button */
+.btn-brown {
+  background-color: #5b3407;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+.btn-brown:hover {
+  background-color: #452705;
+  color: #fff;
+}
+
+/* Input */
+.form-control,
+.form-select {
+  background-color: #e3e1df;
+  border: none;
+  border-radius: 6px;
+}
+
+label {
+  font-weight: bold;
+  color: #2f1a06;
+}
