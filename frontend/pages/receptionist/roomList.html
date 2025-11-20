@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/roomList.css">
+</head>
+
+
+
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Main -->
+    <main>
+        <div class="container mt-2">
+            <div class="top-container d-flex justify-content-center">
+                <div class="search-wrapper p-3 w-lg-75 w-100">
+                    <div class="search-box d-flex align-items-center px-3 py-2">
+                        <i class="bi bi-search fs-4 me-3"></i>
+                        <input type="text" class="flex-grow-1 border-0 bg-transparent search-input"
+                            placeholder="Tìm kiếm theo mã phòng, loại phòng">
+                        <i class="bi bi-funnel fs-4 ms-3"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="body-container">
+                <div class="room-filter d-flex gap-4 pt-3">
+                    <span class="filter-item active">Danh sách phòng</span>
+                    <span class="filter-item">Phòng trống</span>
+                    <span class="filter-item">Đang ở</span>
+                </div>
+
+                <!-- Render Card Room ở đây -->
+                <div class="room-card container mt-4" id="roomCard">
+                    <div class="row align-items-center mb-3 pb-md-4">
+                        <!-- Ảnh phòng -->
+                        <div class="col-md-4">
+                            <img src="https://png.pngtree.com/background/20230520/original/pngtree-beautiful-modern-living-room-with-a-chandelier-picture-image_2679050.jpg"
+                                class="img-fluid rounded room-img" alt="room">
+                        </div>
+                        <!-- Thông tin phòng -->
+                        <div class="col-md-8 mt-4 mt-md-0">
+                            <div class="room-code d-flex align-items-center mb-2">
+                                <span class="me-3">Mã phòng <strong>#P101</strong></span>
+                                <div class="divider flex-grow-1"></div>
+                                <i class="bi bi-suit-diamond-fill ms-2"></i>
+                            </div>
+                            <h4 class="room-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h4>
+                            <p class="room-desc">
+                                Không gian ấm cúng, phù hợp cho 1 - 2 người.<br>
+                                Trang bị: TV màn hình phẳng, tủ lạnh mini, máy sấy tóc, Wi-Fi miễn phí.
+                            </p>
+                            <button type="button" class="btn room-ready-btn px-4 py-2 fw-bold">Sẵn sàng</button>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-3 pb-md-4">
+                        <!-- Ảnh phòng -->
+                        <div class="col-md-4">
+                            <img src="https://png.pngtree.com/background/20230520/original/pngtree-beautiful-modern-living-room-with-a-chandelier-picture-image_2679050.jpg"
+                                class="img-fluid rounded room-img" alt="room">
+                        </div>
+                        <!-- Thông tin phòng -->
+                        <div class="col-md-8 mt-4 mt-md-0">
+                            <div class="room-code d-flex align-items-center mb-2">
+                                <span class="me-3">Mã phòng <strong>#P102</strong></span>
+                                <div class="divider flex-grow-1"></div>
+                                <i class="bi bi-suit-diamond-fill ms-2"></i>
+                            </div>
+                            <h4 class="room-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h4>
+                            <p class="room-desc">
+                                Không gian ấm cúng, phù hợp cho 1 - 2 người.<br>
+                                Trang bị: TV màn hình phẳng, tủ lạnh mini, máy sấy tóc, Wi-Fi miễn phí.
+                            </p>
+                            <button type="button" class="btn room-clean-btn px-4 py-2 fw-bold">Đang dọn dẹp</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+
+    <!-- Header JS -->
+    <script src="./js/headerAndFooter.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

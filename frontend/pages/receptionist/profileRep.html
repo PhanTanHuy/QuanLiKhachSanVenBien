@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/profileRep.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <main>
+        <div class="container py-4">
+            <div class="header-bar mb-4">
+                Hồ sơ cá nhân
+            </div>
+
+            <div class="profile-container ">
+                <!-- Avatar -->
+                <div class="text-center mb-4">
+                    <div class="avatar-wrapper">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.h3U-yGZNxT8PkF5vlRnnxgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" class="img-avatar" alt="">
+                        <i class="bi bi-camera-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+
+                        <div class="mb-3">
+                            <label>Họ và tên</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Ngày sinh</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Giới tính</label>
+                            <select class="form-select">
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                                <option>Khác</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Số điện thoại</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="mb-4">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end gap-3 mt-3">
+                    <button class="btn btn-brown">
+                        <i class="bi bi-pencil-square me-1"></i> Chỉnh sửa hồ sơ
+                    </button>
+
+                    <button class="btn btn-brown">
+                        <i class="bi bi-save2 me-1"></i> Lưu
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Header JS -->
+    <script src="./js/headerAndFooter.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
