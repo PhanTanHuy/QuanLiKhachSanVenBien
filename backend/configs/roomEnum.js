@@ -1,11 +1,11 @@
-const RoomStatus = {
-    AVAILABLE: "Trống",      // Trống
-    OCCUPIED: "Đang thuê",        // Đang thuê
-    RESERVED: "Đã đặt cọc",        // Đã đặt cọc
-    MAINTENANCE: "Đang bảo trì"   // Đang bảo trì
+export const RoomStatus = {
+    AVAILABLE: "Trống",
+    OCCUPIED: "Đang thuê",
+    RESERVED: "Đã đặt cọc",
+    MAINTENANCE: "Đang bảo trì"
 };
 
-const RoomType = {
+export const RoomType = {
     STANDARD: "Standard",
     SUPERIOR: "Superior",
     DELUXE: "Deluxe",
@@ -18,7 +18,7 @@ const RoomType = {
     BUNGALOW: "Bungalow"
 };
 
-const RoomDescriptions = {
+export const RoomDescriptions = {
     "Economy": "Phòng nhỏ, tiện nghi cơ bản, không cửa sổ, thích hợp cho khách ngắn ngày.",
     "Standard": "Phòng tiêu chuẩn, đầy đủ tiện nghi, giường đôi, có cửa sổ.",
     "Superior": "Phòng Superior thoáng mát, cửa sổ rộng, máy lạnh, TV.",
@@ -30,5 +30,3 @@ const RoomDescriptions = {
     "Family": "Phòng gia đình, 2 giường lớn, không gian rộng, đầy đủ tiện nghi.",
     "Bungalow": "Phòng Bungalow riêng biệt, view thiên nhiên, không gian yên tĩnh, có sân vườn."
 };
-
-module.exports = { RoomStatus, RoomType, RoomDescriptions };

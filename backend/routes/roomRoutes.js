@@ -1,14 +1,23 @@
-const express = require('express');
+import express from "express";
+import {
+    getRooms,
+    getRoomById,
+    createRoom,
+    updateRoom,
+    deleteRoom,
+    getRoomEnums
+} from "../controllers/roomController.js";
+
 const router = express.Router();
-const roomController = require('../controllers/roomController');
 
 // CRUD
-router.get('/', roomController.getRooms);
-router.get('/one/:id', roomController.getRoomById);
-router.post('/', roomController.createRoom);
-router.put('/one/:id', roomController.updateRoom);
-router.delete('/one/:id', roomController.deleteRoom);
-// Enum
-router.get('/enums', roomController.getRoomEnums);
+router.get("/", getRooms);
+router.get("/one/:id", getRoomById);
+router.post("/", createRoom);
+router.put("/one/:id", updateRoom);
+router.delete("/one/:id", deleteRoom);
 
-module.exports = router;
+// ENUM
+router.get("/enums", getRoomEnums);
+
+export default router;

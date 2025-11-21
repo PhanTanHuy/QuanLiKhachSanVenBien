@@ -30,42 +30,42 @@ export async function addRoomApi(room) {
 
 // --- Sửa phòng ---
 export async function updateRoomApi(id, updatedRoom) {
-    // try {
-    //     const res = await fetch(`${API_URL}/${id}`, {
-    //         method: "PUT",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(updatedRoom)
-    //     });
-    //     if (!res.ok) throw new Error("Cập nhật phòng thất bại");
-    //     return await res.json();
-    // } catch (err) {
-    //     console.error(err);
-    //     throw err;
-    // }
+    try {
+        const res = await fetch(`${API_URL}/one/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedRoom)
+        });
+        if (!res.ok) throw new Error("Cập nhật phòng thất bại");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
 }
 
 // --- Xóa phòng ---
 export async function deleteRoomApi(id) {
-    // try {
-    //     const res = await fetch(`${API_URL}/${id}`, {
-    //         method: "DELETE"
-    //     });
-    //     if (!res.ok) throw new Error("Xóa phòng thất bại");
-    //     return await res.json();
-    // } catch (err) {
-    //     console.error(err);
-    //     throw err;
-    // }
+    try {
+        const res = await fetch(`${API_URL}/one/${id}`, {
+            method: "DELETE"
+        });
+        if (!res.ok) throw new Error("Xóa phòng thất bại");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
 }
 
 // --- Lấy 1 phòng theo id ---
 export async function getRoomByIdApi(id) {
-    // try {
-    //     const res = await fetch(`${API_URL}/${id}`);
-    //     if (!res.ok) throw new Error("Không tìm thấy phòng");
-    //     return await res.json();
-    // } catch (err) {
-    //     console.error(err);
-    //     return null;
-    // }
+    try {
+        const res = await fetch(`${API_URL}/one/${id}`);
+        if (!res.ok) throw new Error("Không tìm thấy phòng");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
 }
