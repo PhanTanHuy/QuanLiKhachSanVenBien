@@ -38,28 +38,9 @@
                 </div>
 
                 <!-- Render Card Room ở đây -->
-                <div class="room-card container mt-4" id="roomCard">
-                    <div class="row align-items-center mb-3 pb-md-4">
-                        <!-- Ảnh phòng -->
-                        <div class="col-md-4">
-                            <img src="https://png.pngtree.com/background/20230520/original/pngtree-beautiful-modern-living-room-with-a-chandelier-picture-image_2679050.jpg"
-                                class="img-fluid rounded room-img" alt="room">
-                        </div>
-                        <!-- Thông tin phòng -->
-                        <div class="col-md-8 mt-4 mt-md-0">
-                            <div class="room-code d-flex align-items-center mb-2">
-                                <span class="me-3">Mã phòng <strong>#P101</strong></span>
-                                <div class="divider flex-grow-1"></div>
-                                <i class="bi bi-suit-diamond-fill ms-2"></i>
-                            </div>
-                            <h4 class="room-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h4>
-                            <p class="room-desc">
-                                Không gian ấm cúng, phù hợp cho 1 - 2 người.<br>
-                                Trang bị: TV màn hình phẳng, tủ lạnh mini, máy sấy tóc, Wi-Fi miễn phí.
-                            </p>
-                            <button type="button" class="btn room-ready-btn px-4 py-2 fw-bold">Sẵn sàng</button>
-                        </div>
-                    </div>
+                <div class="container mt-4" id="roomList"></div>
+                
+                <div class="room-card container mt-4">
                     <div class="row align-items-center mb-3 pb-md-4">
                         <!-- Ảnh phòng -->
                         <div class="col-md-4">
@@ -93,6 +74,8 @@
 
     <!-- Header JS -->
     <script src="./js/headerAndFooter.js"></script>
+    <!-- Room JS -->
+     <script src="./js/roomList.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -1,5 +1,7 @@
 require('dotenv').config(); 
 const express = require('express');
+const cors = require("cors");
+
 require('./configs/database'); 
 const path = require('path'); 
 const homeRoutes = require('./routes/homeRoutes');
@@ -17,6 +19,7 @@ const roomRoutes = require('./routes/roomRoutes.js');
 const app = express();
 app.use(express.json());
 app.use(cookiesParser());
+app.use(cors());
 
 //load aset
 app.use(express.static(path.join(__dirname, '../frontend')));
