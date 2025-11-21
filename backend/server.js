@@ -24,8 +24,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Routes
+// Routes page
 app.use('/admin', adminRoutes);
+
+
+//Route api
 app.use('/api/rooms', roomRoutes);
 app.use('/api/auth', authRoute);
 
