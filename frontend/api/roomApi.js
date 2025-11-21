@@ -1,5 +1,5 @@
 const API_URL = "/api/rooms";
-
+// frontend chay cung domain sever nen tu chen localhost:3000
 // --- Lấy danh sách phòng ---
 export async function getRoomsApi() {
     try {

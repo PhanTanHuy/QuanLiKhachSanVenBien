@@ -1,15 +1,17 @@
-const Room = require('../models/Rooms.js');
-const { RoomType, RoomStatus } = require('../configs/roomEnum');
+import Room from "../models/Rooms.js";
+import { RoomType, RoomStatus } from "../configs/roomEnum.js";
+
 
 // API trả enum cho frontend
-exports.getRoomEnums = (req, res) => {
+export const getRoomEnums = (req, res) => {
     res.json({
         types: Object.values(RoomType),
         statuses: Object.values(RoomStatus)
     });
 };
+
 // --- GET all rooms ---
-exports.getRooms = async (req, res) => {
+export const getRooms = async (req, res) => {
     try {
         const rooms = await Room.find({});
         res.json(rooms);
@@ -19,7 +21,7 @@ exports.getRooms = async (req, res) => {
 };
 
 // --- GET single room by id ---
-exports.getRoomById = async (req, res) => {
+export const getRoomById = async (req, res) => {
     try {
         const room = await Room.findOne({ id: req.params.id });
         if (!room) return res.status(404).json({ message: "Room not found" });
@@ -30,10 +32,11 @@ exports.getRoomById = async (req, res) => {
 };
 
 // --- CREATE room ---
-exports.createRoom = async (req, res) => {
+export const createRoom = async (req, res) => {
     try {
         const existing = await Room.findOne({ id: req.body.id });
-        if (existing) return res.status(400).json({ message: "Room ID already exists" });
+        if (existing)
+            return res.status(400).json({ message: "Room ID already exists" });
 
         const room = new Room(req.body);
         await room.save();
@@ -44,7 +47,7 @@ exports.createRoom = async (req, res) => {
 };
 
 // --- UPDATE room ---
-exports.updateRoom = async (req, res) => {
+export const updateRoom = async (req, res) => {
     try {
         const room = await Room.findOneAndUpdate(
             { id: req.params.id },
@@ -59,7 +62,7 @@ exports.updateRoom = async (req, res) => {
 };
 
 // --- DELETE room ---
-exports.deleteRoom = async (req, res) => {
+export const deleteRoom = async (req, res) => {
     try {
         const room = await Room.findOneAndDelete({ id: req.params.id });
         if (!room) return res.status(404).json({ message: "Room not found" });

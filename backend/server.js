@@ -1,32 +1,37 @@
-require('dotenv').config(); 
-const express = require('express');
-require('./configs/database'); 
-const path = require('path'); 
-const homeRoutes = require('./routes/homeRoutes');
-const adminRoutes = require('./routes/admin/adminRoutes');
-const authRoute = require('./routes/authRoute.js');
-const cookiesParser = require('cookie-parser');
-const { protectedRoute } = require('./middlewares/authMiddleware.js');
-const userRpute = require('./routes/userRpute.js');
+import 'dotenv/config'; // thay cho require('dotenv').config()
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
 
-const roomRoutes = require('./routes/roomRoutes.js');
-
-
-
+// Routes & Middleware
+import './configs/database.js'; // database init
+import homeRoutes from './routes/homeRoutes.js';
+import adminRoutes from './routes/admin/adminRoutes.js';
+import authRoute from './routes/authRoute.js';
+import { protectedRoute } from './middlewares/authMiddleware.js';
+import userRoute from './routes/userRpute.js';
+import roomRoutes from './routes/roomRoutes.js';
 
 const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(cookiesParser());
+app.use(cookieParser());
 
-//load aset
+// Load static assets
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../frontend')));
-app.use('/admin', adminRoutes);
-app.use("/api/rooms", roomRoutes);
 
-app.use("/api/auth", authRoute);
-//private routes
-app.use(protectedRoute)
-app.use("/api/users", userRpute)
+// Routes
+app.use('/admin', adminRoutes);
+app.use('/api/rooms', roomRoutes);
+app.use('/api/auth', authRoute);
+
+// Private routes
+app.use(protectedRoute);
+app.use('/api/users', userRoute);
 
 const PORT = 3000;
 app.listen(PORT, () => {
