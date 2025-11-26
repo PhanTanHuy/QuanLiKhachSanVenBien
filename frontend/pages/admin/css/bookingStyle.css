@@ -1,0 +1,120 @@
+/* ===== BOOKING LIST ===== */
+.booking-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.booking-card {
+    background: #fff4e6;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #d3b89d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.booking-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.booking-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.booking-card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.payment-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.booking-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.booking-card-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.booking-card-info p strong {
+    color: #333;
+}
+
+/* --- BOOKING DETAIL POPUP --- */
+.booking-detail-content {
+    width: 90vw;
+    max-width: 1000px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.booking-detail-content .form-horizontal {
+    display: flex;
+    gap: 30px;
+}
+
+.booking-detail-content .left-section,
+.booking-detail-content .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking-detail-content label {
+    font-weight: bold;
+    margin-top: 8px;
+    color: #444;
+    font-size: 13px;
+}
+
+.booking-detail-content input,
+.booking-detail-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    background: #f9f9f9;
+    color: #333;
+}
+
+.booking-detail-content textarea {
+    height: 60px;
+    resize: none;
+}
+
+.booking-detail-content input:disabled,
+.booking-detail-content textarea:disabled {
+    background: #f0f0f0;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .booking-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-detail-content .form-horizontal {
+        flex-direction: column;
+    }
+}

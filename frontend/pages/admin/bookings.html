@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Chi tiết Đặt Phòng - Admin Dashboard</title>
+  <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
+  <link rel="stylesheet" href="/pages/admin/css/bookingStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="/pages/admin/js/adminLayout.js" defer></script>
+  <script type="module" src="/pages/admin/js/bookings.js" defer></script>
+</head>
+
+<body>
+  <div id="header-container"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-container">
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input id="searchInput" type="text" placeholder="Tìm kiếm theo mã đặt phòng, tên khách, số phòng">
+        <span id="openFilter" class="icon-right"><i class="fa-solid fa-filter"></i></span>
+      </div>
+    </div>
+
+    <!-- Filter buttons -->
+    <div class="top-bar">
+      <div class="sort-bar">
+        <select id="paymentFilter" class="admin-select">
+          <option value="">-- Tất cả phương thức --</option>
+          <option value="Tiền mặt">Tiền mặt</option>
+          <option value="Chuyển khoản">Chuyển khoản</option>
+        </select>
+        <select id="statusFilter" class="admin-select">
+          <option value="">-- Tất cả trạng thái --</option>
+          <option value="PENDING">Chờ xác nhận</option>
+          <option value="CONFIRMED">Đã xác nhận</option>
+          <option value="COMPLETED">Hoàn tất</option>
+          <option value="CANCELLED">Hủy</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Booking list -->
+    <div id="bookingList" class="booking-list">
+      <!-- JS will render booking cards here -->
+    </div>
+  </main>
+
+  <!-- FILTER POPUP -->
+  <div id="filterPopup" class="filter-popup">
+    <div class="filter-content">
+      <h3>Bộ lọc chi tiết đặt phòng</h3>
+
+      <label>Mã đặt phòng:</label>
+      <input id="filterCode" type="text" placeholder="Nhập mã đặt phòng">
+
+      <label>Tên khách:</label>
+      <input id="filterName" type="text" placeholder="Nhập tên khách">
+
+      <label>Số điện thoại:</label>
+      <input id="filterPhone" type="text" placeholder="Nhập số điện thoại">
+
+      <label>Phương thức thanh toán:</label>
+      <select id="filterPayment">
+        <option value="">-- Tất cả --</option>
+        <option value="Tiền mặt">Tiền mặt</option>
+        <option value="Chuyển khoản">Chuyển khoản</option>
+      </select>
+
+      <div class="filter-footer">
+        <button id="applyFilter">Áp dụng</button>
+        <button id="closeFilter">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING DETAIL POPUP -->
+  <div id="detailPopup" class="add-popup">
+    <div class="add-popup-content booking-detail-content">
+      <h3>Chi tiết chi tiết đặt phòng</h3>
+
+      <div class="form-horizontal">
+        <div class="left-section">
+          <label>Mã đặt phòng:</label>
+          <input id="detailCode" type="text" disabled>
+
+          <label>Tên khách hàng:</label>
+          <input id="detailUserName" type="text" disabled>
+
+          <label>Email:</label>
+          <input id="detailUserEmail" type="text" disabled>
+
+          <label>Số điện thoại:</label>
+          <input id="detailUserPhone" type="text" disabled>
+
+          <label>CCCD:</label>
+          <input id="detailUserCccd" type="text" disabled>
+
+          <label>Địa chỉ:</label>
+          <textarea id="detailUserAddress" disabled></textarea>
+        </div>
+
+        <div class="right-section">
+          <label>Số phòng:</label>
+          <input id="detailRoomCode" type="text" disabled>
+
+          <label>Loại phòng:</label>
+          <input id="detailRoomType" type="text" disabled>
+
+          <label>Mô tả:</label>
+          <textarea id="detailRoomDesc" disabled></textarea>
+
+          <label>Ngày nhận phòng:</label>
+          <input id="detailCheckIn" type="text" disabled>
+
+          <label>Ngày trả phòng:</label>
+          <input id="detailCheckOut" type="text" disabled>
+
+          <label>Số đêm:</label>
+          <input id="detailNights" type="number" disabled>
+
+          <label>Giá/đêm:</label>
+          <input id="detailPrice" type="number" disabled>
+
+          <label>Tổng tiền:</label>
+          <input id="detailTotal" type="number" disabled>
+
+          <label>Số tiền cọc (30%):</label>
+          <input id="detailDeposit" type="number" disabled>
+
+          <label>Phương thức thanh toán:</label>
+          <input id="detailPayment" type="text" disabled>
+
+          <label>Trạng thái:</label>
+          <input id="detailStatus" type="text" disabled>
+        </div>
+      </div>
+
+      <div class="footer-btns">
+        <button id="closeDetail">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+</body>
+</html>

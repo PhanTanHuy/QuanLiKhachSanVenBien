@@ -1,4 +1,4 @@
-import Room from '../models/Rooms.js';
+import Room from '../models/Room.js';
 import SampleRooms from '../mock/sampleRooms.js';
 
 export default async function initRooms() {

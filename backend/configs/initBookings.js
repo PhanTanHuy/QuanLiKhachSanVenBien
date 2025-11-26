@@ -1,6 +1,6 @@
 import BookingDetail from '../models/BookingDetail.js';
 import User from '../models/User.js';
-import Rooms from '../models/Rooms.js';
+import Rooms from '../models/Room.js';
 import { PaymentMethod } from '../configs/enum/paymentEnum.js';
 
 export default async function initBookings() {

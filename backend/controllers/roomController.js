@@ -1,4 +1,4 @@
-import Room from "../models/Rooms.js";
+import Room from "../models/Room.js";
 import { RoomType, RoomStatus } from "../configs/enum/roomEnum.js";
 
 

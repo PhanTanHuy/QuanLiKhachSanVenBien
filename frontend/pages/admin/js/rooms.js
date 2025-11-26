@@ -11,12 +11,9 @@ let currentEditingRoom = null;
 const roomList = document.getElementById("roomList");
 
 // FILTER POPUP
-const filterPopup = document.getElementById("filterPopup");
 const filterTypeSelect = document.getElementById("filterType");
 const filterStatusSelect = document.getElementById("filterStatus");
 const filterPriceInput = document.getElementById("filterPrice");
-document.getElementById("openFilter").onclick = () => filterPopup.style.display = "flex";
-document.getElementById("closeFilter").onclick = () => filterPopup.style.display = "none";
 
 // ADD ROOM POPUP
 const addRoomPopup = document.getElementById("addRoomPopup");
@@ -140,22 +137,6 @@ init();
 
 // --- SEARCH ---
 document.getElementById("searchInput").oninput = () => filterRooms();
-
-// --- FILTER POPUP (for advanced filtering) ---
-document.getElementById("applyFilter").onclick = () => {
-    const maxPrice = Number(filterPriceInput.value);
-    const fType = filterTypeSelect.value;
-    const fStatus = filterStatusSelect.value;
-
-    const filtered = roomsData.filter(r => 
-        (!maxPrice || r.price <= maxPrice) &&
-        (!fType || r.type === fType) &&
-        (!fStatus || r.status === fStatus)
-    );
-
-    renderRooms(filtered);
-    filterPopup.style.display = "none";
-};
 
 // --- SORTING ---
 document.querySelectorAll(".sort-bar button").forEach(btn => {

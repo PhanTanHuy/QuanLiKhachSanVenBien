@@ -16,7 +16,7 @@ const bookingSchema = new mongoose.Schema({
   },
 
   // Thông tin phòng (tham chiếu + snapshot để lưu giá tại thời điểm đặt)
-  room: { type: mongoose.Schema.Types.ObjectId, ref: 'Rooms', required: true },
+  room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
   roomSnapshot: {
     code: { type: String },
     type: { type: String },

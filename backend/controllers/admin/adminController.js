@@ -19,3 +19,8 @@ export const getAdminUsers = (req, res) => {
     const adminPath = path.resolve(__dirname, '../../../frontend/pages/admin/users.html');
     res.sendFile(adminPath);
 };
+
+export const getAdminBookings = (req, res) => {
+    const adminPath = path.resolve(__dirname, '../../../frontend/pages/admin/bookings.html');
+    res.sendFile(adminPath);
+};
