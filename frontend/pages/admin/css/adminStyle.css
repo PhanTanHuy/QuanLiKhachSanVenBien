@@ -136,6 +136,45 @@ body {
     margin-left: 10px;
 }
 
+/* ===== SHARED SELECT STYLES FOR ADMIN PAGES ===== */
+.admin-select,
+.role-select,
+.type-select,
+.status-select {
+  padding: 8px 14px;
+  border: 1px solid #5A3300;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  font-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.admin-select:focus,
+.role-select:focus,
+.type-select:focus,
+.status-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(90,51,0,0.08);
+  border-color: #3f2400;
+}
+
+.admin-select:hover,
+.role-select:hover,
+.type-select:hover,
+.status-select:hover {
+  background: #fbfbfb;
+}
+
+/* small caret spacing if using inline selects */
+.select-inline {
+  display: inline-flex;
+  align-items: center;
+}
+
 /* ===== STAT CARDS  ===== */
 .stats-grid {
   display: grid;

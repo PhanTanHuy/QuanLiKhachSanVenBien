@@ -1,5 +1,5 @@
 import Room from '../models/Rooms.js';
-import SampleRooms from './sampleRooms.js';
+import SampleRooms from '../mock/sampleRooms.js';
 
 export default async function initRooms() {
     const count = await Room.countDocuments();

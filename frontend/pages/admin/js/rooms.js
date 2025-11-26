@@ -74,26 +74,59 @@ async function loadEnums() {
         // Populate dropdowns
         const newTypeSelect = document.getElementById("newRoomType");
         const newStatusSelect = document.getElementById("newRoomStatus");
-        const allDropdowns = [filterTypeSelect, filterStatusSelect, newTypeSelect, newStatusSelect, editRoomType, editRoomStatus];
-
-        allDropdowns.forEach(sel => sel.innerHTML = "<option value=''>-- Tất cả --</option>");
+        const typeFilterSelect = document.getElementById("typeFilter");
+        const statusFilterSelect = document.getElementById("statusFilter");
+        
+        // Populate filter selects
+        typeFilterSelect.innerHTML = "<option value=''>-- Tất cả loại phòng --</option>";
+        statusFilterSelect.innerHTML = "<option value=''>-- Tất cả tình trạng --</option>";
+        
+        newTypeSelect.innerHTML = "<option value=''>-- Chọn loại phòng --</option>";
+        newStatusSelect.innerHTML = "<option value=''>-- Chọn tình trạng --</option>";
+        
+        editRoomType.innerHTML = "";
+        editRoomStatus.innerHTML = "";
 
         ROOM_TYPES.forEach(type => {
-            const opt = createOption(type);
-            filterTypeSelect.appendChild(createOption("", "-- Tất cả --"));
-            newTypeSelect.appendChild(opt.cloneNode(true));
-            editRoomType.appendChild(opt.cloneNode(true));
+            const opt1 = createOption(type);
+            const opt2 = createOption(type);
+            const opt3 = createOption(type);
+            typeFilterSelect.appendChild(opt1);
+            newTypeSelect.appendChild(opt2);
+            editRoomType.appendChild(opt3);
         });
 
         ROOM_STATUSES.forEach(st => {
-            const opt = createOption(st.value, st.label);
-            filterStatusSelect.appendChild(createOption("", "-- Tất cả --"));
-            newStatusSelect.appendChild(opt.cloneNode(true));
-            editRoomStatus.appendChild(opt.cloneNode(true));
+            const opt1 = createOption(st.value, st.label);
+            const opt2 = createOption(st.value, st.label);
+            const opt3 = createOption(st.value, st.label);
+            statusFilterSelect.appendChild(opt1);
+            newStatusSelect.appendChild(opt2);
+            editRoomStatus.appendChild(opt3);
         });
+
+        // Add filter event listeners
+        document.getElementById("typeFilter").onchange = () => filterRooms();
+        document.getElementById("statusFilter").onchange = () => filterRooms();
     } catch (err) {
         console.error("Lấy enum thất bại", err);
     }
+}
+
+// --- FILTER FUNCTION ---
+function filterRooms() {
+    const typeFilter = document.getElementById("typeFilter").value;
+    const statusFilter = document.getElementById("statusFilter").value;
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+
+    const filtered = roomsData.filter(r => {
+        const matchType = !typeFilter || r.type === typeFilter;
+        const matchStatus = !statusFilter || r.status === statusFilter;
+        const matchSearch = r.id.toLowerCase().includes(searchValue) || r.type.toLowerCase().includes(searchValue);
+        return matchType && matchStatus && matchSearch;
+    });
+
+    renderRooms(filtered);
 }
 
 // --- INITIAL LOAD ---
@@ -106,12 +139,9 @@ async function init() {
 init();
 
 // --- SEARCH ---
-document.getElementById("searchInput").oninput = e => {
-    const value = e.target.value.toLowerCase();
-    renderRooms(roomsData.filter(r => r.id.toLowerCase().includes(value) || r.type.toLowerCase().includes(value)));
-};
+document.getElementById("searchInput").oninput = () => filterRooms();
 
-// --- FILTER ---
+// --- FILTER POPUP (for advanced filtering) ---
 document.getElementById("applyFilter").onclick = () => {
     const maxPrice = Number(filterPriceInput.value);
     const fType = filterTypeSelect.value;

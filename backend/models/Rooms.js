@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { RoomType, RoomStatus } from "../configs/roomEnum.js";
+import { RoomType, RoomStatus } from "../configs/enum/roomEnum.js";
 
 const roomSchema = new mongoose.Schema(
     {

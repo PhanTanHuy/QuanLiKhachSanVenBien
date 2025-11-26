@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
+import { UserRole } from '../configs/enum/userEnum.js';
 
 const userSchema = new mongoose.Schema(
     {
-        username: { type: String, required: true, unique: true },
         hashedPassword: { type: String, required: true },
         email: {
             type: String,
@@ -11,14 +11,22 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             trim: true,
         },
-        displayName: { type: String, required: true },
         phone: {
             type: String,
             required: true,
             unique: true,
+        },
+        name: { type: String },
+        cccd: { type: String, unique: true, sparse: true },
+        address: { type: String },
+        role: {
+            type: String,
+            enum: Object.values(UserRole),
+            default: UserRole.USER
         }
-    }
-)
+    },
+    { timestamps: true }
+);
 
 const User = mongoose.model('User', userSchema);
 export default User;

@@ -12,6 +12,7 @@ import './configs/database.js'; // database init
 import homeRoutes from './routes/homeRoutes.js';
 import adminRoutes from './routes/admin/adminRoutes.js';
 import authRoute from './routes/authRoute.js';
+import accountRoutes from './routes/accountRoutes.js';
 import { protectedRoute } from './middlewares/authMiddleware.js';
 import userRoute from './routes/userRoute.js';
 import roomRoutes from './routes/roomRoutes.js';
@@ -46,6 +47,7 @@ app.use('/admin', adminRoutes);
 //Route api
 app.use('/api/rooms', roomRoutes);
 app.use('/api/auth', authRoute);
+app.use('/api/account', accountRoutes);
 
 // Private routes
 app.use(protectedRoute);

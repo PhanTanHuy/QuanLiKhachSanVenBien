@@ -1,5 +1,5 @@
 import Room from "../models/Rooms.js";
-import { RoomType, RoomStatus } from "../configs/roomEnum.js";
+import { RoomType, RoomStatus } from "../configs/enum/roomEnum.js";
 
 
 // API trả enum cho frontend
