@@ -236,6 +236,10 @@ document.getElementById("saveEditUser").onclick = async () => {
 document.getElementById("deleteUserBtn").onclick = async () => {
     if (!currentEditingUser) return;
     try {
+        // Ask for confirmation using Notify.confirm (returns Promise<boolean>)
+        const ok = await Notify.confirm("Bạn chắc chắn muốn xóa user này?");
+        if (!ok) return;
+
         const token = localStorage.getItem("accessToken");
         await deleteUserApi(currentEditingUser._id, token);
 
