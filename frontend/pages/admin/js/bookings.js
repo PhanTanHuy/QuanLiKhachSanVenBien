@@ -6,12 +6,8 @@ let bookingsData = [];
 // --- DOM ELEMENTS ---
 const bookingList = document.getElementById("bookingList");
 const detailPopup = document.getElementById("detailPopup");
+detailPopup.style.display = "none";
 document.getElementById("closeDetail").onclick = () => detailPopup.style.display = "none";
-
-// FILTER POPUP
-const filterPopup = document.getElementById("filterPopup");
-document.getElementById("openFilter").onclick = () => filterPopup.style.display = "flex";
-document.getElementById("closeFilter").onclick = () => filterPopup.style.display = "none";
 
 // --- UTILS ---
 function formatDate(date) {
@@ -108,26 +104,6 @@ function filterBookings() {
 document.getElementById("searchInput").oninput = () => filterBookings();
 document.getElementById("paymentFilter").onchange = () => filterBookings();
 document.getElementById("statusFilter").onchange = () => filterBookings();
-
-// APPLY FILTER FROM POPUP
-document.getElementById("applyFilter").onclick = () => {
-    const code = document.getElementById("filterCode").value.toLowerCase();
-    const name = document.getElementById("filterName").value.toLowerCase();
-    const phone = document.getElementById("filterPhone").value;
-    const payment = document.getElementById("filterPayment").value;
-
-    const filtered = bookingsData.filter(b => {
-        const matchCode = !code || b.bookingCode.toLowerCase().includes(code);
-        const matchName = !name || b.userSnapshot?.name?.toLowerCase().includes(name);
-        const matchPhone = !phone || b.userSnapshot?.phone?.includes(phone);
-        const matchPayment = !payment || b.paymentMethod === payment;
-        return matchCode && matchName && matchPhone && matchPayment;
-    });
-
-    renderBookings(filtered);
-    filterPopup.style.display = "none";
-};
-
 // --- INITIAL LOAD ---
 async function init() {
     await fetchBookings();
