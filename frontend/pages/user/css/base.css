@@ -67,6 +67,7 @@ nav {
   color: #8b5a3c;
 }
 
+
 .user-icon {
   width: 32px;
   height: 32px;
@@ -90,6 +91,48 @@ a {
 }
 li {
   list-style: none;
+}
+
+/* Footer */
+footer {
+background-color: #4a2c1a;
+color: #fff;
+padding: 40px 50px 20px;
+margin-top: 80px;
+}
+
+.footer-content {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 40px;
+margin-bottom: 30px;
+}
+
+.footer-section h4 {
+font-size: 17px;
+margin-bottom: 15px;
+font-weight: normal;
+}
+
+.footer-section p,
+.footer-section a {
+color: rgba(255, 255, 255, 0.8);
+text-decoration: none;
+line-height: 1.8;
+font-size: 13px;
+display: block;
+}
+
+.footer-section a:hover {
+color: #fff;
+}
+
+.footer-bottom {
+text-align: center;
+padding-top: 20px;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+color: rgba(255, 255, 255, 0.7);
+font-size: 13px;
 }
 
 @media (max-width: 1200px) {

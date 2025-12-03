@@ -39,6 +39,8 @@ app.get("/signup", (req, res) => {
 app.get("/signin", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/Auth/signin.html"));
 });
+// router.use("/search", searchRoutes);
+// router.use("/rooms", roomRoutes);
 
 // Routes page
 app.use('/admin', adminRoutes);

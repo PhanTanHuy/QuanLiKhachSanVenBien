@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urbanza Suites - Chi Tiết Phòng</title>
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/bookRoom.css" />
+  </head>
+  <style>
+    .add-review {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.add-review h3 {
+  margin: 0;
+  color: #333;
+}
+
+.review-input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.submit-review-btn {
+  background: #0077ff;
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.submit-review-btn:hover {
+  background: #005fd1;
+}
+
+  </style>
+  <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-item">
+        <span>📞</span>
+        <span>0123456789</span>
+      </div>
+      <div class="top-bar-item">
+        <span>✉️</span>
+        <span>hotel@gmail.com</span>
+      </div>
+      <div class="top-bar-item">
+        <span>📍</span>
+        <span>280 An Dương Vương, Phường 4, TPHCM</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">Khách sạn Ven Biển</div>
+      <ul class="nav-menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/rooms.html">Phòng</a></li>
+        <li><a href="#services">Dịch vụ</a></li>
+        <li><a href="#booking">Lịch sử đặt phòng</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+      <div class="user-icon">👤</div>
+    </nav>
+
+    <!-- Booking Bar -->
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <div class="filter-group">
+        <label class="filter-label">Ngày nhận phòng</label>
+        <select class="filter-select">
+          <option>12 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Ngày trả phòng</label>
+        <select class="filter-select">
+          <option>23 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Loại phòng</label>
+        <select id="roomType">
+          <option value="">Tất cả</option>
+          <option value="suite">Suite Room</option>
+          <option value="luxe">Luxe Room</option>
+          <option value="premium">Premium Room</option>
+          <option value="master">Master Room</option>
+          <option value="family">Family Room</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Giá phòng</label>
+        <select id="priceRange">
+          <option value="">Tất cả</option>
+          <option value="0-300000">Dưới 300.000đ</option>
+          <option value="300000-500000">300.000đ - 500.000đ</option>
+          <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+          <option value="1000000+">Trên 1.000.000đ</option>
+        </select>
+      </div>
+      <!-- <div class="filter-group">
+        <label>Số người</label>
+        <select id="capacity">
+          <option value="">Tất cả</option>
+          <option value="1-2">1-2 người</option>
+          <option value="3-4">3-4 người</option>
+          <option value="5+">5+ người</option>
+        </select>
+      </div> -->
+      <div class="filter-group">
+        <label class="filter-label">Loại phòng</label>
+        <select class="filter-select">
+          <option>1 giường ngủ</option>
+        </select>
+      </div>
+      <button class="btn-filter">Tìm kiếm</button>
+    </div>
+
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <div class="title-row">
+          <h1 class="hotel-name">Urbanza Suites</h1>
+          <span class="room-type">(Double Bed)</span>
+          <span class="discount-badge">20% OFF</span>
+        </div>
+
+        <div class="rating-row">
+          <div class="stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star empty">☆</span>
+          </div>
+          <span class="reviews">200+ reviews</span>
+        </div>
+
+        <div class="location">
+          <span>📍</span>
+          <span>Main Road 123 Street, 23 Colony</span>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery-item main-image">
+          <img
+            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1000"
+            alt="Main room view"
+          />
+        </div>
+        <div class="gallery-item thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600"
+            alt="Bedroom view"
+          />
+        </div>
+        <div class="gallery-item thumbnail active">
+          <img
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600"
+            alt="Room with red bedding"
+          />
+        </div>
+        <div class="gallery-item thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"
+            alt="Modern bedroom"
+          />
+        </div>
+        <div class="gallery-item thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600"
+            alt="Luxury bedroom"
+          />
+        </div>
+      </div>
+
+      <!-- Room Info & Booking -->
+      <div class="room-info-section">
+        <div class="info-left">
+          <h2 class="section-title">Thông tin phòng</h2>
+          <p class="room-description">
+            Phòng Tiêu Chuẩn 1 Giường Đôi mang đến không gian trang nhã và hiện
+            đại, được thiết kế đặc biệt cho 2 người lớn. Phòng được trang bị đầy
+            đủ tiện nghi cao cấp bao gồm TV màn hình phẳng, tủ lạnh mini, máy
+            sấy tóc và Wi-Fi tốc độ cao miễn phí. Phòng tắm riêng được thiết kế
+            sang trọng với đầy đủ tiện nghi hiện đại.
+          </p>
+
+          <h2 class="section-title">Tiện nghi phòng</h2>
+          <div class="features-grid">
+            <div class="feature-item">🌐 Wifi miễn phí</div>
+            <div class="feature-item">❄️ Điều hòa không khí</div>
+            <div class="feature-item">🛎️ Dịch vụ phòng 24/7</div>
+
+            <div class="feature-item">💆 Spa & chăm sóc sức khỏe</div>
+            <div class="feature-item">🏞️ Sân thượng view đẹp</div>
+            <div class="feature-item">🧺 Dịch vụ giặt là</div>
+
+            <div class="feature-item">🚿 Phòng tắm riêng</div>
+            <div class="feature-item">📺 TV màn hình phẳng</div>
+          </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="booking-card">
+          <div class="room-category">Phòng tiêu chuẩn</div>
+          <h3 class="room-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h3>
+
+          <div class="price-section">
+            <div class="price-label">Giá mỗi đêm</div>
+            <div class="price">
+              <span class="currency">$</span>
+              <span>950.000</span>
+            </div>
+          </div>
+
+          <button class="book-button">Đặt phòng ngay</button>
+        </div>
+      </div>
+      <!-- Reviews Section -->
+     <div class="reviews-section">
+  <h2 class="section-title">Đánh giá của khách</h2>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="reviewer-info">
+        <div class="reviewer-avatar">R</div>
+        <span class="reviewer-name">Roxane</span>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">
+        Vị trí tuyệt vời, phòng đẹp và sang trọng. Nhân viên siêu thân
+        thiện và nhiệt tình. Chắc chắn sẽ quay lại lần sau!
+      </p>
+    </div>
+
+    <div class="review-card">
+      <div class="reviewer-info">
+        <div class="reviewer-avatar">L</div>
+        <span class="reviewer-name">Lane</span>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">
+        Căn phòng rộng rãi, sạch sẽ và có tủ lạnh tiện lợi. Tôi đặc biệt
+        thích view từ cửa sổ và giường ngủ rất êm ái.
+      </p>
+    </div>
+  </div>
+
+  <!-- bình luận mới -->
+  <div class="add-review">
+    <h3>Đánh giá của bạn</h3>
+
+
+
+
+    <textarea
+      class="review-input"
+      rows="4"
+      placeholder="Viết cảm nhận của bạn..."
+    ></textarea>
+
+    <button class="submit-review-btn">Gửi đánh giá</button>
+  </div>
+</div>
+
+    </div>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Khách sạn Ven Biển</h4>
+          <div class="social-icons">
+            <a href="#">f</a>
+            <a href="#">📷</a>
+            <a href="#">🐦</a>
+          </div>
+          <p style="margin-top: 15px">venBien@gmail.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>Thông tin liên hệ đặt phòng</h4>
+          <p>Hotline: 0123456789</p>
+          <p>Email: venBien@gmail.com</p>
+          <p>Địa chỉ: 280 An Dương Vương, Phường 4, TPHCM</p>
+        </div>
+        <div class="footer-section">
+          <h4>Điều khoản và quy định</h4>
+          <a href="#">Điều khoản chung</a>
+          <a href="#">Quy định chung</a>
+          <a href="#">Chính sách quyền riêng tư</a>
+        </div>
+        <div class="footer-section">
+          <h4>Khám phá</h4>
+          <a href="#">Về chúng tôi</a>
+          <a href="#">Hỏi đáp khách hàng</a>
+          <a href="#">Dịch vụ</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Khách sạn Ven Biển. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Gallery interaction
+      const galleryItems = document.querySelectorAll(".gallery-item");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      const mainImage = document.querySelector(".main-image img");
+
+      thumbnails.forEach((thumb) => {
+        thumb.addEventListener("click", function () {
+          thumbnails.forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          const imgSrc = this.querySelector("img").src;
+          mainImage.src = imgSrc.replace("w=600", "w=1000");
+        });
+      });
+
+      // Smooth scroll animation for features
+      const features = document.querySelectorAll(".feature-item");
+      features.forEach((feature, index) => {
+        feature.style.animationDelay = `${index * 0.05}s`;
+      });
+    </script>
+  </body>
+</html>

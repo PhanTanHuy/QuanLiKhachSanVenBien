@@ -1,232 +1,209 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách phòng - Khách sạn Ven Biển</title>
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/listRoom.css">
-    
-</head>
-<body>
-    <!-- Top Bar -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khách Sạn Ven Biển</title>
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/listRoom.css" />
+  </head>
+  <body>
+    <div class="header">
+       <!-- Top Bar -->
     <div class="top-bar">
-        📞 0123456789 | ✉️ hotel@gmail.com | 📍 280 An Dương Vương, Phường 4, TPHCM
+        <div class="top-bar-item">
+            <span>📞</span>
+            <span>0123456789</span>
+        </div>
+        <div class="top-bar-item">
+            <span>✉️</span>
+            <span>hotel@gmail.com</span>
+        </div>
+        <div class="top-bar-item">
+            <span>📍</span>
+            <span>280 An Dương Vương, Phường 4, TPHCM</span>
+        </div>
     </div>
 
     <!-- Navigation -->
     <nav>
         <div class="logo">Khách sạn Ven Biển</div>
         <ul class="nav-menu">
-            <li><a href="">Trang chủ</a></li>
-            <li><a href="">Phòng</a></li>
-            <li><a href="">Dịch vụ</a></li>
-            <li><a href="">Lịch sử đặt phòng</a></li>
-            <li><a href="">Liên hệ</a></li>
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#rooms">Phòng</a></li>
+            <li><a href="#services">Dịch vụ</a></li>
+            <li><a href="#booking">Lịch sử đặt phòng</a></li>
+            <li><a href="#contact">Liên hệ</a></li>
         </ul>
         <div class="user-icon">👤</div>
     </nav>
 
-    <!-- Page Header -->
-    <!-- <div class="page-header">
-        <h1>Danh sách các phòng</h1>
-        <p>Tìm phòng hoàn hảo cho kỳ nghỉ của bạn</p>
-    </div> -->
+    </div>
+
 
     <!-- Filter Section -->
     <div class="filter-section">
-        <div class="filter-group">
-            <label>Loại phòng</label>
-            <select id="roomType">
-                <option value="">Tất cả</option>
-                <option value="suite">Suite Room</option>
-                <option value="luxe">Luxe Room</option>
-                <option value="premium">Premium Room</option>
-                <option value="master">Master Room</option>
-                <option value="family">Family Room</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label>Giá phòng</label>
-            <select id="priceRange">
-                <option value="">Tất cả</option>
-                <option value="0-300000">Dưới 300.000đ</option>
-                <option value="300000-500000">300.000đ - 500.000đ</option>
-                <option value="500000-1000000">500.000đ - 1.000.000đ</option>
-                <option value="1000000+">Trên 1.000.000đ</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label>Số người</label>
-            <select id="capacity">
-                <option value="">Tất cả</option>
-                <option value="1-2">1-2 người</option>
-                <option value="3-4">3-4 người</option>
-                <option value="5+">5+ người</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label>Tiện nghi</label>
-            <select id="amenities">
-                <option value="">Tất cả</option>
-                <option value="wifi">WiFi miễn phí</option>
-                <option value="balcony">Ban công</option>
-                <option value="view">View đẹp</option>
-                <option value="kitchen">Bếp</option>
-            </select>
-        </div>
-        <button class="btn-filter">Tìm kiếm</button>
+      <div class="filter-group">
+        <label class="filter-label">Ngày nhận phòng</label>
+        <select class="filter-select">
+          <option>12 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Ngày trả phòng</label>
+        <select class="filter-select">
+          <option>23 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Loại phòng</label>
+        <select id="roomType">
+          <option value="">Tất cả</option>
+          <option value="suite">Suite Room</option>
+          <option value="luxe">Luxe Room</option>
+          <option value="premium">Premium Room</option>
+          <option value="master">Master Room</option>
+          <option value="family">Family Room</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Giá phòng</label>
+        <select id="priceRange">
+          <option value="">Tất cả</option>
+          <option value="0-300000">Dưới 300.000đ</option>
+          <option value="300000-500000">300.000đ - 500.000đ</option>
+          <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+          <option value="1000000+">Trên 1.000.000đ</option>
+        </select>
+      </div>
+      <!-- <div class="filter-group">
+        <label>Số người</label>
+        <select id="capacity">
+          <option value="">Tất cả</option>
+          <option value="1-2">1-2 người</option>
+          <option value="3-4">3-4 người</option>
+          <option value="5+">5+ người</option>
+        </select>
+      </div> -->
+      <div class="filter-group">
+        <label class="filter-label">Loại phòng</label>
+        <select class="filter-select">
+          <option>1 giường ngủ</option>
+        </select>
+      </div>
+      <button class="btn-filter">Tìm kiếm</button>
     </div>
 
-    <!-- Rooms Container -->
-    <div class="rooms-container">
-        <div class="rooms-header">
-            <h2>Có sẵn 12 phòng</h2>
-            <div class="rooms-count">Hiển thị 1-12 của 12 phòng</div>
+    <!-- Main Content -->
+    <div class="container">
+      <h1 class="page-title">Danh sách phòng</h1>
+
+      <div class="product-list">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <img
+            src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=500"
+            alt="Phòng giường đôi"
+            class="product-image"
+          />
+          <div class="product-info">
+            <div>
+              <div class="product-category">Phòng tiêu chuẩn</div>
+              <h2 class="product-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h2>
+              <p class="product-description">
+                Không gian trang nhã với phòng tắm - 2 người lớn. Không có, Ký
+                túc xác nhận 1 phòng, nơi bạn gặp được 1 giường đôi, để khởi
+                chúng.
+              </p>
+            </div>
+            <div>
+              <div class="product-price">150.000.000 VND</div>
+              <button class="detail-button">Xem phòng ngay</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Room Card 1 -->
-        
-
-        <!-- Room Card 2 -->
-        <div class="room-card"> 
-            <div class="room-image">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23e8dcc8' width='400' height='300'/%3E%3C/svg%3E" alt="Phòng Đơn Luxury">
-                <div class="rating-badge">
-                    <span class="star">★</span>
-                    <span>4.7</span>
-                </div>
+        <!-- Product 2 -->
+        <div class="product-card">
+          <img
+            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500"
+            alt="Phòng giường đôi"
+            class="product-image"
+          />
+          <div class="product-info">
+            <div>
+              <div class="product-category">Phòng tiêu chuẩn</div>
+              <h2 class="product-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h2>
+              <p class="product-description">
+                Không gian trang nhã với phòng tắm - Căn phòng sang trọng cho 2
+                người. Mặc dù, kế bên lối ra - ngủ dấu hấp, dẫn đến tất cả, để
+                khi chúng.
+              </p>
             </div>
-            <div class="room-content">
-                <div>
-                    <div class="room-type">
-                        <div>
-                            <h3>Phòng Đơn Luxury (Dbl)</h3>
-                            <p class="room-type-label">Phòng Đơn Luxury</p>
-                        </div>
-                    </div>
-                    <p class="room-description">
-                        Phòng đơn thiết kế tối giản nhưng sang trọng, phù hợp cho khách 
-                        công tác hoặc du lịch một mình. Đầy đủ tiện nghi hiện đại với 
-                        không gian riêng tư và yên tĩnh.
-                    </p>
-                    <div class="room-features">
-                        <div class="feature-item">
-                            <span class="feature-icon">👥</span>
-                            <span>1-2 người</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">📏</span>
-                            <span>25m²</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">🛏️</span>
-                            <span>1 giường đơn</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">📶</span>
-                            <span>WiFi miễn phí</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="room-footer">
-                    <div class="room-price">
-                        <div class="price-current">250.000đ <span>/đêm</span></div>
-                    </div>
-                    <button class="btn-book">Đặt phòng ngay</button>
-                </div>
+            <div>
+              <div class="product-price">150.000.000 VND</div>
+              <button class="detail-button">Xem phòng ngay</button>
             </div>
-        </div> 
-
-        <!-- Room Card 3 -->
-        <div class="room-card">
-            <div class="room-image">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%234a5560' width='400' height='300'/%3E%3C/svg%3E" alt="Phòng Đôi Luxury">
-                <div class="rating-badge">
-                    <span class="star">★</span>
-                    <span>4.9</span>
-                </div>
-            </div>
-            <div class="room-content">
-                <div>
-                    <div class="room-type">
-                        <div>
-                            <h3>Phòng Đôi Luxury (Dbl)</h3>
-                            <p class="room-type-label">Phòng Đôi Luxury</p>
-                        </div>
-                        <div class="discount-badge">-15%</div>
-                    </div>
-                    <p class="room-description">
-                        Phòng cao cấp với thiết kế sang trọng, nội thất gỗ tự nhiên. 
-                        Ban công riêng với view đẹp, phòng tắm hiện đại với bồn tắm. 
-                        Lựa chọn hoàn hảo cho kỳ nghỉ lãng mạn.
-                    </p>
-                    <div class="room-features">
-                        <div class="feature-item">
-                            <span class="feature-icon">👥</span>
-                            <span>2-3 người</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">📏</span>
-                            <span>40m²</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">🛏️</span>
-                            <span>1 giường king</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">🏖️</span>
-                            <span>Ban công</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="room-footer">
-                    <div class="room-price">
-                        <span class="price-original">500.000đ</span>
-                        <div class="price-current">425.000đ <span>/đêm</span></div>
-                    </div>
-                    <button class="btn-book">Đặt phòng ngay</button>
-                </div>
-            </div>
+          </div>
         </div>
 
-
-      
+        <!-- Product 3 -->
+        <div class="product-card">
+          <img
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=500"
+            alt="Phòng giường đôi"
+            class="product-image"
+          />
+          <div class="product-info">
+            <div>
+              <div class="product-category">Phòng tiêu chuẩn</div>
+              <h2 class="product-title">Phòng Tiêu Chuẩn 1 Giường Đôi</h2>
+              <p class="product-description">
+                Không gian trang nhã với phòng tắm - 2 người lớn. Không có, Ký
+                túc xác nhận 1 phòng, nơi bạn gặp được 1 giường đôi, để khởi
+                chúng.
+              </p>
+            </div>
+            <div>
+              <div class="product-price">150.000.000 VND</div>
+              <button class="detail-button">Xem phòng ngay</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Khách sạn Ven Biển</h4>
-                <p>Khách sạn cao cấp với dịch vụ chuyên nghiệp và tiện nghi hiện đại.</p>
-                <p style="margin-top: 15px;">venBien@gmail.com</p>
-            </div>
-            <div class="footer-section">
-                <h4>Thông tin liên hệ đặt phòng</h4>
-                <p>Hotline: 0123456789</p>
-                <p>Email: venBien@gmail.com</p>
-                <p>Địa chỉ: 280 An Dương Vương, Phường 4, TPHCM</p>
-            </div>
-            <div class="footer-section">
-                <h4>Điều khoản và quy định</h4>
-                <a href="#">Điều khoản chung</a>
-                <a href="#">Quy định chung</a>
-                <a href="#">Chính sách quyền riêng tư</a>
-            </div>
-            <div class="footer-section">
-                <h4>Khám phá</h4>
-                <a href="#">Về chúng tôi</a>
-                <a href="#">Hỏi đáp khách hàng</a>
-                <a href="#">Dịch vụ</a>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Khách sạn Ven Biển</h4>
+          <p>
+            Khách sạn cao cấp với dịch vụ chuyên nghiệp và tiện nghi hiện đại.
+          </p>
+          <p style="margin-top: 15px">venBien@gmail.com</p>
         </div>
-        <div class="footer-bottom">
-            <p>© 2025 Khách sạn Ven Biển. All rights reserved.</p>
+        <div class="footer-section">
+          <h4>Thông tin liên hệ đặt phòng</h4>
+          <p>Hotline: 0123456789</p>
+          <p>Email: venBien@gmail.com</p>
+          <p>Địa chỉ: 280 An Dương Vương, Phường 4, TPHCM</p>
         </div>
+        <div class="footer-section">
+          <h4>Điều khoản và quy định</h4>
+          <a href="#">Điều khoản chung</a>
+          <a href="#">Quy định chung</a>
+          <a href="#">Chính sách quyền riêng tư</a>
+        </div>
+        <div class="footer-section">
+          <h4>Khám phá</h4>
+          <a href="#">Về chúng tôi</a>
+          <a href="#">Hỏi đáp khách hàng</a>
+          <a href="#">Dịch vụ</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Khách sạn Ven Biển. All rights reserved.</p>
+      </div>
     </footer>
-
-    
-</body>
- 
+  </body>
 </html>
