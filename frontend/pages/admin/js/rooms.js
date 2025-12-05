@@ -53,7 +53,7 @@ function renderRooms(list) {
             <h3>Phòng ${r.id} – ${r.type}</h3>
             <p class="room-description">${r.desc}</p>
             <p>Giá: ${r.price.toLocaleString()} đ</p>
-            <p>Trạng thái: ${r.status === "available" ? "Trống" : r.status === "occupied" ? "Đang thuê" : "Đã đặt cọc"}</p>
+            <p>Trạng thái: ${r.status}</p>
         `;
         card.onclick = () => openEditRoomPopup(r);
         roomList.appendChild(card);
@@ -75,11 +75,11 @@ async function loadEnums() {
         const statusFilterSelect = document.getElementById("statusFilter");
         
         // Populate filter selects
-        typeFilterSelect.innerHTML = "<option value=''>-- Tất cả loại phòng --</option>";
-        statusFilterSelect.innerHTML = "<option value=''>-- Tất cả tình trạng --</option>";
+        typeFilterSelect.innerHTML = "<option value=''>Tất cả loại phòng</option>";
+        statusFilterSelect.innerHTML = "<option value=''>Tất cả tình trạng</option>";
         
-        newTypeSelect.innerHTML = "<option value=''>-- Chọn loại phòng --</option>";
-        newStatusSelect.innerHTML = "<option value=''>-- Chọn tình trạng --</option>";
+        newTypeSelect.innerHTML = "<option value=''>Chọn loại phòng</option>";
+        newStatusSelect.innerHTML = "<option value=''>Chọn tình trạng</option>";
         
         editRoomType.innerHTML = "";
         editRoomStatus.innerHTML = "";

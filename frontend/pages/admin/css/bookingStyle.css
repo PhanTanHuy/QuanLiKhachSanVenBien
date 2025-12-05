@@ -34,7 +34,13 @@
     color: #333;
 }
 
-.payment-badge {
+.booking-card-header > div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.payment-badge, .status-badge {
     padding: 4px 10px;
     border-radius: 12px;
     color: white;

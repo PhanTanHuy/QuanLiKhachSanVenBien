@@ -1,7 +1,9 @@
 import { Notify } from "../../../components/notification.js";
-import { getAllBookingsApi, getBookingByCodeApi } from "../../../api/bookingApi.js";
+import { getAllBookingsApi, getBookingByCodeApi, getPaymentMethodsApi, getBookingStatusesApi } from "../../../api/bookingApi.js";
 
 let bookingsData = [];
+let paymentMethods = {};
+let bookingStatuses = {};
 
 // --- DOM ELEMENTS ---
 const bookingList = document.getElementById("bookingList");
@@ -23,10 +25,15 @@ function renderBookings(list) {
     list.forEach(booking => {
         const card = document.createElement("div");
         card.className = "booking-card";
+        const statusColor = booking.status === 'Đã thanh toán' ? '#4CAF50' : '#FF9800';
+        const paymentColor = booking.paymentMethod === 'Tiền mặt' ? '#4CAF50' : '#2196F3';
         card.innerHTML = `
             <div class="booking-card-header">
                 <h3>${booking.bookingCode}</h3>
-                <span class="payment-badge" style="background-color: ${booking.paymentMethod === 'Tiền mặt' ? '#4CAF50' : '#2196F3'}">${booking.paymentMethod}</span>
+                <div>
+                    <span class="payment-badge" style="background-color: ${paymentColor}">${booking.paymentMethod}</span>
+                    <span class="status-badge" style="background-color: ${statusColor}">${booking.status}</span>
+                </div>
             </div>
             <div class="booking-card-info">
                 <p><strong>Khách:</strong> ${booking.userSnapshot?.name || "N/A"}</p>
@@ -104,8 +111,44 @@ function filterBookings() {
 document.getElementById("searchInput").oninput = () => filterBookings();
 document.getElementById("paymentFilter").onchange = () => filterBookings();
 document.getElementById("statusFilter").onchange = () => filterBookings();
+// --- POPULATE FILTERS FROM API ---
+async function populateFilters() {
+    try {
+        const [paymentData, statusData] = await Promise.all([
+            getPaymentMethodsApi(),
+            getBookingStatusesApi()
+        ]);
+        
+        paymentMethods = paymentData.paymentMethods || {};
+        bookingStatuses = statusData.bookingStatuses || {};
+        
+        // Populate payment filter
+        const paymentFilter = document.getElementById("paymentFilter");
+        paymentFilter.innerHTML = '<option value="">-- Tất cả phương thức --</option>';
+        Object.entries(paymentMethods).forEach(([key, value]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            paymentFilter.appendChild(option);
+        });
+        
+        // Populate status filter
+        const statusFilter = document.getElementById("statusFilter");
+        statusFilter.innerHTML = '<option value="">-- Tất cả trạng thái --</option>';
+        Object.entries(bookingStatuses).forEach(([key, value]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            statusFilter.appendChild(option);
+        });
+    } catch (err) {
+        console.error("Lỗi khi tải bộ lọc:", err);
+    }
+}
+
 // --- INITIAL LOAD ---
 async function init() {
+    await populateFilters();
     await fetchBookings();
 }
 

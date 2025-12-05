@@ -17,6 +17,7 @@ import { protectedRoute } from './middlewares/authMiddleware.js';
 import userRoute from './routes/userRoute.js';
 import roomRoutes from './routes/roomRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -52,6 +53,7 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/auth', authRoute);
 app.use('/api/account', accountRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Private routes
 app.use(protectedRoute);
