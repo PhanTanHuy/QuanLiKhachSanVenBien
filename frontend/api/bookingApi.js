@@ -25,3 +25,16 @@ export async function getBookingByCodeApi(code, token) {
         throw err;
     }
 }
+
+// --- Lay danhh thu---
+export async function getRevenue(token) {
+    try {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const res = await fetch(`${API_URL}/revenue`, { headers });
+        if (!res.ok) throw new Error("Lấy danh thu thất bại");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { PaymentMethod } from '../configs/enum/paymentEnum.js';
+import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
 
 // Chi tiết đặt phòng
 const bookingSchema = new mongoose.Schema({
@@ -46,7 +47,12 @@ const bookingSchema = new mongoose.Schema({
   },
 
   // Trạng thái thanh toán / đặt (tuỳ ý có thể mở rộng sau)
-  status: { type: String, default: 'PENDING' }
+  status: { 
+    type: String, 
+    enum: Object.values(BookingStatus),
+    default: BookingStatus.PENDING 
+  }
+
 
 }, { timestamps: true });
 

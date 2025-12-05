@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllBookings, getBookingByCode } from "../controllers/bookingController.js";
+import { getAllBookings, getBookingByCode, getRevenue } from "../controllers/bookingController.js";
 
 const router = express.Router();
 
@@ -7,6 +7,9 @@ const router = express.Router();
 router.get("/", getAllBookings);
 
 // Lấy chi tiết đặt phòng theo mã đặt phòng
-router.get("/:code", getBookingByCode);
+router.get("/getOne/:code", getBookingByCode);
+
+// Lấy tổng danh thu
+router.get("/revenue", getRevenue);
 
 export default router;
