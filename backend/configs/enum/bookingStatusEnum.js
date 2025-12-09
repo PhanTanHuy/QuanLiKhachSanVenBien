@@ -1,4 +1,4 @@
 export const BookingStatus = {
-  PENDING: "Chờ thanh toán",
-  PAID: "Đã thanh toán"
+  occupied: "Đang thuê",
+  reserved: "Đã đặt cọc"
 };

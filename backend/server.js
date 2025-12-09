@@ -19,6 +19,9 @@ import roomRoutes from './routes/roomRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 
+// Receptionist routes
+import pathRecep from './routes/receptionist/recepRoutes.js';
+
 dotenv.config();
 const app = express();
 
@@ -45,8 +48,7 @@ app.get("/signin", (req, res) => {
 
 // Routes page
 app.use('/admin', adminRoutes);
-
-
+app.use('/receptionist', pathRecep);
 
 //Route api
 app.use('/api/rooms', roomRoutes);
