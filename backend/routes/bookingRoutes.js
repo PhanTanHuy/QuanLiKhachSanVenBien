@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllBookings, getBookingByCode, getRevenue, createBooking } from "../controllers/bookingController.js";
+import { createBooking, getAllBookings, getBookingByCode, getRevenue } from "../controllers/bookingController.js";
 import { PaymentMethod } from "../configs/enum/paymentEnum.js";
 import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
 
