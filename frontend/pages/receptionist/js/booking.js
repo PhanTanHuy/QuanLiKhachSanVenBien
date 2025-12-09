@@ -9,64 +9,21 @@ const PAGE_SIZE = 12;
 let totalPages = 1;
 
 const STATUS_LABELS = {
-  available: "Trống",
   occupied: "Đang thuê",
   reserved: "Đã đặt cọc",
-  maintenance: "Đang bảo trì",
 };
 
-const RoomStatus = Object.keys(STATUS_LABELS).reduce((acc, k) => {
+const Status_Room = Object.keys(STATUS_LABELS).reduce((acc, k) => {
   acc[k] = STATUS_LABELS[k];
   acc[k.toUpperCase()] = STATUS_LABELS[k];
   return acc;
 }, {});
 
-// API
 async function getRoomsApi() {
   const response = await fetch(apiURL);
   const data = await response.json();
   return data;
 }
-
-// Load ENUMS
-async function addRoomTypes() {
-  try {
-    const res = await fetch("/api/rooms/enums");
-    const data = await res.json();
-
-    const types = data.types || [];
-    ROOM_STATUSES = (data.statuses || []).map((st) => ({
-      value: st,
-      label: st,
-    }));
-
-    const newTypeSelect = document.getElementById("roomTypes");
-    if (!newTypeSelect) return;
-    newTypeSelect.innerHTML = "<option value='0'>-- Tất cả --</option>";
-    types.forEach((type) => {
-      const opt = createOption(type);
-      newTypeSelect.appendChild(opt.cloneNode(true));
-    });
-  } catch (err) {
-    console.error("Lấy enum thất bại", err);
-  }
-}
-
-function createOption(value) {
-  const opt = document.createElement("option");
-  opt.value = value;
-  opt.textContent = value;
-  return opt;
-}
-
-// Hàm filter
-const filterMap = {
-  "Danh sách phòng": "all",
-  "Phòng trống": "available",
-  "Đang ở": "occupied",
-  "Đang bảo trì": "maintenance",
-  "Phòng đang đặt cọc": "reserved",
-};
 
 function initStatusFilter() {
   const filterItems = document.querySelectorAll(".filter-item");
@@ -85,9 +42,9 @@ function initStatusFilter() {
   });
 }
 
-// Hàm filters
 function applyFilters() {
   let rooms = [...ALL_ROOMS];
+  rooms = rooms.filter((r) => r.status == "occupied" || r.status == "reserved");
 
   if (currentFilter !== "all") {
     rooms = rooms.filter(
@@ -132,7 +89,6 @@ function applyFilters() {
   renderPagination();
 }
 
-// Hàm Render
 function renderRooms(list) {
   const roomList = document.getElementById("roomList");
   if (!roomList) return console.error("Không tìm thấy roomList trong HTML");
@@ -188,7 +144,6 @@ function renderRooms(list) {
   });
 }
 
-// Hàm render phân trang
 function renderPagination() {
   const paginationEl = document.getElementById("pagination");
   if (!paginationEl) return;
@@ -233,9 +188,7 @@ function renderPagination() {
   paginationEl.appendChild(nextBtn);
 }
 
-// Khởi tạo page
 async function init() {
-  await addRoomTypes();
   ALL_ROOMS = await getRoomsApi();
 
   const searchInput = document.querySelector(".search-input");

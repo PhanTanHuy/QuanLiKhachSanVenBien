@@ -13,11 +13,14 @@ import { protectedRoute } from './middlewares/authMiddleware.js';
 import userRoute from './routes/userRpute.js';
 import roomRoutes from './routes/roomRoutes.js';
 
+// Receptionist routes
+import pathRecep from './routes/receptionist/recepRoutes.js';
+
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cookiesParser());
+app.use(cookieParser());
 
 // Load static assets
 const __filename = fileURLToPath(import.meta.url);
@@ -26,11 +29,12 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Routes page
 app.use('/admin', adminRoutes);
-
+app.use('/receptionist', pathRecep);
 
 //Route api
 app.use('/api/rooms', roomRoutes);
 app.use('/api/auth', authRoute);
+
 
 // Private routes
 app.use(protectedRoute);
