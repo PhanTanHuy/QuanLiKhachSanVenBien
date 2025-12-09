@@ -1,0 +1,267 @@
+
+body {
+font-family: Arial, sans-serif;
+background-color: #F5E6D3;
+}
+
+
+/* Filter Section */
+.filter-section {
+/* margin-top: 20px;
+    max-width: 1175px;
+    margin-left: auto;
+    margin-right: auto; */
+background-color: #4a2c1a;
+padding: 25px 50px;
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+align-items: center;
+justify-content: center;
+/* border-radius: 10px; */
+}
+
+.filter-group {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+.filter-group label {
+color: #fff;
+font-size: 13px;
+opacity: 0.9;
+}
+
+.filter-group select,
+.filter-group input {
+background-color: rgba(255, 255, 255, 0.1);
+border: 1px solid rgba(255, 255, 255, 0.3);
+color: #fff;
+padding: 10px 15px;
+font-size: 14px;
+border-radius: 4px;
+min-width: 140px;
+cursor: pointer;
+}
+
+.filter-group select option {
+background-color: #4a2c1a;
+color: #fff;
+}
+
+.btn-filter {
+background-color: #8b5a3c;
+color: #fff;
+border: none;
+padding: 12px 30px;
+font-size: 14px;
+cursor: pointer;
+border-radius: 4px;
+margin-top: 20px;
+transition: background-color 0.3s;
+}
+
+.btn-filter:hover {
+background-color: #654321;
+}
+/* Main Content */
+.container {
+max-width: 1200px;
+margin: 30px auto;
+padding: 0 20px;
+}
+
+.page-title {
+font-size: 24px;
+margin-bottom: 30px;
+color: #3d2516;
+}
+
+/* Product Cards */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 192, 203, 0.4);
+    background: linear-gradient(135deg, #fff 0%, #ffe6f0 100%);
+}
+
+.product-image {
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+    filter: brightness(1.05) saturate(1.1);
+}
+
+.product-info {
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-category {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .product-category {
+    color: #e91e63;
+}
+
+.product-category::after {
+    content: "→";
+    font-weight: bold;
+}
+
+.product-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3d2516;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .product-title {
+    color: #d81b60;
+}
+
+.product-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .product-description {
+    color: #555;
+}
+
+.product-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3d2516;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .product-price {
+    color: #c2185b;
+}
+
+.product-price::before {
+    content: "$";
+    font-size: 18px;
+}
+
+.detail-button {
+    background-color: #5d3a22;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.detail-button:hover {
+    background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+nav {
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 20px;
+}
+
+.nav-menu {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-section {
+  padding: 20px;
+}
+
+.rooms-container {
+  padding: 0 20px;
+}
+
+.room-card {
+  grid-template-columns: 1fr;
+}
+
+.room-image {
+  height: 200px;
+}
+
+.room-content {
+  padding: 20px;
+}
+
+.footer-content {
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+}
+
+@media (max-width: 768px) {
+.product-card {
+  flex-direction: column;
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+}
+
+.filter-content {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.filter-select,
+.filter-button {
+  width: 100%;
+}
+}

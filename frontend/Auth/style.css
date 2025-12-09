@@ -1,0 +1,152 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #fff;
+  --primary: #2b6ef6;
+  --muted: #7b7f88;
+  --radius: 12px;
+  --shadow: 0 6px 20px rgba(21, 30, 60, 0.08);
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f3f6fb 0%, #eef3fb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #1b2430;
+}
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.small-card {
+  max-width: 420px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.brand img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.brand h1 {
+  margin: 0;
+  font-size: 20px;
+}
+.tab {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+.tab button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: #fff;
+  cursor: pointer;
+}
+.tab button.active {
+  background: linear-gradient(90deg, var(--primary), #4d8bff);
+  color: #fff;
+  border: none;
+}
+.form {
+  margin-top: 8px;
+}
+.field {
+  margin-bottom: 10px;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: #fbfdff;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+button.primary {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+button.link,
+a.link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.msg {
+  margin-top: 10px;
+  color: #d23f3f;
+  font-size: 14px;
+}
+.small {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 12px;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+}
+.container {
+  max-width: 1000px;
+  margin: 28px auto;
+  padding: 0 14px;
+}
+.card pre {
+  white-space: pre-wrap;
+  background: #f7f9ff;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e8eefc;
+}
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+    border-radius: 10px;
+  }
+  .brand h1 {
+    font-size: 18px;
+  }
+}
+

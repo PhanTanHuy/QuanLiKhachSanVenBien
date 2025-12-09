@@ -1,4 +1,4 @@
-import { RoomStatus, RoomType, RoomDescriptions } from "./roomEnum.js";
+import { RoomStatus, RoomType, RoomDescriptions } from "./enum/roomEnum.js";
 
 // --- Pool chứa ảnh ---
 export const RoomImagePool = [

@@ -21,15 +21,18 @@
           <div class="search-bar">
               <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
               <input id="searchInput" type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
-              <span id="openFilter" class="icon-right"><i class="fa-solid fa-filter"></i></span>
           </div>
       </div>
        <!-- Sort buttons va them phong -->
       <div class="top-bar">
           <div class="sort-bar">
               <button data-sort="price">Giá ↑↓</button>
-              <button data-sort="type">Loại phòng</button>
-              <button data-sort="status">Tình trạng</button>
+              <select id="typeFilter" class="type-select">
+                  <option value="">-- Tất cả loại phòng --</option>
+              </select>
+              <select id="statusFilter" class="status-select">
+                  <option value="">-- Tất cả tình trạng --</option>
+              </select>
           </div>
 
           <button id="addRoomBtn" class="add-room-btn">+ Thêm phòng</button>

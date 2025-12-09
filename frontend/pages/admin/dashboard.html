@@ -5,50 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
+  <link rel="stylesheet" href="/pages/admin/css/dashboardStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="/pages/admin/js/adminLayout.js" defer></script>
-
+  <script type="module" src="/pages/admin/js/dashboard.js" defer></script>
 </head>
-
 
 <body>
   <div id="header-container"></div>
 
   <!-- ===== MAIN CONTENT ===== -->
   <main class="main-container">
-    <!-- Ô tìm kiếm -->
-    <div class="search-wrapper">
-        <div class="search-bar">
-            <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
-            <input type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
-            <span class="icon-right"><i class="fa-solid fa-filter"></i></span>
-        </div>
+    <div class="dashboard-header">
+      <p class="subtitle">Xem tổng quan hoạt động khách sạn</p>
     </div>
 
-
-    <!-- Thống kê nhanh -->
-    <section class="stats-grid">
-      <div class="card"><h3>Số lượng phòng</h3><p>201</p></div>
-      <div class="card"><h3>Phòng trống</h3><p>56</p></div>
-      <div class="card"><h3>Phòng đã đặt cọc</h3><p>5614</p></div>
-      <div class="card"><h3>Phòng đang được ở</h3><p>1256</p></div>
-      <div class="card"><h3>Phòng đang bảo trì</h3><p>25643</p></div>
-      <!-- <div class="card"><h3>Đang ở</h3><p>1463</p></div> -->
+    <!-- Thống kê phòng -->
+    <section class="dashboard-section">
+      <h2 class="section-title"><i class="fas fa-bed"></i> Thống Kê Phòng</h2>
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-icon"><i class="fas fa-building"></i></div>
+          <div class="stat-content">
+            <h3>Tổng Số Phòng</h3>
+            <p class="stat-number" id="totalRooms">--</p>
+          </div>
+        </div>
+        <div class="stat-card available">
+          <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-content">
+            <h3>Phòng Trống</h3>
+            <p class="stat-number" id="availableRooms">--</p>
+          </div>
+        </div>
+        <div class="stat-card reserved">
+          <div class="stat-icon"><i class="fas fa-bookmark"></i></div>
+          <div class="stat-content">
+            <h3>Đã Đặt Cọc</h3>
+            <p class="stat-number" id="reservedRooms">--</p>
+          </div>
+        </div>
+        <div class="stat-card occupied">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-content">
+            <h3>Đang Thuê</h3>
+            <p class="stat-number" id="occupiedRooms">--</p>
+          </div>
+        </div>
+        <div class="stat-card maintenance">
+          <div class="stat-icon"><i class="fas fa-tools"></i></div>
+          <div class="stat-content">
+            <h3>Đang Bảo Trì</h3>
+            <p class="stat-number" id="maintenanceRooms">--</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Biểu đồ -->
-    <section class="charts-grid">
-      <div class="chart-card">
-        <h3>Doanh thu 2025</h3>
-        <canvas id="revenueChart"></canvas>
+    <!-- Thống kê đặt phòng & doanh thu -->
+    <section class="dashboard-section">
+      <h2 class="section-title"><i class="fas fa-chart-line"></i> Thống Kê Kinh Doanh</h2>
+      <div class="business-stats">
+        <div class="big-stat-card revenue">
+          <div class="big-stat-icon"><i class="fas fa-dollar-sign"></i></div>
+          <div class="big-stat-content">
+            <h3>Tổng Doanh Thu</h3>
+            <p class="big-stat-number" id="totalRevenue">--</p>
+            <span class="stat-label">Từ <span id="paidBookingsCount">--</span> đơn đã thanh toán</span>
+          </div>
+        </div>
+        <div class="big-stat-card bookings">
+          <div class="big-stat-icon"><i class="fas fa-calendar-check"></i></div>
+          <div class="big-stat-content">
+            <h3>Tổng Lượt Đặt Phòng</h3>
+            <p class="big-stat-number" id="totalBookings">--</p>
+            <div class="booking-breakdown">
+              <span class="breakdown-item paid"><i class="fas fa-check"></i> Đã thanh toán: <strong id="paidBookings">--</strong></span>
+              <span class="breakdown-item pending"><i class="fas fa-clock"></i> Chờ thanh toán: <strong id="pendingBookings">--</strong></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="chart-card">
-        <h3>Lượt đặt phòng 2025 </h3>
-        <canvas id="userActivity"></canvas>
+    </section>
+
+    <!-- Thống kê users -->
+    <section class="dashboard-section">
+      <h2 class="section-title"><i class="fas fa-user-friends"></i> Thống Kê Người Dùng</h2>
+      <div class="stats-grid-small">
+        <div class="stat-card users">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-content">
+            <h3>Tổng Người Dùng</h3>
+            <p class="stat-number" id="totalUsers">--</p>
+          </div>
+        </div>
       </div>
-      <!-- <div class="chart-card">
-        <h3>Profit & Loss 2023</h3>
-        <canvas id="profitChart"></canvas>
-      </div> -->
     </section>
   </main>
 

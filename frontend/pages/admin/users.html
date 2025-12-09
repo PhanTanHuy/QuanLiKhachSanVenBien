@@ -3,52 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>Quản lý Users - Admin Dashboard</title>
   <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
+  <link rel="stylesheet" href="/pages/admin/css/userStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="/pages/admin/js/adminLayout.js" defer></script>
-
+  <script type="module" src="/pages/admin/js/users.js" defer></script>
 </head>
 
-
 <body>
-
   <div id="header-container"></div>
-  <h1>Trang Users</h1>
-  <!-- ===== MAIN CONTENT =====
-  <main class="dashboard">
-    <div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm theo mã phòng, loại phòng">
-      <button>🔍</button>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-container">
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input id="searchInput" type="text" placeholder="Tìm kiếm theo tên, email, số điện thoại">
+      </div>
     </div>
 
-    <section class="stats-grid">
-      <div class="card"><h3>Rooms</h3><p>201</p></div>
-      <div class="card"><h3>Dịch vụ</h3><p>56</p></div>
-      <div class="card"><h3>Khách hàng</h3><p>5614</p></div>
-      <div class="card"><h3>Doanh thu</h3><p>1256</p></div>
-      <div class="card"><h3>Phòng trống</h3><p>25643</p></div>
-      <div class="card"><h3>Đang ở</h3><p>1463</p></div>
-    </section>
-
-    <section class="charts-grid">
-      <div class="chart-card">
-        <h3>Thống kê doanh thu 2023</h3>
-        <canvas id="revenueChart"></canvas>
+    <!-- Sort buttons và thêm user -->
+    <div class="top-bar">
+      <div class="sort-bar">
+        <button data-sort="name">Tên A-Z</button>
+        <select id="roleFilter" class="role-select">
+          <option value="">-- Tất cả vai trò --</option>
+        </select>
       </div>
-      <div class="chart-card">
-        <h3>Hoạt động người dùng</h3>
-        <canvas id="userActivity"></canvas>
-      </div>
-      <div class="chart-card">
-        <h3>Profit & Loss 2023</h3>
-        <canvas id="profitChart"></canvas>
-      </div>
-    </section>
-  </main> -->
+      <button id="addUserBtn" class="add-user-btn">+ Thêm user</button>
+    </div>
 
+    <!-- User list render output -->
+    <div id="userList" class="user-list">
+      <!-- JS sẽ render danh sách user ở đây -->
+    </div>
+  </main>
 
-  <div id="footer-container">
+  <!-- POPUP THÊM USER -->
+  <div id="addUserPopup" class="add-popup">
+    <div class="add-popup-content">
+      <h3>Thêm người dùng mới</h3>
+
+      <div class="form-vertical">
+        <label>Tên đầy đủ:</label>
+        <input id="newUserName" type="text" placeholder="Nhập tên">
+
+        <label>Email:</label>
+        <input id="newUserEmail" type="email" placeholder="Nhập email">
+
+        <label>Số điện thoại:</label>
+        <input id="newUserPhone" type="text" placeholder="Nhập số điện thoại">
+
+        <label>Địa chỉ:</label>
+        <textarea id="newUserAddress" placeholder="Nhập địa chỉ"></textarea>
+
+        <label>Căn cước công dân (CCCD):</label>
+        <input id="newUserCccd" type="text" placeholder="Nhập CCCD">
+
+        <label>Mật khẩu:</label>
+        <input id="newUserPassword" type="password" placeholder="Nhập mật khẩu">
+
+        <label>Vai trò:</label>
+        <select id="newUserRole"></select>
+      </div>
+
+      <div class="footer-btns">
+        <button id="saveNewUser">Lưu</button>
+        <button id="closeAddUser">Đóng</button>
+      </div>
+    </div>
   </div>
 
+  <!-- POPUP CHI TIẾT / CHỈNH SỬA USER -->
+  <div id="editUserPopup" class="add-popup">
+    <div class="add-popup-content">
+      <h3>Chi tiết người dùng</h3>
+
+      <div class="form-vertical">
+        <label>ID:</label>
+        <input id="editUserId" type="text" disabled>
+
+        <label>Tên đầy đủ:</label>
+        <input id="editUserName" type="text">
+
+        <label>Email:</label>
+        <input id="editUserEmail" type="email" disabled>
+
+        <label>Số điện thoại:</label>
+        <input id="editUserPhone" type="text">
+
+        <label>Địa chỉ:</label>
+        <textarea id="editUserAddress"></textarea>
+
+        <label>Căn cước công dân (CCCD):</label>
+        <input id="editUserCccd" type="text">
+
+        <label>Vai trò:</label>
+        <select id="editUserRole"></select>
+
+        <label>Ngày tạo:</label>
+        <input id="editUserCreatedAt" type="text" disabled>
+      </div>
+
+      <div class="footer-btns">
+        <button id="saveEditUser">Lưu thay đổi</button>
+        <button id="deleteUserBtn" style="background:#ff4d4f; color:white;">Xóa user</button>
+        <button id="closeEditUser">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
 </body>
 </html>
