@@ -9,6 +9,7 @@ const bookingSchema = new mongoose.Schema({
   // Thông tin user (tham chiếu + snapshot để lưu lịch sử)
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   userSnapshot: {
+    userId: { type: String },
     name: { type: String },
     email: { type: String },
     phone: { type: String },
@@ -19,6 +20,7 @@ const bookingSchema = new mongoose.Schema({
   // Thông tin phòng (tham chiếu + snapshot để lưu giá tại thời điểm đặt)
   room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
   roomSnapshot: {
+    roomId: { type: String},
     code: { type: String },
     type: { type: String },
     description: { type: String },
