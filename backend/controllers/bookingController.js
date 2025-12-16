@@ -24,7 +24,7 @@ const generateBookingCode = async () => {
 export const createBooking = async (req, res) => {
   try {
     console.log("Đang tiến hành create-booking");
-    
+
     let userId;
     const {
       email,
@@ -46,34 +46,35 @@ export const createBooking = async (req, res) => {
       const existingUser = await User.findOne({ email: email });
       if (existingUser) {
         return res.status(400).json({
-          message: "Email đã tồn tại, vui lòng sử dụng email khác hoặc chọn tài khoản hiện có",
+          message:
+            "Email đã tồn tại, vui lòng sử dụng email khác hoặc chọn tài khoản hiện có",
         });
       }
       const user = new User({
         // Tạo user mới với thông tin từ form
-      })
+      });
       await user.save();
       userId = user._id;
-    }
-    else if (accountType === "old") {
+    } else if (accountType === "old") {
       // Tìm user hiện có theo email
       const existingUser = await User.findOne({ email: email });
       if (!existingUser) {
-        return res.status(404).json({ message: "Không tìm thấy tài khoản với email đã cho" });
+        return res
+          .status(404)
+          .json({ message: "Không tìm thấy tài khoản với email đã cho" });
       }
       userId = existingUser._id;
-    }
-    else {
+    } else {
       return res.status(400).json({ message: "Loại tài khoản không hợp lệ" });
     }
     console.log("📌 Tìm thấy userId:", userId);
     // Xử lý thông tin phòng
     const room = await Room.findOne({ id: roomId });
-    
+
     if (!room) {
       return res.status(404).json({ message: "Không tìm thấy phòng" });
     }
-    
+
     // Tạo mã đặt phòng tự động
     const bookingCode = await generateBookingCode();
 
@@ -116,6 +117,46 @@ export const createBooking = async (req, res) => {
     });
   } catch (error) {
     console.error("Lỗi khi tạo booking:", error);
+    return res.status(500).json({
+      message: "Lỗi hệ thống",
+      error: error.message,
+    });
+  }
+};
+
+// Cập nhật chi tiết đặt phòng
+export const updateBooking = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    console.log(bookingId);
+    
+    const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({
+        message: "Thiếu trạng thái booking",
+      });
+    }
+
+    const updatedBooking = await BookingDetail.findByIdAndUpdate(
+      bookingId,
+      { status },
+      { new: true }
+    )
+      .populate("user", "-hashedPassword")
+      .populate("room");
+
+    if (!updatedBooking) {
+      return res.status(404).json({
+        message: "Không tìm thấy chi tiết đặt phòng để cập nhật",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Cập nhật booking thành công",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật booking:", error);
     return res.status(500).json({
       message: "Lỗi hệ thống",
       error: error.message,

@@ -61,6 +61,116 @@
         </div>
     </main>
 
+    <!-- Modal Đặt Phòng -->
+    <div class="modal fade" id="bookingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Đặt phòng / Thuê phòng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden" id="bookingRoomId">
+
+                    <!-- Chọn loại tài khoản -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Khách hàng:</label>
+                        <select id="accountType" class="form-select" onchange="toggleAccountFields()">
+                            <option value="old">Đã có tài khoản</option>
+                            <option value="new">Chưa có tài khoản</option>
+                        </select>
+                    </div>
+
+                    <!-- Email + nút tìm user -->
+                    <div class="mb-3">
+                        <label class="form-label">Email *</label>
+                        <div class="input-group">
+                            <input type="email" id="email" class="form-control" required>
+                            <button class="btn btn-outline-primary" type="button" onclick="findUserByEmail()">
+                                Tìm user
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- Nếu chưa có tài khoản -->
+                    <div id="newUserFields" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Họ tên *</label>
+                                <input type="text" id="name" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Số điện thoại *</label>
+                                <input type="text" id="phone" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">CCCD *</label>
+                            <input type="text" id="cccd" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ *</label>
+                            <input type="text" id="address" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Hình thức đặt -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Hình thức:</label><br>
+                        <label class="me-3">
+                            <input type="radio" name="bookingType" value="rent" checked>
+                            Thuê ở ngay
+                        </label>
+                        <label class="ms-3">
+                            <input type="radio" name="bookingType" value="deposit">
+                            Đặt cọc
+                        </label>
+                    </div>
+
+                    <!-- Ngày nhận phòng & trả phòng -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Ngày Check-in *</label>
+                            <input type="date" id="checkInDate" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Ngày Check-out *</label>
+                            <input type="date" id="checkOutDate" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Phương thức thanh toán -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Phương thức thanh toán *</label>
+                        <select id="paymentMethod" class="form-select">
+                            <option value="Tiền mặt">Tiền mặt</option>
+                            <option value="Chuyển khoản">Chuyển khoản</option>
+                            <option value="Momo">Momo</option>
+                            <option value="ZaloPay">ZaloPay</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" onclick="submitBooking()">Xác nhận</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!-- Footer -->
     <div id="footer"></div>
 
