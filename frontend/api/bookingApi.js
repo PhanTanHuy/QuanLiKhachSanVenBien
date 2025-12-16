@@ -1,18 +1,13 @@
 const API_URL = "/api/bookings";
 
 // --- Tạo booking mới ---
-export async function createBookingApi(bookingData, token) {
+export async function createBookingApi(bookingData) {
     try {
-        const headers = {
-            "Content-Type": "application/json"
-        };
-        if (token) {
-            headers.Authorization = `Bearer ${token}`;
-        }
-        
         const res = await fetch(API_URL, {
             method: "POST",
-            headers,
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(bookingData)
         });
         
@@ -29,10 +24,9 @@ export async function createBookingApi(bookingData, token) {
 }
 
 // --- Lấy tất cả booking ---
-export async function getAllBookingsApi(token) {
+export async function getAllBookingsApi() {
     try {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const res = await fetch(API_URL, { headers });
+        const res = await fetch(API_URL);
         if (!res.ok) throw new Error("Lấy danh sách booking thất bại");
         return await res.json();
     } catch (err) {
@@ -42,10 +36,9 @@ export async function getAllBookingsApi(token) {
 }
 
 // --- Lấy booking theo mã ---
-export async function getBookingByCodeApi(code, token) {
+export async function getBookingByCodeApi(code) {
     try {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const res = await fetch(`${API_URL}/${code}`, { headers });
+        const res = await fetch(`${API_URL}/${code}`);
         if (!res.ok) throw new Error("Lấy booking thất bại");
         return await res.json();
     } catch (err) {
@@ -78,11 +71,34 @@ export async function getBookingStatusesApi() {
     }
 }
 
-// --- Lay danhh thu---
-export async function getRevenue(token) {
+// --- Lấy danh sách booking theo phòng (roomId hoặc room code) ---
+export async function getBookingsByRoomApi(roomIdentifier) {
     try {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const res = await fetch(`${API_URL}/revenue`, { headers });
+        const res = await fetch(`${API_URL}/by-room/${roomIdentifier}`);
+        if (!res.ok) throw new Error("Lấy booking theo phòng thất bại");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
+// --- Lấy danh sách booking theo user (userId hoặc email) ---
+export async function getBookingsByUserApi(userIdentifier) {
+    try {
+        const res = await fetch(`${API_URL}/by-user/${userIdentifier}`);
+        if (!res.ok) throw new Error("Lấy booking theo user thất bại");
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
+// --- Lay danhh thu---
+export async function getRevenue() {
+    try {
+        const res = await fetch(`${API_URL}/revenue`);
         if (!res.ok) throw new Error("Lấy danh thu thất bại");
         return await res.json();
     } catch (err) {

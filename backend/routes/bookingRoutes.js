@@ -17,6 +17,12 @@ router.get("/", getAllBookings);
 // Lấy chi tiết đặt phòng theo mã đặt phòng
 router.get("/getOne/:code", getBookingByCode);
 
+// Lấy danh sách booking theo roomId hoặc room code
+router.get("/by-room/:roomIdentifier", getBookingsByRoom);
+
+// Lấy danh sách booking theo userId hoặc email
+router.get("/by-user/:userIdentifier", getBookingsByUser);
+
 // Lấy tổng danh thu
 router.get("/revenue", getRevenue);
 
