@@ -5,78 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Urbanza Suites - Chi Tiết Phòng</title>
     <link rel="stylesheet" href="./css/base.css" />
-    <link rel="stylesheet" href="./css/bookRoom.css" />
+    <link rel="stylesheet" href="./css/detailRoom.css" />
+    <script src="/pages/user/js/userLayout.js" defer></script>
+    <script src="/pages/user/js/roomDetail.js" defer></script>
   </head>
-  <style>
-    .add-review {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f8f8f8;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 
-.add-review h3 {
-  margin: 0;
-  color: #333;
-}
-
-.review-input {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.submit-review-btn {
-  background: #0077ff;
-  border: none;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 8px;
-}
-
-.submit-review-btn:hover {
-  background: #005fd1;
-}
-
-  </style>
   <body>
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="top-bar-item">
-        <span>📞</span>
-        <span>0123456789</span>
-      </div>
-      <div class="top-bar-item">
-        <span>✉️</span>
-        <span>hotel@gmail.com</span>
-      </div>
-      <div class="top-bar-item">
-        <span>📍</span>
-        <span>280 An Dương Vương, Phường 4, TPHCM</span>
-      </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-      <div class="logo">Khách sạn Ven Biển</div>
-      <ul class="nav-menu">
-        <li><a href="/">Trang chủ</a></li>
-        <li><a href="/rooms.html">Phòng</a></li>
-        <li><a href="#services">Dịch vụ</a></li>
-        <li><a href="#booking">Lịch sử đặt phòng</a></li>
-        <li><a href="#contact">Liên hệ</a></li>
-      </ul>
-      <div class="user-icon">👤</div>
-    </nav>
-
-    <!-- Booking Bar -->
+    <div id="header-container"></div>
     <!-- Filter Section -->
     <div class="filter-section">
       <div class="filter-group">
@@ -112,15 +47,7 @@
           <option value="1000000+">Trên 1.000.000đ</option>
         </select>
       </div>
-      <!-- <div class="filter-group">
-        <label>Số người</label>
-        <select id="capacity">
-          <option value="">Tất cả</option>
-          <option value="1-2">1-2 người</option>
-          <option value="3-4">3-4 người</option>
-          <option value="5+">5+ người</option>
-        </select>
-      </div> -->
+
       <div class="filter-group">
         <label class="filter-label">Loại phòng</label>
         <select class="filter-select">
@@ -234,23 +161,23 @@
         </div>
       </div>
       <!-- Reviews Section -->
-     <div class="reviews-section">
-  <h2 class="section-title">Đánh giá của khách</h2>
+      <div class="reviews-section">
+        <h2 class="section-title">Đánh giá của khách</h2>
 
-  <div class="reviews-grid">
-    <div class="review-card">
-      <div class="reviewer-info">
-        <div class="reviewer-avatar">R</div>
-        <span class="reviewer-name">Roxane</span>
-      </div>
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">
-        Vị trí tuyệt vời, phòng đẹp và sang trọng. Nhân viên siêu thân
-        thiện và nhiệt tình. Chắc chắn sẽ quay lại lần sau!
-      </p>
-    </div>
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">R</div>
+              <span class="reviewer-name">Roxane</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">
+              Vị trí tuyệt vời, phòng đẹp và sang trọng. Nhân viên siêu thân
+              thiện và nhiệt tình. Chắc chắn sẽ quay lại lần sau!
+            </p>
+          </div>
 
-    <div class="review-card">
+          <!-- <div class="review-card">
       <div class="reviewer-info">
         <div class="reviewer-avatar">L</div>
         <span class="reviewer-name">Lane</span>
@@ -260,84 +187,24 @@
         Căn phòng rộng rãi, sạch sẽ và có tủ lạnh tiện lợi. Tôi đặc biệt
         thích view từ cửa sổ và giường ngủ rất êm ái.
       </p>
-    </div>
-  </div>
+    </div> -->
+          <div class="reviews-grid"></div>
+        </div>
 
-  <!-- bình luận mới -->
-  <div class="add-review">
-    <h3>Đánh giá của bạn</h3>
+        <!-- bình luận mới -->
+        <div class="add-review">
+          <h3>Đánh giá của bạn</h3>
+          <textarea
+            class="review-input"
+            rows="4"
+            placeholder="Viết cảm nhận của bạn..."
+          ></textarea>
 
-
-
-
-    <textarea
-      class="review-input"
-      rows="4"
-      placeholder="Viết cảm nhận của bạn..."
-    ></textarea>
-
-    <button class="submit-review-btn">Gửi đánh giá</button>
-  </div>
-</div>
-
+          <button class="submit-review-btn">Gửi đánh giá</button>
+        </div>
+      </div>
     </div>
     <!-- Footer -->
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Khách sạn Ven Biển</h4>
-          <div class="social-icons">
-            <a href="#">f</a>
-            <a href="#">📷</a>
-            <a href="#">🐦</a>
-          </div>
-          <p style="margin-top: 15px">venBien@gmail.com</p>
-        </div>
-        <div class="footer-section">
-          <h4>Thông tin liên hệ đặt phòng</h4>
-          <p>Hotline: 0123456789</p>
-          <p>Email: venBien@gmail.com</p>
-          <p>Địa chỉ: 280 An Dương Vương, Phường 4, TPHCM</p>
-        </div>
-        <div class="footer-section">
-          <h4>Điều khoản và quy định</h4>
-          <a href="#">Điều khoản chung</a>
-          <a href="#">Quy định chung</a>
-          <a href="#">Chính sách quyền riêng tư</a>
-        </div>
-        <div class="footer-section">
-          <h4>Khám phá</h4>
-          <a href="#">Về chúng tôi</a>
-          <a href="#">Hỏi đáp khách hàng</a>
-          <a href="#">Dịch vụ</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2024 Khách sạn Ven Biển. All rights reserved.</p>
-      </div>
-    </footer>
-
-    <script>
-      // Gallery interaction
-      const galleryItems = document.querySelectorAll(".gallery-item");
-      const thumbnails = document.querySelectorAll(".thumbnail");
-      const mainImage = document.querySelector(".main-image img");
-
-      thumbnails.forEach((thumb) => {
-        thumb.addEventListener("click", function () {
-          thumbnails.forEach((t) => t.classList.remove("active"));
-          this.classList.add("active");
-
-          const imgSrc = this.querySelector("img").src;
-          mainImage.src = imgSrc.replace("w=600", "w=1000");
-        });
-      });
-
-      // Smooth scroll animation for features
-      const features = document.querySelectorAll(".feature-item");
-      features.forEach((feature, index) => {
-        feature.style.animationDelay = `${index * 0.05}s`;
-      });
-    </script>
+    <div id="footer-container"></div>
   </body>
 </html>

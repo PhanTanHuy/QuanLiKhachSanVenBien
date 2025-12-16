@@ -205,3 +205,4 @@ body {
     padding: 12px 12px 12px 45px;
   }
 }
+.hidden { display: none !important; }

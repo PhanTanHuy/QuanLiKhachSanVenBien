@@ -17,27 +17,15 @@
       <h1 class="signup-title">ĐĂNG KÝ</h1>
 
       <form id="signupForm">
-        <!-- Display Name Input -->
+
+        <!-- Họ và tên -->
         <div class="input-group">
           <span class="input-icon">👤</span>
           <input 
-            id="displayName" 
+            id="name" 
             type="text" 
             class="input-field" 
             placeholder="Họ và tên"
-            required
-          >
-          <p class="error-message"></p>
-        </div>
-
-        <!-- Username Input -->
-        <div class="input-group">
-          <span class="input-icon">👤</span>
-          <input 
-            id="username" 
-            type="text" 
-            class="input-field" 
-            placeholder="Username"
             required
           >
           <p class="error-message"></p>
@@ -56,6 +44,7 @@
           <p class="error-message"></p>
         </div>
 
+
         <!-- Phone Input -->
         <div class="input-group">
           <span class="input-icon">📱</span>
@@ -65,6 +54,30 @@
             class="input-field" 
             placeholder="Số điện thoại"
             required
+          >
+          <p class="error-message"></p>
+        </div>
+
+        <!-- CCCD Input -->
+        <div class="input-group">
+          <span class="input-icon">#</span>
+          <input 
+            id="cccd" 
+            type="text" 
+            class="input-field" 
+            placeholder="CCCD (nếu có)"
+          >
+          <p class="error-message"></p>
+        </div>
+
+        <!-- Address Input -->
+        <div class="input-group">
+          <span class="input-icon">🏠</span>
+          <input 
+            id="address" 
+            type="text" 
+            class="input-field" 
+            placeholder="Địa chỉ"
           >
           <p class="error-message"></p>
         </div>
@@ -132,6 +145,6 @@
     </div>
   </div>
 
- <script src="../Auth/js/apiSignUp.js"></script>
+ <script type="module" src="../Auth/js/apiSignUp.js"></script>
 </body>
 </html>

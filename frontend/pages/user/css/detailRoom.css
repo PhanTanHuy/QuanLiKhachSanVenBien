@@ -1,49 +1,3 @@
-/* Header */
-
-nav {
-  background-color: #f5e6d3;
-  padding: 20px 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 22px;
-  font-style: italic;
-  color: #654321;
-  font-weight: bold;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-}
-
-.nav-menu a {
-  text-decoration: none;
-  color: #654321;
-  font-size: 15px;
-  transition: color 0.3s;
-}
-
-.nav-menu a:hover {
-  color: #8b5a3c;
-}
-
-.user-icon {
-  width: 32px;
-  height: 32px;
-  background-color: #654321;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  cursor: pointer;
-}
-
 /* Booking Bar */
 .booking-bar {
   background-color: #4a2c1a;
@@ -80,67 +34,6 @@ nav {
 
 .booking-item select option {
   background-color: #4a2c1a;
-}
-
-/* Filter Section */
-.filter-section {
-/* margin-top: 20px;
-    max-width: 1175px;
-    margin-left: auto;
-    margin-right: auto; */
-background-color: #4a2c1a;
-padding: 25px 50px;
-display: flex;
-flex-wrap: wrap;
-gap: 20px;
-align-items: center;
-justify-content: center;
-/* border-radius: 10px; */
-}
-
-.filter-group {
-display: flex;
-flex-direction: column;
-gap: 5px;
-}
-
-.filter-group label {
-color: #fff;
-font-size: 13px;
-opacity: 0.9;
-}
-
-.filter-group select,
-.filter-group input {
-background-color: rgba(255, 255, 255, 0.1);
-border: 1px solid rgba(255, 255, 255, 0.3);
-color: #fff;
-padding: 10px 15px;
-font-size: 14px;
-border-radius: 4px;
-min-width: 140px;
-cursor: pointer;
-}
-
-.filter-group select option {
-background-color: #4a2c1a;
-color: #fff;
-}
-
-.btn-filter {
-background-color: #8b5a3c;
-color: #fff;
-border: none;
-padding: 12px 30px;
-font-size: 14px;
-cursor: pointer;
-border-radius: 4px;
-margin-top: 20px;
-transition: background-color 0.3s;
-}
-
-.btn-btn-filter:hover {
-  background-color: #8b5a3c;
 }
 
 .container {
@@ -469,6 +362,44 @@ transition: background-color 0.3s;
   color: #555;
   font-size: 15px;
   line-height: 1.7;
+}
+.add-review {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.add-review h3 {
+  margin: 0;
+  color: #333;
+}
+
+.review-input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.submit-review-btn {
+  background: #0077ff;
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 8px;
+  height: 50px;
+  width: 130px;
+}
+
+.submit-review-btn:hover {
+  background: #005fd1;
 }
 
 @media (max-width: 1200px) {

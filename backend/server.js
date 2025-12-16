@@ -18,6 +18,8 @@ import userRoute from './routes/userRoute.js';
 import roomRoutes from './routes/roomRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
+
 
 dotenv.config();
 const app = express();
@@ -26,10 +28,18 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+
+
 // Load static assets
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.use('/api/reviews', reviewRoutes);
+
+
+
+
 
 // Signup page
 app.get("/signup", (req, res) => {
@@ -40,6 +50,15 @@ app.get("/signup", (req, res) => {
 app.get("/signin", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/Auth/signin.html"));
 });
+app.get("/forgot-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/Auth/forgotPassword.html"));
+});
+
+// Trang rooms
+app.get("/user/rooms", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/pages/user/listRoom.html"));
+});
+
 // router.use("/search", searchRoutes);
 // router.use("/rooms", roomRoutes);
 
@@ -56,8 +75,9 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 // Private routes
-app.use(protectedRoute);
+// app.use(protectedRoute);
 app.use('/api/users', userRoute);
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

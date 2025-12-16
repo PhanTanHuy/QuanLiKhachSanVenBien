@@ -5,13 +5,16 @@ import {
     createRoom,
     updateRoom,
     deleteRoom,
-    getRoomEnums
+    getRoomEnums,
+    getRoomDetail
 } from "../controllers/roomController.js";
 
 const router = express.Router();
 
 // CRUD
 router.get("/", getRooms);
+//user
+router.get("/:id", getRoomDetail);
 router.get("/one/:id", getRoomById);
 router.post("/", createRoom);
 router.put("/one/:id", updateRoom);

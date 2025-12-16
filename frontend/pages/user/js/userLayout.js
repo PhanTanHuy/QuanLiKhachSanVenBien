@@ -9,7 +9,7 @@ async function loadLayout() {
   }
 
   if (footerContainer) {
-    const footerHtml = await fetch('/components/footer.html').then(res => res.text());
+    const footerHtml = await fetch('/pages/user/component/footer.html').then(res => res.text());
     footerContainer.innerHTML = footerHtml;
   }
 }

@@ -1,79 +1,100 @@
-const API_URL = "http://localhost:3000/api/auth/signin"; 
-
-const form = document.getElementById("signInForm");
-
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  const errUser = document.getElementById("errUsername");
+window.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("signInForm");
+  if (!form) return;
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const errEmail = document.getElementById("errEmail");
   const errPass = document.getElementById("errPassword");
+  const globalError = document.getElementById("globalError");
 
-  // Reset lỗi
-  errUser.textContent = "";
-  errPass.textContent = "";
-  errUser.classList.add("hidden");
-  errPass.classList.add("hidden");
+  // Helper: show error with animation
 
-  let valid = true;
-
-  // =====  CHECK USERNAME =====
-  if (!username) {
-    errUser.textContent = "Vui lòng nhập tên đăng nhập";
-    errUser.classList.remove("hidden");
-    valid = false;
-  } 
-  else if (username.length < 3) {
-    errUser.textContent = "Tên đăng nhập phải có ít nhất 3 ký tự";
-    errUser.classList.remove("hidden");
-    valid = false;
-  }
-  else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-    errUser.textContent = "Tên đăng nhập chỉ được chứa chữ, số và dấu gạch dưới";
-    errUser.classList.remove("hidden");
-    valid = false;
+  function showError(element, message) {
+    if (!element) return;
+    element.textContent = message;
+    element.classList.remove("hidden");
+    element.style.color = "#d32f2f";
+    element.style.fontWeight = "bold";
+    element.style.transition = "all 0.2s";
+    element.style.transform = "scale(1.08)";
+    setTimeout(() => {
+      element.style.transform = "scale(1)";
+    }, 200);
   }
 
-  // =====  CHECK PASSWORD =====
-  if (!password) {
-    errPass.textContent = "Vui lòng nhập mật khẩu";
-    errPass.classList.remove("hidden");
-    valid = false;
-  }
-  else if (password.length < 6) {
-    errPass.textContent = "Mật khẩu phải có ít nhất 6 ký tự";
-    errPass.classList.remove("hidden");
-    valid = false;
+  function clearError(element) {
+    if (!element) return;
+    element.textContent = "";
+    element.classList.add("hidden");
+    element.style.color = "";
+    element.style.fontWeight = "";
+    element.style.transform = "";
   }
 
-  // Nếu có lỗi → không gọi API
-  if (!valid) return;
+  function showGlobalError(message) {
+    if (!globalError) return;
+    globalError.textContent = message;
+    globalError.classList.remove("hidden");
+    globalError.style.color = "#d32f2f";
+    globalError.style.fontWeight = "bold";
+    globalError.style.transition = "all 0.2s";
+    globalError.style.transform = "scale(1.08)";
+    setTimeout(() => {
+      globalError.style.transform = "scale(1)";
+    }, 200);
+  }
+  function clearGlobalError() {
+    if (!globalError) return;
+    globalError.textContent = "";
+    globalError.classList.add("hidden");
+    globalError.style.color = "";
+    globalError.style.fontWeight = "";
+    globalError.style.transform = "";
+  }
 
-  // ===== CALL API =====
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ username, password })
-    });
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-    const data = await res.json();
+    clearError(errEmail);
+    clearError(errPass);
+    clearGlobalError();
 
-    if (!res.ok) {
-      errPass.textContent = data.message || "Sai tài khoản hoặc mật khẩu";
-      errPass.classList.remove("hidden");
+    let valid = true;
+    if (!emailInput.value.trim()) {
+      showError(errEmail, "Vui lòng nhập email");
+      valid = false;
+    }
+    if (!passwordInput.value.trim()) {
+      showError(errPass, "Vui lòng nhập mật khẩu");
+      valid = false;
+    }
+    if (!valid) {
+      showGlobalError("Vui lòng nhập đầy đủ thông tin đăng nhập.");
       return;
     }
 
-    alert("🎉 Đăng nhập thành công!");
-    window.location.href = "index.html";
-
-  } catch (err) {
-    alert("Không thể kết nối tới server!");
-    console.error(err);
-  }
+    try {
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          email: emailInput.value.trim(),
+          password: passwordInput.value.trim()
+        })
+      });
+      let data = {};
+      try { data = await res.json(); } catch {}
+      if (!res.ok) {
+        showError(errPass, data.message || "Sai tài khoản hoặc mật khẩu");
+        showGlobalError(data.message || "Sai tài khoản hoặc mật khẩu");
+        return;
+      }
+      // Thành công
+      window.location.href = "/pages/user/homePage.html";
+    } catch (err) {
+      showError(errPass, "Không thể kết nối tới server!");
+      showGlobalError("Không thể kết nối tới server!");
+    }
+  });
 });

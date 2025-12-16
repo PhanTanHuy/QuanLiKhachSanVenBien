@@ -11,13 +11,68 @@ export const getRoomEnums = (req, res) => {
 };
 
 // --- GET all rooms ---
+// export const getRooms = async (req, res) => {
+//     try {
+//         const rooms = await Room.find({});
+//         res.json(rooms);
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// };
+// roomController.js
 export const getRooms = async (req, res) => {
-    try {
-        const rooms = await Room.find({});
-        res.json(rooms);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const skip = (page - 1) * limit;
+
+    const [rooms, total] = await Promise.all([
+      Room.find({})
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 }),
+      Room.countDocuments()
+    ]);
+
+    res.json({
+      success: true,
+      data: rooms,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
+/**
+ * GET /api/rooms/:id
+ */
+export const getRoomDetail = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy phòng"
+      });
     }
+
+    res.json({
+      success: true,
+      data: room
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
 
 // --- GET single room by id ---

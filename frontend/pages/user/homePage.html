@@ -36,45 +36,51 @@
         </ul>
         <div class="user-icon">👤</div>
     </nav>
+  <!-- Filter Section -->
+    <div class="filter-section">
+      <div class="filter-group">
+        <label class="filter-label">Ngày nhận phòng</label>
+        <select class="filter-select">
+          <option>12 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Ngày trả phòng</label>
+        <select class="filter-select">
+          <option>23 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Loại phòng</label>
+        <select id="roomType">
+          <option value="">Tất cả</option>
+          <option value="suite">Suite Room</option>
+          <option value="luxe">Luxe Room</option>
+          <option value="premium">Premium Room</option>
+          <option value="master">Master Room</option>
+          <option value="family">Family Room</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Giá phòng</label>
+        <select id="priceRange">
+          <option value="">Tất cả</option>
+          <option value="0-300000">Dưới 300.000đ</option>
+          <option value="300000-500000">300.000đ - 500.000đ</option>
+          <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+          <option value="1000000+">Trên 1.000.000đ</option>
+        </select>
+      </div>
 
-    <!-- Booking Bar -->
-    <div class="booking-bar">
-        <div class="booking-item">
-            <label>Ngày nhận phòng</label>
-            <select>
-                <option>12 June</option>
-                <option>13 June</option>
-                <option>14 June</option>
-            </select>
-        </div>
-        <div class="booking-item">
-            <label>Ngày trả phòng</label>
-            <select>
-                <option>22 June</option>
-                <option>23 June</option>
-                <option>24 June</option>
-            </select>
-        </div>
-        <div class="booking-item">
-            <label>Người lớn</label>
-            <select>
-                <option>03</option>
-                <option>01</option>
-                <option>02</option>
-                <option>04</option>
-            </select>
-        </div>
-        <div class="booking-item">
-            <label>Trẻ em</label>
-            <select>
-                <option>03</option>
-                <option>00</option>
-                <option>01</option>
-                <option>02</option>
-            </select>
-        </div>
-        <button class="btn-search">Tìm phòng</button>
+      <div class="filter-group">
+        <label class="filter-label">Loại phòng</label>
+        <select class="filter-select">
+          <option>1 giường ngủ</option>
+        </select>
+      </div>
+      <button class="btn-filter">Tìm kiếm</button>
     </div>
+
 
     <!-- Hero Section -->
     <section class="hero">
@@ -98,50 +104,18 @@
         </div>
     </section>
 
-    <!-- Rooms Section -->
+    <!-- Rooms Section (API) -->
     <section class="rooms-section">
         <div class="section-header">
             <h3>Lựa chọn chúng tôi</h3>
             <h2>Cung cấp dịch vụ tốt nhất cho bạn!</h2>
         </div>
-        <div class="rooms-grid">
-            <div class="room-card">
-                <div class="room-price">300.000VNĐ/đêm</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23d4c4a8' width='400' height='300'/%3E%3C/svg%3E" alt="Couple Suite Room">
-                <div class="room-info">
-                    <h3 class="room-name">Couple Suite Room</h3>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-price">600.000VNĐ/đêm</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%235a4a3a' width='400' height='300'/%3E%3C/svg%3E" alt="Luxe Room">
-                <div class="room-info">
-                    <h3 class="room-name">Luxe Room</h3>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-price">250.000VNĐ/đêm</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23c8b8a0' width='400' height='300'/%3E%3C/svg%3E" alt="Premium Room">
-                <div class="room-info">
-                    <h3 class="room-name">Premium Room</h3>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-price">600.000VNĐ/đêm</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23a08968' width='400' height='300'/%3E%3C/svg%3E" alt="Master Room">
-                <div class="room-info">
-                    <h3 class="room-name">Master Room</h3>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-price">600.000VNĐ/đêm</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%234a6c7a' width='400' height='300'/%3E%3C/svg%3E" alt="Family Luxe">
-                <div class="room-info">
-                    <h3 class="room-name">Family Luxe</h3>
-                </div>
-            </div>
-        </div>
+        <div id="roomList" class="rooms-grid"></div>
+        <div id="pagination" style="text-align:center;margin:20px 0;"></div>
     </section>
+
+    <script src="../user/js/roomList.js"></script>
+    <script src="../user/js/logout.js"></script>
 
     <!-- Promotion Section -->
     <section class="promo-section">
@@ -194,7 +168,7 @@
                     <a href="#">📷</a>
                     <a href="#">🐦</a>
                 </div>
-                <p>venBien@gmail.com</p>
+                <p style="margin-top: 15px;">venBien@gmail.com</p>
             </div>
             <div class="footer-section">
                 <h4>Thông tin liên hệ đặt phòng</h4>
@@ -215,6 +189,10 @@
                 <a href="#">Dịch vụ</a>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>© 2025 Khách sạn Ven Biển. All rights reserved.</p>
+        </div>
     </footer>
+
 </body>
 </html>

@@ -143,3 +143,48 @@ export const refreshToken = async (req, res) => {
     return res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ message: 'Email required' });
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(200).json({ message: 'Nếu email tồn tại, sẽ nhận được đường dẫn đặt lại' }); // không leak
+
+    const token = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000); // 1h
+    await user.save();
+
+    const resetLink = `${process.env.APP_URL}/Auth/reset-password.html?token=${token}&email=${encodeURIComponent(email)}`;
+    const html = `<p>Xin chào ${user.name || ''},</p>
+                  <p>Nhấn vào <a href="${resetLink}">đây</a> để đặt lại mật khẩu (hết hạn sau 1 giờ).</p>`;
+
+    await sendEmail({ to: email, subject: 'Đặt lại mật khẩu', html });
+
+    return res.json({ message: 'Nếu email tồn tại, đã gửi link đặt lại mật khẩu' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, token, newPassword } = req.body;
+    if (!email || !token || !newPassword) return res.status(400).json({ message: 'Thiếu thông tin' });
+
+    const user = await User.findOne({ email, resetPasswordToken: token, resetPasswordExpires: { $gt: new Date() } });
+    if (!user) return res.status(400).json({ message: 'Token không hợp lệ hoặc đã hết hạn' });
+
+    user.hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    return res.json({ message: 'Đặt lại mật khẩu thành công' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
