@@ -130,6 +130,11 @@
             <label>Trạng thái:</label>
             <select id="editRoomStatus"></select>
 
+            <div id="maintenanceCodeRow" style="display: none;">
+                <label>Mã bảo trì:</label>
+                <input id="editMaintenanceCode" type="text" disabled>
+            </div>
+
             <label>Mô tả:</label>
             <textarea id="editRoomDesc"></textarea>
         </div>
@@ -153,6 +158,33 @@
     </div>
   </div>
 
+  <!-- POPUP BẢO TRÌ PHÒNG -->
+  <div id="maintenancePopup" class="add-popup">
+    <div class="add-popup-content">
+      <h3>Tạo lịch bảo trì phòng</h3>
+
+      <div class="form-horizontal">
+        <div class="left-section" style="width: 100%;">
+          <label>Mã phòng:</label>
+          <input id="maintenanceRoomCode" type="text" disabled>
+
+          <label>Ngày bắt đầu:</label>
+          <input id="maintenanceStartDate" type="datetime-local" required>
+
+          <label>Ngày kết thúc:</label>
+          <input id="maintenanceEndDate" type="datetime-local" required>
+
+          <label>Lý do bảo trì:</label>
+          <textarea id="maintenanceReason" rows="4" placeholder="Nhập lý do bảo trì..."></textarea>
+        </div>
+      </div>
+
+      <div class="footer-btns">
+          <button id="saveMaintenanceBtn">Lưu</button>
+          <button id="closeMaintenanceBtn">Đóng</button>
+      </div>
+    </div>
+  </div>
 
   <div id="footer-container">
   </div>

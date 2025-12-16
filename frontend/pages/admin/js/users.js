@@ -142,15 +142,23 @@ document.getElementById("searchInput").oninput = () => filterUsers();
 document.getElementById("roleFilter").onchange = () => filterUsers();
 
 // --- SORT ---
+let sortNameAsc = true;
+
 document.querySelectorAll(".sort-bar button").forEach(btn => {
     btn.addEventListener("click", function () {
         const sortType = this.dataset.sort;
-        usersData.sort((a, b) => {
-            const aVal = a[sortType] || "";
-            const bVal = b[sortType] || "";
-            return aVal.toString().localeCompare(bVal.toString());
-        });
-        renderUsers(usersData);
+        if (sortType === "name") {
+            sortNameAsc = !sortNameAsc;
+            usersData.sort((a, b) => {
+                const aVal = a[sortType] || "";
+                const bVal = b[sortType] || "";
+                return sortNameAsc 
+                    ? aVal.toString().localeCompare(bVal.toString())
+                    : bVal.toString().localeCompare(aVal.toString());
+            });
+            this.textContent = sortNameAsc ? "Tên ↑" : "Tên ↓";
+            renderUsers(usersData);
+        }
     });
 });
 

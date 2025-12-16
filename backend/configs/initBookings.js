@@ -2,7 +2,7 @@ import BookingDetail from '../models/BookingDetail.js';
 import User from '../models/User.js';
 import Rooms from '../models/Room.js';
 import { PaymentMethod } from './enum/paymentEnum.js';
-import { BookingStatus } from './enum/bookingStatusEnum.js';
+import { RoomStatus } from './enum/roomEnum.js';
 
 export default async function initBookings() {
     try {
@@ -27,7 +27,7 @@ export default async function initBookings() {
             ];
 
             const paymentMethods = [PaymentMethod.CASH, PaymentMethod.TRANSFER];
-            const statuses = [BookingStatus.PENDING, BookingStatus.PAID];
+            const statuses = [RoomStatus.RESERVED, RoomStatus.OCCUPIED];
 
             for (let i = 0; i < 10; i++) {
                 const user = users[i % users.length];

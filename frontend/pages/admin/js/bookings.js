@@ -111,6 +111,20 @@ function filterBookings() {
 document.getElementById("searchInput").oninput = () => filterBookings();
 document.getElementById("paymentFilter").onchange = () => filterBookings();
 document.getElementById("statusFilter").onchange = () => filterBookings();
+
+// --- SORTING BY DATE ---
+let sortDateAsc = true;
+const sortByDateBtn = document.getElementById("sortByDateBtn");
+sortByDateBtn.onclick = () => {
+    sortDateAsc = !sortDateAsc;
+    const sorted = [...bookingsData].sort((a, b) => {
+        const dateA = new Date(a.checkInDate);
+        const dateB = new Date(b.checkInDate);
+        return sortDateAsc ? dateA - dateB : dateB - dateA;
+    });
+    sortByDateBtn.textContent = sortDateAsc ? "Ngày ↑" : "Ngày ↓";
+    renderBookings(sorted);
+};
 // --- POPULATE FILTERS FROM API ---
 async function populateFilters() {
     try {
