@@ -45,7 +45,7 @@ export function getRefreshToken() { return localStorage.getItem('refreshToken');
 // redirect theo role (input: user object returned by login)
 export function redirectByRole(user) {
   if (!user || !user.role) return window.location.href = '/';
-  if (user.role === 'ADMIN') window.location.href = '/pages/admin/rooms.html';
+  if (user.role === 'ADMIN') window.location.href = '/admin/dashboard';
   else if (user.role === 'RECEPTIONIST' || user.role === 'RECEPTIONIST') window.location.href = '/receptionist';
   else window.location.href = '/';
 }

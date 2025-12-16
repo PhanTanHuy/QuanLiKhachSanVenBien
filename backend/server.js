@@ -59,8 +59,7 @@ app.get("/user/rooms", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/user/listRoom.html"));
 });
 
-// router.use("/search", searchRoutes);
-// router.use("/rooms", roomRoutes);
+
 
 // Routes page
 app.use('/admin', adminRoutes);
