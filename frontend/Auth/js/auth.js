@@ -13,11 +13,11 @@ export async function apiPost(path, body) {
 }
 
 export async function register(form) {
-  return apiPost('/register', form);
+  return apiPost('/signup', form);
 }
 
 export async function login({ email, password }) {
-  return apiPost('/login', { email, password });
+  return apiPost('/signin', { email, password });
 }
 
 export async function forgotPassword({ email }) {
