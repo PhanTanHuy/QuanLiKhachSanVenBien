@@ -6,11 +6,16 @@ import {
     updateRoom,
     deleteRoom,
     getRoomEnums,
-    getRoomDetail
+    getRoomDetail,
+    getRoomsForHome,
+    getPromotionRoom
 } from "../controllers/roomController.js";
 
 const router = express.Router();
 
+// dùng cho homepage (rooms section)
+router.get("/home", getRoomsForHome);
+router.get("/promotion", getPromotionRoom);
 // CRUD
 router.get("/", getRooms);
 //user

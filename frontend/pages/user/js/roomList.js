@@ -98,8 +98,7 @@ function changePage(page) {
 
 
 function viewRoom(roomId) {
-  window.location.href =
-    `/pages/user/detailRoom.html?id=${roomId}`;
+ window.location.href = `/user/rooms/${roomId}`;
 }
 
 loadRooms();

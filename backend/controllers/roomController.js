@@ -51,6 +51,78 @@ export const getRooms = async (req, res) => {
     });
   }
 };
+// --- GET rooms for home page ---
+export const getRoomsForHome = async (req, res) => {
+  try {
+    const rooms = await Room.find(
+      { status: "AVAILABLE" },
+      {
+        type: 1,
+        price: 1,
+        img: 1,
+        isFeatured: 1
+      }
+    )
+      .sort({ isFeatured: -1, price: 1 }) // featured lên trước
+      .limit(5);
+
+    const formattedRooms = rooms.map(room => ({
+      id: room._id,
+      type: room.type,
+      price: room.price,
+      img: room.img,
+      isLarge: room.isFeatured //  frontend dùng
+    }));
+
+    res.json({
+      success: true,
+      data: formattedRooms
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+// GET /api/rooms/promotion
+export const getPromotionRoom = async (req, res) => {
+  try {
+    const room = await Room.findOne({
+      status: "Trống",
+      discounted: { $gt: 0 }
+    })
+      .sort({ discounted: -1 }) // giảm giá cao nhất
+      .limit(1);
+
+    if (!room) {
+      return res.json({
+        success: true,
+        data: null
+      });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        id: room._id,
+        type: room.type,
+        img: room.img,
+        discounted: room.discounted,
+        price: room.price,
+        finalPrice:
+          room.price - (room.price * room.discounted) / 100
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
+
 
 /**
  * GET /api/rooms/:id

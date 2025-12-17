@@ -16,7 +16,9 @@ const roomSchema = new mongoose.Schema(
             required: true
         },
         img: { type: String },
-        desc: { type: String }
+        desc: { type: String },
+        isFeatured: { type: Boolean, default: false }, // Phòng sang trọng, nổi bật
+        discounted: { type: Number, default: 0 } // khuyến mãi
     },
     { timestamps: true }
 );

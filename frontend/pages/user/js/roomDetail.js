@@ -1,21 +1,16 @@
-
-const params = new URLSearchParams(window.location.search);
-const roomId = params.get("id");
-
-if (!roomId) {
-  alert("Không tìm thấy ID phòng");
-  throw new Error("Missing room id");
-}
+const roomId = window.location.pathname.split("/").pop();
 
 async function loadRoomDetail() {
   try {
     const res = await fetch(`/api/rooms/${roomId}`);
     const result = await res.json();
 
-    if (!result.success) throw new Error(result.message);
+    if (!result.success) {
+      throw new Error(result.message);
+    }
 
     renderRoom(result.data);
-    loadReviews(roomId);
+    loadReviews?.(roomId); // nếu có
   } catch (err) {
     console.error(err);
     alert("Lỗi tải thông tin phòng");
@@ -38,6 +33,8 @@ function renderRoom(room) {
   document.querySelector(".main-image img").src =
     room.img || "https://via.placeholder.com/1000";
 }
+
+loadRoomDetail();
 
 // ================= REVIEWS =================
 async function loadReviews(roomId) {

@@ -91,7 +91,7 @@ window.addEventListener("DOMContentLoaded", function() {
         return;
       }
       // Thành công
-      window.location.href = "/pages/user/homePage.html";
+      window.location.href = "/user/home";
     } catch (err) {
       showError(errPass, "Không thể kết nối tới server!");
       showGlobalError("Không thể kết nối tới server!");

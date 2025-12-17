@@ -4,38 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khách sạn Ven Biển</title>
-    <link rel="stylesheet" href="../user/css/base.css" />
-    <link rel="stylesheet" href="../user/css/style.css" />
+    <!-- <link rel="stylesheet" href="../user/css/base.css" />
+    <link rel="stylesheet" href="../user/css/style.css" /> -->
+    <link rel="stylesheet" href="/pages/user/css/base.css" />
+    <link rel="stylesheet" href="/pages/user/css/style.css" />
+    <script src="/pages/user/js/userLayout.js" defer></script>
   </head>
   <body>
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="top-bar-item">
-        <span>📞</span>
-        <span>0123456789</span>
-      </div>
-      <div class="top-bar-item">
-        <span>✉️</span>
-        <span>hotel@gmail.com</span>
-      </div>
-      <div class="top-bar-item">
-        <span>📍</span>
-        <span>280 An Dương Vương, Phường 4, TPHCM</span>
-      </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-      <div class="logo">Khách sạn Ven Biển</div>
-      <ul class="nav-menu">
-        <li><a href="#home">Trang chủ</a></li>
-        <li><a href="/user/rooms">Phòng</a></li>
-        <li><a href="#services">Dịch vụ</a></li>
-        <li><a href="#booking">Lịch sử đặt phòng</a></li>
-        <li><a href="#contact">Liên hệ</a></li>
-      </ul>
-      <div class="user-icon">👤</div>
-    </nav>
+   
+    <div id="header-container"></div>
     <!-- Filter Section -->
     <div class="filter-section">
       <div class="filter-group">
@@ -130,8 +107,8 @@
 
     <!-- Rooms Section -->
     <section class="rooms-section">
-        <div class="container">
-            <div class="header-section">
+      <div class="container">
+        <div class="header-section">
             <div class="left-header">
                 <div class="header-title">
                     <span class="header-text">Lựa chọn chúng tôi</span>
@@ -142,45 +119,8 @@
             </div>
            
         </div>
-
-        <div class="rooms-grid">
-            <div class="room-card">
-                <div class="price-tag">300.000VNĐ/đêm</div>
-                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=800&fit=crop" alt="Couple Simple Room" class="room-image">
-                <div class="room-overlay"></div>
-                <div class="room-name">Couple Simple Room</div>
-            </div>
-
-            <div class="room-card large">
-                <div class="price-tag">600.000VNĐ/đêm</div>
-                <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1200&h=800&fit=crop" alt="Luxe Room" class="room-image">
-                <div class="room-overlay"></div>
-                <div class="room-name">Luxe Room</div>
-            </div>
-
-            <div class="room-card">
-                <div class="price-tag">250.000VNĐ/đêm</div>
-                <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&h=800&fit=crop" alt="Premium Room" class="room-image">
-                <div class="room-overlay"></div>
-                <div class="room-name">Premium Room</div>
-            </div>
-
-            <div class="room-card">
-                <div class="price-tag">600.000VNĐ/đêm</div>
-                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=800&fit=crop" alt="Master Room" class="room-image">
-                <div class="room-overlay"></div>
-                <div class="room-name">Master Room</div>
-            </div>
-
-            <div class="room-card">
-                <div class="price-tag">600.000VNĐ/đêm</div>
-                <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&h=800&fit=crop" alt="Family Luxe" class="room-image">
-                <div class="room-overlay"></div>
-                <div class="room-name">Family Luxe</div>
-            </div>
-        </div>
-        </div>
-    </div>
+        <div class="rooms-grid"></div>
+      </div>
     </section>
 
    
@@ -297,42 +237,11 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Khách sạn Ven Biển</h4>
-          <div class="social-icons">
-            <a href="#">f</a>
-            <a href="#">📷</a>
-            <a href="#">🐦</a>
-          </div>
-          <p style="margin-top: 15px">venBien@gmail.com</p>
-        </div>
-        <div class="footer-section">
-          <h4>Thông tin liên hệ đặt phòng</h4>
-          <p>Hotline: 0123456789</p>
-          <p>Email: venBien@gmail.com</p>
-          <p>Địa chỉ: 280 An Dương Vương, Phường 4, TPHCM</p>
-        </div>
-        <div class="footer-section">
-          <h4>Điều khoản và quy định</h4>
-          <a href="#">Điều khoản chung</a>
-          <a href="#">Quy định chung</a>
-          <a href="#">Chính sách quyền riêng tư</a>
-        </div>
-        <div class="footer-section">
-          <h4>Khám phá</h4>
-          <a href="#">Về chúng tôi</a>
-          <a href="#">Hỏi đáp khách hàng</a>
-          <a href="#">Dịch vụ</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 Khách sạn Ven Biển. All rights reserved.</p>
-      </div>
-    </footer>
+    <div id="footer-container"></div>
      <script src="../user/js/roomList.js"></script>
-    <script src="../user/js/logout.js"></script>
+
+   <script src="/pages/user/js/homepage.js"></script>
+
     <script>
         // Tab switching functionality
         const tabs = document.querySelectorAll('.tab');

@@ -38,9 +38,6 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/api/reviews', reviewRoutes);
 
 
-
-
-
 // Signup page
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/Auth/signup.html"));
@@ -53,10 +50,20 @@ app.get("/signin", (req, res) => {
 app.get("/forgot-password", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/Auth/forgotPassword.html"));
 });
+//homePage
+app.get("/user/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/pages/user/homePage.html"));
+});
 
-// Trang rooms
+// rooms pages 
 app.get("/user/rooms", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/user/listRoom.html"));
+});
+// route render page
+app.get("/user/rooms/:id", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/pages/user/detailRoom.html")
+  );
 });
 
 
