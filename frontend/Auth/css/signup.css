@@ -173,6 +173,14 @@
       margin-left: 15px;
       display: none;
     }
+    
+/* Error Messages */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  
+}
 
     /* Responsive */
     @media (max-width: 768px) {

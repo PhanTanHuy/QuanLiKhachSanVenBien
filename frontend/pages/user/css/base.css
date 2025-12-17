@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 
+
+
 * {
   margin: 0;
   padding: 0;
@@ -78,6 +80,48 @@ nav {
   color: #fff;
   cursor: pointer;
 }
+.user-icon {
+  position: relative;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  width: 180px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.user-dropdown.show {
+  display: block;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+  background: #f2f2f2;
+}
+
 /* Filter Section */
 .filter-section {
   background-color: #4a2c1a;
