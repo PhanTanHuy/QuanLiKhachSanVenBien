@@ -25,13 +25,18 @@
             <li><a href="#booking">Lịch sử đặt phòng</a></li>
             <li><a href="/user/contact">Liên hệ</a></li>
         </ul>
-        <div class="user-icon">👤</div>
+       <div class="user-menu">
+  <div class="user-icon" id="userIcon">👤</div>
+
+  <div class="user-dropdown hidden" id="userDropdown">
+    <p id="userName">Xin chào!</p>
+    <hr />
+    <button id="logoutBtn">Đăng xuất</button>
+  </div>
+</div>
     </nav>
 
 
 
 </div>
-<script type="module">
-    import { renderHeaderUser } from '/pages/user/js/userAuth.js';
-    renderHeaderUser();
-</script>
+<script src="/user/js/signout.js" defer></script>
