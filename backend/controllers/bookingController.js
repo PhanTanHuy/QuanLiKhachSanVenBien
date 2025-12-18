@@ -23,37 +23,15 @@ const generateBookingCode = async () => {
 // Tạo chi tiết đặt phòng mới
 export const createBooking = async (req, res) => {
   try {
-    console.log("Đang tiến hành create-booking");
-    
-    let userId;
-    const {
-      email,
-      name,
-      phone,
-      cccd,
-      address,
-      roomId,
-      checkInDate,
-      checkOutDate,
-      paymentMethod,
-      status,
-      accountType, // giúp be biết cần tạo user hay dùng user hiện có
-    } = req.body;
+    const { userId, roomId, checkInDate, checkOutDate, paymentMethod, status } =
+      req.body;
 
-    // Xử lý thông tin user
-    if (accountType === "new") {
-      // Tạo user mới
-      const existingUser = await User.findOne({ email: email });
-      if (existingUser) {
-        return res.status(400).json({
-          message: "Email đã tồn tại, vui lòng sử dụng email khác hoặc chọn tài khoản hiện có",
-        });
-      }
-      const user = new User({
-        // Tạo user mới với thông tin từ form
-      })
-      await user.save();
-      userId = user._id;
+    // Validate required fields
+    if (!userId || !roomId || !checkInDate || !checkOutDate) {
+      return res.status(400).json({
+        message:
+          "Thiếu thông tin bắt buộc: userId, roomId, checkInDate, checkOutDate",
+      });
     }
     else if (accountType === "old") {
       // Tìm user hiện có theo email
@@ -73,7 +51,17 @@ export const createBooking = async (req, res) => {
     if (!room) {
       return res.status(404).json({ message: "Không tìm thấy phòng" });
     }
-    
+
+    // Validate dates
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+
+    if (checkOut <= checkIn) {
+      return res.status(400).json({
+        message: "Ngày trả phòng phải sau ngày nhận phòng",
+      });
+    }
+
     // Tạo mã đặt phòng tự động
     const bookingCode = await generateBookingCode();
 
@@ -82,11 +70,11 @@ export const createBooking = async (req, res) => {
       bookingCode,
       user: userId,
       userSnapshot: {
-        name: name,
-        email: email,
-        phone: phone,
-        cccd: cccd,
-        address: address,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        cccd: user.cccd,
+        address: user.address,
       },
       room: room._id,
       roomSnapshot: {
@@ -98,8 +86,8 @@ export const createBooking = async (req, res) => {
       checkInDate: checkInDate,
       checkOutDate: checkOutDate,
       pricePerNight: room.price,
-      paymentMethod: paymentMethod,
-      status: status,
+      paymentMethod: paymentMethod || "Tiền mặt",
+      status: status || BookingStatus.PENDING,
       // totalPrice, deposit, nights sẽ được tính tự động trong pre-validate hook
     });
 
@@ -111,6 +99,7 @@ export const createBooking = async (req, res) => {
       .populate("room");
 
     return res.status(201).json({
+      success: true,
       message: "Đặt phòng thành công",
       booking: savedBooking,
     });

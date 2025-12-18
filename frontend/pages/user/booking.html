@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Phòng Khách Sạn</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/booking.css">
+    
+  
+</head>
+<body>
+        <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-item">
+        <span>📞</span>
+        <span>0123456789</span>
+      </div>
+      <div class="top-bar-item">
+        <span>✉️</span>
+        <span>hotel@gmail.com</span>
+      </div>
+      <div class="top-bar-item">
+        <span>📍</span>
+        <span>280 An Dương Vương, Phường 4, TPHCM</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">Khách sạn Ven Biển</div>
+      <ul class="nav-menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/rooms.html">Phòng</a></li>
+        <li><a href="#services">Dịch vụ</a></li>
+        <li><a href="#booking">Lịch sử đặt phòng</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+      <div class="user-icon">👤</div>
+    </nav>
+
+    <!-- Booking Bar -->
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <div class="filter-group">
+        <label class="filter-label">Ngày nhận phòng</label>
+        <select class="filter-select">
+          <option>12 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Ngày trả phòng</label>
+        <select class="filter-select">
+          <option>23 June</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Loại phòng</label>
+        <select id="roomType">
+          <option value="">Tất cả</option>
+          <option value="suite">Suite Room</option>
+          <option value="luxe">Luxe Room</option>
+          <option value="premium">Premium Room</option>
+          <option value="master">Master Room</option>
+          <option value="family">Family Room</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Giá phòng</label>
+        <select id="priceRange">
+          <option value="">Tất cả</option>
+          <option value="0-300000">Dưới 300.000đ</option>
+          <option value="300000-500000">300.000đ - 500.000đ</option>
+          <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+          <option value="1000000+">Trên 1.000.000đ</option>
+        </select>
+      </div>
+      <!-- <div class="filter-group">
+        <label>Số người</label>
+        <select id="capacity">
+          <option value="">Tất cả</option>
+          <option value="1-2">1-2 người</option>
+          <option value="3-4">3-4 người</option>
+          <option value="5+">5+ người</option>
+        </select>
+      </div> -->
+      <div class="filter-group">
+        <label class="filter-label">Loại phòng</label>
+        <select class="filter-select">
+          <option>1 giường ngủ</option>
+        </select>
+      </div>
+      <button class="btn-filter">Tìm kiếm</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>CHI TIẾT ĐẶT PHÒNG CỦA BẠN</h1>
+        </div>
+
+        <div class="content">
+            <div class="left-section">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop" alt="Phòng khách sạn">
+                </div>
+
+                <div class="room-details">
+                    <h2>Phòng Tiêu Chuẩn</h2>
+                    <h3>Phòng Tiêu Chuẩn 1 Giường Đôi</h3>
+                    
+                    <div class="room-description">
+                        Không gian ấm cúng, phù hợp cho 1-2 người. Trang bị TV màn hình phẳng, tủ lạnh mini, máy sấy tóc, Wi-Fi miễn phí. Phòng rộng 35m², có ban công hướng biển, bồn tắm riêng, wifi miễn phí.
+                    </div>
+
+                    <div class="amenities">
+                        <div class="amenity">1 giường lớn</div>
+                        <div class="amenity">Phòng tắm riêng</div>
+                        <div class="amenity">Wifi miễn phí</div>
+                        <div class="amenity">An toàn</div>
+                    </div>
+
+                    <!-- <div class="price-tag">
+                        <span class="price-label">Giá:</span>
+                        <span class="price-amount">650.000</span>
+                        <span class="price-currency">đêm</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="right-section">
+                <div class="booking-form">
+                    <h2>Thông tin đặt phòng</h2>
+
+                    <div class="form-group">
+                        <label>Ngày nhận phòng:</label>
+                        <div class="date-input">
+                            <input type="date" value="2025-10-27">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ngày trả phòng:</label>
+                        <div class="date-input">
+                            <input type="date" value="2025-10-28">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số người:</label>
+                        <select>
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hình thức thanh toán:</label>
+                        <select>
+                            <option>Trực tiếp tại quầy</option>
+                            <option>Chuyển khoản</option>
+                            <option>Thanh toán online</option>
+                        </select>
+                    </div>
+
+                    <div class="total-section">
+                        <div class="total-row">
+                            <span class="total-label">Tổng tiền tạm tính:</span>
+                            <span class="total-amount">650.000 VNĐ</span>
+                        </div>
+                    </div>
+
+                    <button class="book-button" onclick="showModal()">Xác nhận đặt phòng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="checkmark">✓</div>
+                <h2>Xác nhận đặt phòng</h2>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-info">
+                    <div class="info-row">
+                        <span class="info-label">Thông tin phòng:</span>
+                        <span class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Loại phòng:</span>
+                        <span class="info-value">Phòng tiêu chuẩn 1 giường đôi</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Ngày:</span>
+                        <span class="info-value">27/10 – 28/10/2025 (1 đêm)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Số người:</span>
+                        <span class="info-value">1 người lớn</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Hình thức:</span>
+                        <span class="info-value">Đặt cọc 30%</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Tổng số tiền:</span>
+                        <span class="info-value">650.00 VNĐ</span>
+                    </div>
+                </div>
+
+                <div class="payment-note">
+                    💳 Vui lòng thanh toán 30% (195.000 VNĐ) để xác nhận đặt phòng. Số tiền còn lại sẽ thanh toán khi nhận phòng.
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-confirm" onclick="confirmBooking()">Thanh toán</button>
+                    <button class="btn-cancel" onclick="closeModal()">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal() {
+            document.getElementById('confirmModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmBooking() {
+            alert('✓ Đặt phòng thành công!\n\nChúng tôi đã gửi xác nhận đến email của bạn.\nMã đặt phòng: #BK' + Math.floor(Math.random() * 100000));
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('confirmModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

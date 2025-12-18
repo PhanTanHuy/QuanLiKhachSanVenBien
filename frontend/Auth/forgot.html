@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quên mật khẩu</title>
+  <link rel="stylesheet" href="/Auth/style.css">
+</head>
+<body>
+  <div class="card small-card">
+    <h2>Quên mật khẩu</h2>
+    <form id="forgotForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" required>
+      </div>
+      <div class="actions">
+        <button type="submit" class="primary">Gửi liên kết</button>
+      </div>
+      <div id="msg" class="msg"></div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { forgotPassword } from '/Auth/auth.js';
+    const form = document.getElementById('forgotForm');
+    const msg = document.getElementById('msg');
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      try {
+        const email = document.getElementById('email').value;
+        const res = await forgotPassword({ email });
+        msg.textContent = res.message || 'Đã gửi (nếu email tồn tại)';
+        msg.style.color = 'green';
+      } catch (err) {
+        msg.textContent = err.message || 'Lỗi';
+        msg.style.color = 'red';
+      }
+    };
+  </script>
+</body>
+</html>
