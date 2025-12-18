@@ -1,11 +1,13 @@
 // rooms.js
 import { Notify } from "../../../components/notification.js"; // đường dẫn tới notification.js
 import { getRoomsApi, addRoomApi, updateRoomApi, deleteRoomApi } from "../../../api/roomApi.js";
+import { createMaintenanceApi, getMaintenancesByRoomApi } from "../../../api/maintenanceApi.js";
 
 let roomsData = [];
 let ROOM_TYPES = [];
 let ROOM_STATUSES = [];
 let currentEditingRoom = null;
+let currentMaintenanceRoom = null;
 
 // --- DOM ELEMENTS ---
 const roomList = document.getElementById("roomList");
@@ -47,13 +49,26 @@ function renderRooms(list) {
     list.forEach(r => {
         const card = document.createElement("div");
         card.className = "room-card";
+        
+        // Thêm class maintenance nếu phòng đang bảo trì
+        if (r.status === "Đang bảo trì") {
+            card.className += " maintenance";
+        }
+        
         card.dataset.id = r.id;
+        
+        // Thêm nút bảo trì cho phòng trống
+        const maintenanceBtn = r.status === "Trống" 
+            ? `<button class="maintenance-btn" onclick="event.stopPropagation(); openMaintenancePopup('${r.id}', '${r._id}')">🔧 Bảo trì</button>`
+            : '';
+        
         card.innerHTML = `
             <img src="${r.img}" alt="Phòng ${r.id}">
             <h3>Phòng ${r.id} – ${r.type}</h3>
             <p class="room-description">${r.desc}</p>
             <p>Giá: ${r.price.toLocaleString()} đ</p>
             <p>Trạng thái: ${r.status}</p>
+            ${maintenanceBtn}
         `;
         card.onclick = () => openEditRoomPopup(r);
         roomList.appendChild(card);
@@ -139,13 +154,34 @@ init();
 document.getElementById("searchInput").oninput = () => filterRooms();
 
 // --- SORTING ---
+let sortStates = {};
+
 document.querySelectorAll(".sort-bar button").forEach(btn => {
+    const sortType = btn.dataset.sort;
+    if (sortType) {
+        sortStates[sortType] = true; // true = ascending, false = descending
+    }
+    
     btn.onclick = () => {
         const type = btn.dataset.sort;
+        if (!type) return;
+        
+        // Toggle sort direction
+        sortStates[type] = !sortStates[type];
+        const isAsc = sortStates[type];
+        
         const sorted = [...roomsData];
-        if (type === "price") sorted.sort((a,b) => a.price - b.price);
-        else if (type === "type") sorted.sort((a,b) => a.type.localeCompare(b.type));
-        else if (type === "status") sorted.sort((a,b) => a.status.localeCompare(b.status));
+        if (type === "price") {
+            sorted.sort((a, b) => isAsc ? a.price - b.price : b.price - a.price);
+            btn.textContent = isAsc ? "Giá ↑" : "Giá ↓";
+        } else if (type === "type") {
+            sorted.sort((a, b) => isAsc ? a.type.localeCompare(b.type) : b.type.localeCompare(a.type));
+            btn.textContent = isAsc ? "Loại ↑" : "Loại ↓";
+        } else if (type === "status") {
+            sorted.sort((a, b) => isAsc ? a.status.localeCompare(b.status) : b.status.localeCompare(a.status));
+            btn.textContent = isAsc ? "Trạng thái ↑" : "Trạng thái ↓";
+        }
+        
         renderRooms(sorted);
     };
 });
@@ -229,7 +265,11 @@ document.getElementById("saveNewRoom").onclick = async () => {
 // --- EDIT ROOM ---
 setupImageUpload(editRoomImg, editPreviewImage, editUploadArea);
 
-function openEditRoomPopup(room) {
+async function openEditRoomPopup(room) {
+    
+    // Disable trạng thái - chỉ có thể xem
+    editRoomStatus.disabled = true;
+    
     currentEditingRoom = room;
     editRoomId.value = room.id;
     editRoomType.value = room.type;
@@ -237,6 +277,37 @@ function openEditRoomPopup(room) {
     editRoomStatus.value = room.status;
     editRoomDesc.value = room.desc;
     editPreviewImage.src = room.img;
+    
+    // Disable trạng thái - chỉ có thể xem
+    editRoomStatus.disabled = true;
+    
+    // Kiểm tra nếu phòng đang bảo trì, lấy mã bảo trì
+    const maintenanceCodeField = document.getElementById("editMaintenanceCode");
+    const maintenanceCodeRow = document.getElementById("maintenanceCodeRow");
+    
+    if (room.status === "Đang bảo trì") {
+        try {
+            const result = await getMaintenancesByRoomApi(room._id);
+            if (result.success && result.maintenances && result.maintenances.length > 0) {
+                // Tìm bảo trì đang hoạt động
+                const activeMaintenance = result.maintenances.find(m => m.status === "Đang bảo trì");
+                if (activeMaintenance) {
+                    maintenanceCodeField.value = activeMaintenance.maintenanceCode;
+                    maintenanceCodeRow.style.display = "block";
+                } else {
+                    maintenanceCodeRow.style.display = "none";
+                }
+            } else {
+                maintenanceCodeRow.style.display = "none";
+            }
+        } catch (err) {
+            console.error("Lỗi khi lấy mã bảo trì:", err);
+            maintenanceCodeRow.style.display = "none";
+        }
+    } else {
+        maintenanceCodeRow.style.display = "none";
+    }
+    
     editRoomPopup.style.display = "flex";
 }
 
@@ -244,11 +315,11 @@ document.getElementById("saveEditRoom").onclick = async () => {
     if (!currentEditingRoom) return;
     const type = editRoomType.value;
     const price = Number(editRoomPrice.value);
-    const status = editRoomStatus.value;
     const desc = editRoomDesc.value;
     const img = editRoomImg.files[0] ? editPreviewImage.src : currentEditingRoom.img;
 
-    const updatedRoom = { ...currentEditingRoom, type, price, status, desc, img };
+    // Không cho phép cập nhật status
+    const updatedRoom = { ...currentEditingRoom, type, price, desc, img };
     try {
         await updateRoomApi(currentEditingRoom.id, updatedRoom);
         roomsData = roomsData.map(r => r.id === updatedRoom.id ? updatedRoom : r);
@@ -280,3 +351,69 @@ document.getElementById("deleteRoomBtn").onclick = async () => {
     }
 };
 
+// --- MAINTENANCE POPUP ---
+const maintenancePopup = document.getElementById("maintenancePopup");
+const maintenanceRoomCode = document.getElementById("maintenanceRoomCode");
+const maintenanceStartDate = document.getElementById("maintenanceStartDate");
+const maintenanceEndDate = document.getElementById("maintenanceEndDate");
+const maintenanceReason = document.getElementById("maintenanceReason");
+
+// Hàm mở popup bảo trì (gọi từ inline onclick trong renderRooms)
+window.openMaintenancePopup = function(roomCode, roomId) {
+    currentMaintenanceRoom = { roomCode, roomId };
+    maintenanceRoomCode.value = roomCode;
+    
+    // Set giá trị mặc định cho ngày
+    const now = new Date();
+    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    maintenanceStartDate.value = now.toISOString().slice(0, 16);
+    maintenanceEndDate.value = tomorrow.toISOString().slice(0, 16);
+    maintenanceReason.value = "";
+    
+    maintenancePopup.style.display = "flex";
+};
+
+document.getElementById("closeMaintenanceBtn").onclick = () => {
+    maintenancePopup.style.display = "none";
+};
+
+document.getElementById("saveMaintenanceBtn").onclick = async () => {
+    if (!currentMaintenanceRoom) return;
+    
+    const startDate = maintenanceStartDate.value;
+    const endDate = maintenanceEndDate.value;
+    const reason = maintenanceReason.value.trim();
+    
+    if (!startDate || !endDate || !reason) {
+        return Notify.show("Vui lòng nhập đầy đủ thông tin!", "error");
+    }
+    
+    if (new Date(endDate) <= new Date(startDate)) {
+        return Notify.show("Ngày kết thúc phải sau ngày bắt đầu!", "error");
+    }
+    
+    try {
+        const maintenanceData = {
+            roomId: currentMaintenanceRoom.roomId,
+            startDate,
+            endDate,
+            reason
+        };
+        
+        const result = await createMaintenanceApi(maintenanceData);
+        
+        if (result.success) {
+            Notify.show(`Tạo lịch bảo trì cho phòng ${currentMaintenanceRoom.roomCode} thành công!`, "success");
+            maintenancePopup.style.display = "none";
+            
+            // Reload lại danh sách phòng để cập nhật trạng thái
+            roomsData = await getRoomsApi();
+            renderRooms(roomsData);
+        } else {
+            Notify.show(result.message || "Tạo lịch bảo trì thất bại!", "error");
+        }
+    } catch (err) {
+        console.error(err);
+        Notify.show(err.message || "Tạo lịch bảo trì thất bại!", "error");
+    }
+};

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý bảo trì - Admin</title>
+  <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
+  <link rel="stylesheet" href="/pages/admin/css/maintenanceStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="/pages/admin/js/adminLayout.js" defer></script>
+  <script type="module" src="/pages/admin/js/maintenance.js" defer></script>
+</head>
+
+<body>
+
+  <div id="header-container"></div>
+  
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-container">
+    <div class="page-header">
+      <h2>Quản lý bảo trì phòng</h2>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <span class="icon-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input id="searchInput" type="text" placeholder="Tìm kiếm theo mã bảo trì, mã phòng">
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="top-bar">
+      <div class="sort-bar">
+        <button id="sortByDateBtn">Ngày ↑↓</button>
+        <select id="statusFilter" class="status-select">
+          <option value="">-- Tất cả trạng thái --</option>
+          <option value="Đang bảo trì">Đang bảo trì</option>
+          <option value="Hoàn thành">Hoàn thành</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Maintenance list -->
+    <div id="maintenanceList" class="maintenance-list">
+      <!-- JS sẽ render danh sách bảo trì ở đây -->
+    </div>
+  </main>
+
+  <!-- POPUP CHI TIẾT BẢO TRÌ -->
+  <div id="detailPopup" class="add-popup">
+    <div class="add-popup-content">
+      <h3>Chi tiết lịch bảo trì</h3>
+
+      <div class="detail-content">
+        <div class="detail-row">
+          <label>Mã bảo trì:</label>
+          <span id="detailMaintenanceCode"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Mã phòng:</label>
+          <span id="detailRoomCode"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Loại phòng:</label>
+          <span id="detailRoomType"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Ngày bắt đầu:</label>
+          <span id="detailStartDate"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Ngày kết thúc:</label>
+          <span id="detailEndDate"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Lý do:</label>
+          <span id="detailReason"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Trạng thái:</label>
+          <span id="detailStatus" class="status-badge"></span>
+        </div>
+
+        <div class="detail-row">
+          <label>Ngày tạo:</label>
+          <span id="detailCreatedAt"></span>
+        </div>
+      </div>
+
+      <div class="footer-btns">
+        <button id="completeMaintenanceBtn" class="complete-btn">Hoàn thành bảo trì</button>
+        <button id="deleteMaintenanceBtn" class="delete-btn">Xóa lịch bảo trì</button>
+        <button id="closeDetailBtn">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+</body>
+</html>

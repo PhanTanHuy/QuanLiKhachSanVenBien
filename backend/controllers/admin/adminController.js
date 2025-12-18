@@ -24,3 +24,8 @@ export const getAdminBookings = (req, res) => {
     const adminPath = path.resolve(__dirname, '../../../frontend/pages/admin/bookings.html');
     res.sendFile(adminPath);
 };
+
+export const getAdminMaintenance = (req, res) => {
+    const adminPath = path.resolve(__dirname, '../../../frontend/pages/admin/maintenance.html');
+    res.sendFile(adminPath);
+};

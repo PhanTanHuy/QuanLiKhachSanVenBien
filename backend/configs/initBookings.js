@@ -1,15 +1,16 @@
 import BookingDetail from '../models/BookingDetail.js';
 import User from '../models/User.js';
 import Rooms from '../models/Room.js';
-import { PaymentMethod } from '../configs/enum/paymentEnum.js';
+import { PaymentMethod } from './enum/paymentEnum.js';
+import { RoomStatus } from './enum/roomEnum.js';
 
 export default async function initBookings() {
     try {
         const count = await BookingDetail.countDocuments();
         if (count === 0) {
             // Fetch real users and rooms from database
-            const users = await User.find().limit(5);
-            const rooms = await Rooms.find().limit(5);
+            const users = await User.find().limit(6);
+            const rooms = await Rooms.find().limit(10);
 
             if (users.length === 0 || rooms.length === 0) {
                 console.warn("⚠️ Không đủ user hoặc room để tạo booking. Bỏ qua khởi tạo booking.");
@@ -19,26 +20,28 @@ export default async function initBookings() {
             // Create 10 mock bookings with real references
             const mockBookings = [];
             const bookingCodes = [
-                "BK-20251126-0001", "BK-20251126-0002", "BK-20251126-0003",
-                "BK-20251126-0004", "BK-20251126-0005", "BK-20251126-0006",
-                "BK-20251126-0007", "BK-20251126-0008", "BK-20251126-0009",
-                "BK-20251126-0010"
+                "BK-20251216-0001", "BK-20251216-0002", "BK-20251216-0003",
+                "BK-20251216-0004", "BK-20251216-0005", "BK-20251216-0006",
+                "BK-20251216-0007", "BK-20251216-0008", "BK-20251216-0009",
+                "BK-20251216-0010"
             ];
 
             const paymentMethods = [PaymentMethod.CASH, PaymentMethod.TRANSFER];
+            const statuses = [RoomStatus.RESERVED, RoomStatus.OCCUPIED];
 
             for (let i = 0; i < 10; i++) {
                 const user = users[i % users.length];
                 const room = rooms[i % rooms.length];
 
                 // Dates for different bookings
-                const checkInDate = new Date(2025, 11, 1 + i * 2);
-                const checkOutDate = new Date(2025, 11, 3 + i * 2);
+                const checkInDate = new Date(2025, 11, 20 + i * 2); // Bắt đầu từ 20/12/2025
+                const checkOutDate = new Date(2025, 11, 22 + i * 2);
 
                 mockBookings.push({
                     bookingCode: bookingCodes[i],
                     user: user._id,
                     userSnapshot: {
+                        userId: user._id.toString(),
                         name: user.name,
                         email: user.email,
                         phone: user.phone,
@@ -47,15 +50,17 @@ export default async function initBookings() {
                     },
                     room: room._id,
                     roomSnapshot: {
-                        code: room.roomCode || room._id.toString(),
+                        roomId: room._id.toString(),
+                        code: room.id,
                         type: room.type,
-                        description: room.description,
+                        description: room.desc,
                         pricePerNight: room.price
                     },
                     checkInDate,
                     checkOutDate,
                     pricePerNight: room.price,
-                    paymentMethod: paymentMethods[i % paymentMethods.length]
+                    paymentMethod: paymentMethods[i % paymentMethods.length],
+                    status: statuses[i % statuses.length]
                 });
             }
 

@@ -4,7 +4,7 @@ import { UserRole } from "../configs/enum/userEnum.js";
 export const accounts = [
     {
         name: "Nguyễn Văn A",
-        cccd: "001234567890",
+        cccd: "00123456789099",
         phone: "0912345678",
         address: "123 Đường Nguyễn Huệ, Quận 1, TP.HCM",
         email: "nguyenvana@example.com",
@@ -14,7 +14,7 @@ export const accounts = [
     {
         name: "Phan Tan Huy",
         cccd: "001234567890",
-        phone: "0912345678",
+        phone: "0329700111",
         address: "123 Đường Nguyễn Huệ, Quận 1, TP.HCM",
         email: "123@gmail.com",
         password: "11111111", // Hash trong thực tế
@@ -56,4 +56,4 @@ export const accounts = [
         password: "password345", // Hash trong thực tế
         role: UserRole.RECEPTIONIST
     }
-];
+]

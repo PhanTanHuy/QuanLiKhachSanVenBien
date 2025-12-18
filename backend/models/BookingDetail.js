@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { PaymentMethod } from '../configs/enum/paymentEnum.js';
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
+import { RoomStatus } from "../configs/enum/roomEnum.js";
 
 // Chi tiết đặt phòng
 const bookingSchema = new mongoose.Schema({
@@ -9,6 +9,7 @@ const bookingSchema = new mongoose.Schema({
   // Thông tin user (tham chiếu + snapshot để lưu lịch sử)
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   userSnapshot: {
+    userId: { type: String },
     name: { type: String },
     email: { type: String },
     phone: { type: String },
@@ -19,6 +20,7 @@ const bookingSchema = new mongoose.Schema({
   // Thông tin phòng (tham chiếu + snapshot để lưu giá tại thời điểm đặt)
   room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
   roomSnapshot: {
+    roomId: { type: String},
     code: { type: String },
     type: { type: String },
     description: { type: String },
@@ -46,11 +48,11 @@ const bookingSchema = new mongoose.Schema({
     default: PaymentMethod.CASH
   },
 
-  // Trạng thái thanh toán / đặt (tuỳ ý có thể mở rộng sau)
+  // Trạng thái: Đã đặt cọc hoặc Đang thuê (sử dụng RoomStatus)
   status: { 
     type: String, 
-    enum: Object.values(BookingStatus),
-    default: BookingStatus.PENDING 
+    enum: [RoomStatus.RESERVED, RoomStatus.OCCUPIED],
+    default: RoomStatus.RESERVED 
   }
 
 

@@ -1,7 +1,7 @@
 import BookingDetail from "../models/BookingDetail.js";
 import User from "../models/User.js";
 import Room from "../models/Room.js";
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
+import { RoomStatus } from "../configs/enum/roomEnum.js";
 
 // Hàm tạo mã đặt phòng tự động (format: BK-YYYYMMDD-XXXX)
 const generateBookingCode = async () => {
@@ -33,15 +33,21 @@ export const createBooking = async (req, res) => {
           "Thiếu thông tin bắt buộc: userId, roomId, checkInDate, checkOutDate",
       });
     }
-
-    // Kiểm tra user tồn tại
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "Không tìm thấy user" });
+    else if (accountType === "old") {
+      // Tìm user hiện có theo email
+      const existingUser = await User.findOne({ email: email });
+      if (!existingUser) {
+        return res.status(404).json({ message: "Không tìm thấy tài khoản với email đã cho" });
+      }
+      userId = existingUser._id;
     }
-
-    // Kiểm tra phòng tồn tại
-    const room = await Room.findById(roomId);
+    else {
+      return res.status(400).json({ message: "Loại tài khoản không hợp lệ" });
+    }
+    console.log("📌 Tìm thấy userId:", userId);
+    // Xử lý thông tin phòng
+    const room = await Room.findOne({ id: roomId });
+    
     if (!room) {
       return res.status(404).json({ message: "Không tìm thấy phòng" });
     }
@@ -70,15 +76,15 @@ export const createBooking = async (req, res) => {
         cccd: user.cccd,
         address: user.address,
       },
-      room: roomId,
+      room: room._id,
       roomSnapshot: {
         code: room.id,
         type: room.type,
         description: room.desc,
         pricePerNight: room.price,
       },
-      checkInDate: checkIn,
-      checkOutDate: checkOut,
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate,
       pricePerNight: room.price,
       paymentMethod: paymentMethod || "Tiền mặt",
       status: status || BookingStatus.PENDING,
@@ -149,17 +155,101 @@ export const getBookingByCode = async (req, res) => {
     return res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
-// Tính tổng doanh thu (chỉ lấy các booking đã thanh toán)
+// Lấy booking theo roomId hoặc room code
+export const getBookingsByRoom = async (req, res) => {
+  try {
+    const { roomIdentifier } = req.params; // có thể là roomId (ObjectId) hoặc room code (string)
+
+    // Tìm room trước để lấy được _id
+    let room;
+    
+    // Thử tìm theo room code (id field)
+    room = await Room.findOne({ id: roomIdentifier });
+    
+    // Nếu không tìm thấy, thử tìm theo MongoDB _id
+    if (!room) {
+      room = await Room.findById(roomIdentifier).catch(() => null);
+    }
+
+    if (!room) {
+      return res.status(404).json({ message: "Không tìm thấy phòng" });
+    }
+
+    // Tìm tất cả booking của phòng này
+    const bookings = await BookingDetail.find({ room: room._id })
+      .populate("user", "-hashedPassword")
+      .populate("room")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      message: `Danh sách booking của phòng ${room.id}`,
+      count: bookings.length,
+      room: {
+        _id: room._id,
+        code: room.id,
+        type: room.type
+      },
+      bookings
+    });
+  } catch (error) {
+    console.error("Lỗi khi lấy booking theo phòng:", error);
+    return res.status(500).json({ message: "Lỗi hệ thống", error: error.message });
+  }
+};
+
+// Lấy danh sách booking theo userId hoặc email
+export const getBookingsByUser = async (req, res) => {
+  try {
+    const { userIdentifier } = req.params; // có thể là userId (ObjectId) hoặc email
+
+    let user;
+
+    // Kiểm tra xem userIdentifier có phải là email không (có chứa @)
+    if (userIdentifier.includes("@")) {
+      // Tìm theo email
+      user = await User.findOne({ email: userIdentifier });
+    } else {
+      // Tìm theo MongoDB _id
+      user = await User.findById(userIdentifier).catch(() => null);
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: "Không tìm thấy user" });
+    }
+
+    // Tìm tất cả booking của user này
+    const bookings = await BookingDetail.find({ user: user._id })
+      .populate("user", "-hashedPassword")
+      .populate("room")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      message: `Danh sách booking của user ${user.name}`,
+      count: bookings.length,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email
+      },
+      bookings
+    });
+  } catch (error) {
+    console.error("Lỗi khi lấy booking theo user:", error);
+    return res.status(500).json({ message: "Lỗi hệ thống", error: error.message });
+  }
+};
+
+// Tính tổng doanh thu (chỉ lấy các booking đang thuê)
 export const getRevenue = async (req, res) => {
   try {
-    const bookings = await BookingDetail.find({ status: BookingStatus.PAID });
+    const bookings = await BookingDetail.find({ status: RoomStatus.OCCUPIED });
 
     const totalRevenue = bookings.reduce((sum, item) => {
       return sum + (item.totalPrice || 0);
     }, 0);
 
     return res.status(200).json({
-      message: "Tổng doanh thu từ các đơn đã thanh toán",
+      message: "Tổng doanh thu từ các phòng đang thuê",
       totalBookings: bookings.length,
       totalRevenue: totalRevenue,
     });

@@ -1,4 +1,25 @@
 /* ===== BOOKING LIST ===== */
+/* --- SORT BAR --- */
+.sort-bar {
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.sort-bar button {
+    padding: 8px 15px;
+    border: none;
+    background: #5A3300;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sort-bar button:hover {
+    background: #3f2400;
+}
+
 .booking-list {
     margin-top: 20px;
     display: grid;
