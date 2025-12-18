@@ -1,40 +1,3 @@
-/* Booking Bar */
-.booking-bar {
-  background-color: #4a2c1a;
-  padding: 25px 50px;
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.booking-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.booking-item label {
-  color: #fff;
-  font-size: 13px;
-}
-
-.booking-item select,
-.booking-item input {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 10px 15px;
-  font-size: 15px;
-  border-radius: 4px;
-  min-width: 120px;
-  cursor: pointer;
-}
-
-.booking-item select option {
-  background-color: #4a2c1a;
-}
 
 .container {
   max-width: 1600px;
@@ -43,9 +6,7 @@
 }
 
 /* Header Section */
-.header {
-  margin-bottom: 40px;
-}
+
 
 .title-row {
   display: flex;

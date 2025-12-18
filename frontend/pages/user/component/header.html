@@ -26,13 +26,29 @@
             <li><a href="/user/contact">Liên hệ</a></li>
         </ul>
        <div class="user-menu">
-  <div class="user-icon" id="userIcon">👤</div>
 
-  <div class="user-dropdown hidden" id="userDropdown">
-    <p id="userName">Xin chào!</p>
-    <hr />
-    <button id="logoutBtn">Đăng xuất</button>
+  <!-- Button đăng nhập -->
+  <a href="/signin" id="loginBtn" class="login-btn hidden">
+    Đăng nhập
+  </a>
+
+  <!-- User icon -->
+  <div id="userWrapper" class="hidden">
+    <div class="user-icon" id="userIcon">👤</div>
+      <div class="user-dropdown hidden" id="userDropdown">
+        <div class="user-info">
+          <div class="avatar" id="userAvatar">👤</div>
+          <div class="user-text">
+          <span class="greeting">Xin chào</span>
+          <span class="username" id="userName">User</span>
+        </div>
+      </div>
+      <button id="logoutBtn">Đăng xuất</button>
+      </div>
   </div>
+
+</div>
+
 </div>
     </nav>
 

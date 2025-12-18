@@ -16,28 +16,32 @@ async function loadLayout() {
 }
 
 async function initHeaderEvents() {
+  const loginBtn = document.getElementById("loginBtn");
+  const userWrapper = document.getElementById("userWrapper");
   const userIcon = document.getElementById("userIcon");
   const dropdown = document.getElementById("userDropdown");
   const logoutBtn = document.getElementById("logoutBtn");
   const userNameEl = document.getElementById("userName");
 
-  if (!userIcon || !logoutBtn || !userNameEl) return;
+  if (!loginBtn || !userWrapper) return;
 
-  // toggle dropdown
+  const token = localStorage.getItem("accessToken");
+
+  // ❌ CHƯA LOGIN
+  if (!token) {
+    loginBtn.classList.remove("hidden");
+    userWrapper.classList.add("hidden");
+    return;
+  }
+
+  // ✅ ĐÃ LOGIN
+  loginBtn.classList.add("hidden");
+  userWrapper.classList.remove("hidden");
+
   userIcon.addEventListener("click", () => {
     dropdown.classList.toggle("hidden");
   });
 
-  const token = localStorage.getItem("accessToken");
-
-  // ❌ chưa đăng nhập
-  if (!token) {
-    userNameEl.textContent = "Chưa đăng nhập";
-    logoutBtn.style.display = "none";
-    return;
-  }
-
-  //  đăng nhập → gọi /me
   try {
     const res = await fetch("/api/users/me", {
       headers: {
@@ -45,31 +49,29 @@ async function initHeaderEvents() {
       },
     });
 
-    if (!res.ok) throw new Error("Token invalid");
+    if (!res.ok) throw new Error("Unauthorized");
 
     const data = await res.json();
+    userNameEl.textContent = data.user.name || "User";
 
-    userNameEl.textContent = ` ${data.user.name || "User"}`;
-    logoutBtn.style.display = "block";
+const avatarEl = document.getElementById("userAvatar");
+if (avatarEl && data.user.name) {
+  avatarEl.textContent = data.user.name.charAt(0).toUpperCase();
+}
+
   } catch (err) {
-    console.error(err);
     localStorage.removeItem("accessToken");
     window.location.href = "/signin";
   }
 
-  // logout
   logoutBtn.addEventListener("click", async () => {
-    try {
-      await fetch("/api/auth/signout", {
-        method: "POST",
-        credentials: "include",
-      });
+    await fetch("/api/auth/signout", {
+      method: "POST",
+      credentials: "include",
+    });
 
-      localStorage.removeItem("accessToken");
-      window.location.href = "/signin";
-    } catch {
-      alert("Không thể đăng xuất");
-    }
+    localStorage.removeItem("accessToken");
+    window.location.href = "/signin";
   });
 }
 

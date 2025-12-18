@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
       enum: Object.values(UserRole),
       default: UserRole.USER,
     },
+    avatar: {
+      type: String,
+      default: "/images/avatar-default.png",
+    },
     // --- reset password ---
     resetPasswordToken: { type: String, index: true, sparse: true },
     resetPasswordExpires: { type: Date },
