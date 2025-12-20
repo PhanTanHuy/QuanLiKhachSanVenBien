@@ -21,9 +21,11 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 
 import maintenanceRoutes from './routes/maintenanceRoutes.js';
-
+import adminApiRoute from './routes/admin/adminApiRoute.js';
+import receptionistApiRoute from './routes/receptionist/receptionistApiRoute.js';
 // Receptionist routes
 import pathRecep from './routes/receptionist/recepRoutes.js';
+
 
 dotenv.config();
 const app = express();
@@ -71,6 +73,8 @@ app.get("/user/rooms/:id", (req, res) => {
 });
 
 
+app.use("/api/admin", adminApiRoute);
+app.use("/api/receptionist", receptionistApiRoute);
 
 // Routes page
 app.use('/admin', adminRoutes);
@@ -84,8 +88,6 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/maintenances', maintenanceRoutes);
 
-// Private routes
-// app.use(protectedRoute);
 app.use('/api/users', userRoute);
 
 

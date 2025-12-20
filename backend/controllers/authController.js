@@ -26,7 +26,7 @@ export const signUp = async (req, res) => {
       return res.status(409).json({ message: "Số điện thoại đã tồn tại" });
     }
 
-    if (cccd && await User.findOne({ cccd })) {
+    if (cccd && (await User.findOne({ cccd }))) {
       return res.status(409).json({ message: "CCCD đã tồn tại" });
     }
 
@@ -111,14 +111,13 @@ export const signOut = async (req, res) => {
         sameSite: "none",
       });
     }
-    
+
     return res.sendStatus(204);
   } catch (error) {
     console.error("Lỗi khi gọi signOut", error);
     return res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
-
 
 // tạo access token mới từ refresh token
 export const refreshToken = async (req, res) => {
@@ -144,9 +143,17 @@ export const refreshToken = async (req, res) => {
     }
 
     // tạo access token mới
+    // const accessToken = jwt.sign(
+    //   {
+    //     userId: session.userId,
+    //   },
+    //   process.env.ACCESS_TOKEN_SECRET,
+    //   { expiresIn: ACCESS_TOKEN_TTL }
+    // );
     const accessToken = jwt.sign(
       {
-        userId: session.userId,
+        userId: user._id,
+        role: user.role,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: ACCESS_TOKEN_TTL }

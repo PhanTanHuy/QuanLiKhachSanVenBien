@@ -1,111 +1,127 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/pages/admin/css/adminStyle.css">
-  <link rel="stylesheet" href="/pages/admin/css/dashboardStyle.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="/pages/admin/js/adminLayout.js" defer></script>
-  <script type="module" src="/pages/admin/js/dashboard.js" defer></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/pages/admin/css/adminStyle.css" />
+    <link rel="stylesheet" href="/pages/admin/css/dashboardStyle.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="/pages/admin/js/adminLayout.js" defer></script>
+    <script type="module" src="/pages/admin/js/dashboard.js" defer></script>
+  </head>
 
-<body>
-  <div id="header-container"></div>
+  <body>
+    <div id="header-container"></div>
 
-  <!-- ===== MAIN CONTENT ===== -->
-  <main class="main-container">
-    <div class="dashboard-header">
-      <p class="subtitle">Xem tổng quan hoạt động khách sạn</p>
-    </div>
-
-    <!-- Thống kê phòng -->
-    <section class="dashboard-section">
-      <h2 class="section-title"><i class="fas fa-bed"></i> Thống Kê Phòng</h2>
-      <div class="stats-grid">
-        <div class="stat-card total">
-          <div class="stat-icon"><i class="fas fa-building"></i></div>
-          <div class="stat-content">
-            <h3>Tổng Số Phòng</h3>
-            <p class="stat-number" id="totalRooms">--</p>
-          </div>
-        </div>
-        <div class="stat-card available">
-          <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-          <div class="stat-content">
-            <h3>Phòng Trống</h3>
-            <p class="stat-number" id="availableRooms">--</p>
-          </div>
-        </div>
-        <div class="stat-card reserved">
-          <div class="stat-icon"><i class="fas fa-bookmark"></i></div>
-          <div class="stat-content">
-            <h3>Đã Đặt Cọc</h3>
-            <p class="stat-number" id="reservedRooms">--</p>
-          </div>
-        </div>
-        <div class="stat-card occupied">
-          <div class="stat-icon"><i class="fas fa-users"></i></div>
-          <div class="stat-content">
-            <h3>Đang Thuê</h3>
-            <p class="stat-number" id="occupiedRooms">--</p>
-          </div>
-        </div>
-        <div class="stat-card maintenance">
-          <div class="stat-icon"><i class="fas fa-tools"></i></div>
-          <div class="stat-content">
-            <h3>Đang Bảo Trì</h3>
-            <p class="stat-number" id="maintenanceRooms">--</p>
-          </div>
-        </div>
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-container">
+      <div class="dashboard-header">
+        <p class="subtitle">Xem tổng quan hoạt động khách sạn</p>
       </div>
-    </section>
 
-    <!-- Thống kê đặt phòng & doanh thu -->
-    <section class="dashboard-section">
-      <h2 class="section-title"><i class="fas fa-chart-line"></i> Thống Kê Kinh Doanh</h2>
-      <div class="business-stats">
-        <div class="big-stat-card revenue">
-          <div class="big-stat-icon"><i class="fas fa-dollar-sign"></i></div>
-          <div class="big-stat-content">
-            <h3>Tổng Doanh Thu</h3>
-            <p class="big-stat-number" id="totalRevenue">--</p>
-            <span class="stat-label">Từ <span id="paidBookingsCount">--</span> đơn đã thanh toán</span>
+      <!-- Thống kê phòng -->
+      <section class="dashboard-section">
+        <h2 class="section-title"><i class="fas fa-bed"></i> Thống Kê Phòng</h2>
+        <div class="stats-grid">
+          <div class="stat-card total">
+            <div class="stat-icon"><i class="fas fa-building"></i></div>
+            <div class="stat-content">
+              <h3>Tổng Số Phòng</h3>
+              <p class="stat-number" id="totalRooms">--</p>
+            </div>
           </div>
-        </div>
-        <div class="big-stat-card bookings">
-          <div class="big-stat-icon"><i class="fas fa-calendar-check"></i></div>
-          <div class="big-stat-content">
-            <h3>Tổng Lượt Đặt Phòng</h3>
-            <p class="big-stat-number" id="totalBookings">--</p>
-            <div class="booking-breakdown">
-              <span class="breakdown-item paid"><i class="fas fa-check"></i> Đã thanh toán: <strong id="paidBookings">--</strong></span>
-              <span class="breakdown-item pending"><i class="fas fa-clock"></i> Chờ thanh toán: <strong id="pendingBookings">--</strong></span>
+          <div class="stat-card available">
+            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-content">
+              <h3>Phòng Trống</h3>
+              <p class="stat-number" id="availableRooms">--</p>
+            </div>
+          </div>
+          <div class="stat-card reserved">
+            <div class="stat-icon"><i class="fas fa-bookmark"></i></div>
+            <div class="stat-content">
+              <h3>Đã Đặt Cọc</h3>
+              <p class="stat-number" id="reservedRooms">--</p>
+            </div>
+          </div>
+          <div class="stat-card occupied">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-content">
+              <h3>Đang Thuê</h3>
+              <p class="stat-number" id="occupiedRooms">--</p>
+            </div>
+          </div>
+          <div class="stat-card maintenance">
+            <div class="stat-icon"><i class="fas fa-tools"></i></div>
+            <div class="stat-content">
+              <h3>Đang Bảo Trì</h3>
+              <p class="stat-number" id="maintenanceRooms">--</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Thống kê users -->
-    <section class="dashboard-section">
-      <h2 class="section-title"><i class="fas fa-user-friends"></i> Thống Kê Người Dùng</h2>
-      <div class="stats-grid-small">
-        <div class="stat-card users">
-          <div class="stat-icon"><i class="fas fa-users"></i></div>
-          <div class="stat-content">
-            <h3>Tổng Người Dùng</h3>
-            <p class="stat-number" id="totalUsers">--</p>
+      <!-- Thống kê đặt phòng & doanh thu -->
+      <section class="dashboard-section">
+        <h2 class="section-title">
+          <i class="fas fa-chart-line"></i> Thống Kê Kinh Doanh
+        </h2>
+        <div class="business-stats">
+          <div class="big-stat-card revenue">
+            <div class="big-stat-icon"><i class="fas fa-dollar-sign"></i></div>
+            <div class="big-stat-content">
+              <h3>Tổng Doanh Thu</h3>
+              <p class="big-stat-number" id="totalRevenue">--</p>
+              <span class="stat-label"
+                >Từ <span id="paidBookingsCount">--</span> đơn đã thanh
+                toán</span
+              >
+            </div>
+          </div>
+          <div class="big-stat-card bookings">
+            <div class="big-stat-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="big-stat-content">
+              <h3>Tổng Lượt Đặt Phòng</h3>
+              <p class="big-stat-number" id="totalBookings">--</p>
+              <div class="booking-breakdown">
+                <span class="breakdown-item paid"
+                  ><i class="fas fa-check"></i> Đã thanh toán:
+                  <strong id="paidBookings">--</strong></span
+                >
+                <span class="breakdown-item pending"
+                  ><i class="fas fa-clock"></i> Chờ thanh toán:
+                  <strong id="pendingBookings">--</strong></span
+                >
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
+      <!-- Thống kê users -->
+      <section class="dashboard-section">
+        <h2 class="section-title">
+          <i class="fas fa-user-friends"></i> Thống Kê Người Dùng
+        </h2>
+        <div class="stats-grid-small">
+          <div class="stat-card users">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-content">
+              <h3>Tổng Người Dùng</h3>
+              <p class="stat-number" id="totalUsers">--</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-  <div id="footer-container">
-  </div>
-
-</body>
+    <div id="footer-container"></div>
+    <script src="/pages/admin/js/guard.js"></script>
+  </body>
 </html>

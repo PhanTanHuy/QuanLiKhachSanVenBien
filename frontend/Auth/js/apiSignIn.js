@@ -35,16 +35,39 @@ form.addEventListener("submit", async (e) => {
     }
 
     if (!res.ok) {
-  globalError.textContent = data.message || "Sai email hoặc mật khẩu";
-  globalError.classList.remove("hidden");
-  return;
-}
+      globalError.textContent = data.message || "Sai email hoặc mật khẩu";
+      globalError.classList.remove("hidden");
+      return;
+    }
 
     // lưu access token
     localStorage.setItem("accessToken", data.accessToken);
 
-    // redirect (tạm thời)
-    window.location.href = "/user/home";
+    // const meRes = await fetch("/api/auth/me", {
+    //   headers: {
+    //     Authorization: "Bearer " + data.accessToken,
+    //   },
+    // });
+    const meRes = await fetch("/api/users/me", {
+      headers: {
+        Authorization: "Bearer " + data.accessToken,
+      },
+    });
+
+    if (!meRes.ok) {
+      throw new Error("Không lấy được thông tin user");
+    }
+
+    const meData = await meRes.json();
+
+
+    if (meData.user.role === "Admin") {
+      window.location.href = "/admin/dashboard";
+    } else if (meData.user.role === "Receptionist") {
+      window.location.href = "/receptionist";
+    } else {
+      window.location.href = "/user/home";
+    }
   } catch (error) {
     console.error(error);
     globalError.textContent = error.message || "Không thể kết nối server";
