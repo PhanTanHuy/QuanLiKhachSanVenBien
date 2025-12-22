@@ -1,0 +1,68 @@
+body {
+  background-color: #f6e8d6;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* CSS top-container */
+.search-wrapper {
+  background-color: #5b3102;
+  border-radius: 12px;
+}
+
+.search-box {
+  background-color: #f2efec;
+  border-radius: 12px;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.search-box i {
+  color: #000000;
+}
+
+/* CSS Room Filter  */
+.room-filter {
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.filter-item {
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.filter-item:hover {
+  background: #f1f1f1;
+}
+
+.filter-item.active {
+  background: #2d7dd2;
+  color: white;
+  font-weight: 600;
+}
+
+.payment-modal {
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.payment-modal th {
+  width: 45%;
+  color: #555;
+}
+
+.payment-modal td {
+  text-align: right;
+}
+
+.payment-modal .table-warning {
+  border-radius: 10px;
+}

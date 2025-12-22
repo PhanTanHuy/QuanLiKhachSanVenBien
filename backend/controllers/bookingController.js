@@ -37,6 +37,7 @@ export const createBooking = async (req, res) => {
       checkOutDate,
       paymentMethod,
       status,
+      deposit,
       accountType, // giúp be biết cần tạo user hay dùng user hiện có
     } = req.body;
 
@@ -101,6 +102,7 @@ export const createBooking = async (req, res) => {
       pricePerNight: room.price,
       paymentMethod: paymentMethod,
       status: status,
+      //deposit: deposit,
       // totalPrice, deposit, nights sẽ được tính tự động trong pre-validate hook
     });
 
@@ -110,6 +112,8 @@ export const createBooking = async (req, res) => {
     const savedBooking = await BookingDetail.findById(newBooking._id)
       .populate("user", "-hashedPassword")
       .populate("room");
+
+    console.log("✅ Booking đã được tạo thành công");
 
     return res.status(201).json({
       message: "Đặt phòng thành công",

@@ -253,40 +253,78 @@ function openTenantInfo(roomId) {
   const footerEl = document.getElementById("tenantModalFooter");
 
   bodyEl.innerHTML = `
-    <p><strong>Email:</strong> ${user.email || ""}</p>
-    <p><strong>Tên:</strong> ${user.name || ""}</p>
-    <p><strong>SĐT:</strong> ${user.phone || ""}</p>
-    <p><strong>Địa chỉ:</strong> ${user.address || ""}</p>
-    <p><strong>CCCD:</strong> ${user.cccd || ""}</p>
-    <p><strong>Ngày check-in:</strong> ${formatDate(booking.checkInDate)}</p>
-    <p><strong>Ngày check-out:</strong> ${formatDate(booking.checkOutDate)}</p>
-    <p><strong>Mã booking:</strong> ${booking.bookingCode}</p>
+    <div class="container-fluid">
+      <div class="row g-3">
+        <!-- LEFT -->
+        <div class="col-md-6">
+          <div class="tenant-item m-2">
+            <i class="bi bi-envelope"></i>
+            <span>${user.email || "—"}</span>
+          </div>
+
+          <div class="tenant-item m-2">
+            <i class="bi bi-person"></i>
+            <span>${user.name || "—"}</span>
+          </div>
+
+          <div class="tenant-item m-2">
+            <i class="bi bi-telephone"></i>
+            <span>${user.phone || "—"}</span>
+          </div>
+
+          <div class="tenant-item m-2">
+            <i class="bi bi-geo-alt"></i>
+            <span>${user.address || "—"}</span>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="col-md-6">
+          <div class="tenant-item m-2">
+            <i class="bi bi-credit-card"></i>
+            <span>${user.cccd || "—"}</span>
+          </div>
+
+          <div class="tenant-item m-2">
+            <i class="bi bi-calendar-check"></i>
+            <span>Check-in: ${formatDate(booking.checkInDate)}</span>
+          </div>
+
+          <div class="tenant-item m-2">
+            <i class="bi bi-calendar-x"></i>
+            <span>Check-out: ${formatDate(booking.checkOutDate)}</span>
+          </div>
+
+          <div class="booking-badge m-2">
+            ${booking.bookingCode}
+          </div>
+        </div>
+      </div>
+    </div>
   `;
 
   footerEl.innerHTML = `
-    <button class="btn btn-secondary" data-bs-dismiss="modal">
-      Đóng
-    </button>
-  `;
+  <button class="btn btn-outline-dark px-4" data-bs-dismiss="modal">
+    Đóng
+  </button>
+`;
 
-  // 👉 ĐÃ ĐẶT CỌC → CHECK IN
   if (status === "đã đặt cọc") {
     footerEl.innerHTML += `
-      <button class="btn btn-success"
-        onclick="checkIn('${booking._id}')">
-        Check in
-      </button>
-    `;
+    <button class="btn btn-success px-4"
+      onclick="checkIn('${booking._id}')">
+      Check in
+    </button>
+  `;
   }
 
-  // 👉 ĐANG THUÊ → CHECK OUT
   if (status === "đang thuê") {
     footerEl.innerHTML += `
-      <button class="btn btn-danger"
-        onclick="checkOut('${booking._id}')">
-        Check out
-      </button>
-    `;
+    <button class="btn btn-danger px-4"
+      onclick="checkOut('${booking._id}')">
+      Check out
+    </button>
+  `;
   }
 
   const modal = new bootstrap.Modal(document.getElementById("tenantModal"));

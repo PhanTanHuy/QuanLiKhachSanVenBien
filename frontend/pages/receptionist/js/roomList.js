@@ -355,6 +355,68 @@ function toggleAccountFields() {
   }
 }
 
+function toggleDepositAmount() {
+  const bookingType = document.querySelector(
+    'input[name="bookingType"]:checked'
+  ).value;
+
+  const wrapper = document.getElementById("depositAmountWrapper");
+  const input = document.getElementById("depositAmount");
+
+  if (bookingType === "deposit") {
+    wrapper.classList.remove("d-none");
+    input.required = true;
+
+    const totalRent = calculateTotalRent();
+    const depositAmount = Math.round(totalRent * 0.3);
+
+    input.value = depositAmount > 0 ? depositAmount : "";
+  } else {
+    wrapper.classList.add("d-none");
+    input.required = false;
+    input.value = "";
+  }
+}
+
+function calculateTotalRent() {
+  const checkIn = document.getElementById("checkInDate").value;
+  const checkOut = document.getElementById("checkOutDate").value;
+
+  if (!checkIn || !checkOut) return 0;
+
+  const start = new Date(checkIn);
+  const end = new Date(checkOut);
+
+  const diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+  if (diffDays <= 0) return 0;
+
+  const room = ALL_ROOMS.find(
+    (r) => r.id === document.getElementById("bookingRoomId").value
+  );
+
+  if (!room) return 0;
+
+  return diffDays * room.price;
+}
+
+document
+  .getElementById("checkInDate")
+  .addEventListener("change", autoUpdateDeposit);
+document
+  .getElementById("checkOutDate")
+  .addEventListener("change", autoUpdateDeposit);
+
+function autoUpdateDeposit() {
+  const bookingType = document.querySelector(
+    'input[name="bookingType"]:checked'
+  ).value;
+
+  if (bookingType === "deposit") {
+    toggleDepositAmount();
+  }
+}
+
 async function submitBooking() {
   const roomId = document.getElementById("bookingRoomId").value;
   const accountType = document.getElementById("accountType").value;
@@ -371,6 +433,8 @@ async function submitBooking() {
   const checkInDate = document.getElementById("checkInDate").value;
   const checkOutDate = document.getElementById("checkOutDate").value;
   const paymentMethod = document.getElementById("paymentMethod").value;
+
+  const deposit = document.getElementById("depositAmount").value || 0;
 
   // Validation cơ bản
   if (!email) {
@@ -398,6 +462,7 @@ async function submitBooking() {
     checkOutDate,
     paymentMethod,
     status: bookingType === "rent" ? "Đang thuê" : "Đã đặt cọc",
+    deposit,
     accountType,
   };
 

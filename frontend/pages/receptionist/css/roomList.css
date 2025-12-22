@@ -28,7 +28,7 @@ body {
   background: #ffffff;
   padding: 12px 16px;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .filter-item {
@@ -49,13 +49,12 @@ body {
   font-weight: 600;
 }
 
-
 /* CSS Room Card */
 .room-card {
-    color: #4b2f16;
-    display: flex;
+  color: #4b2f16;
+  display: flex;
   flex-direction: column;
-  height: 100%;     
+  height: 100%;
 }
 .divider {
   height: 1px;
@@ -64,12 +63,12 @@ body {
 }
 
 .room-img-fixed {
-  height: 180px;            
-  object-fit: cover;        
+  height: 180px;
+  object-fit: cover;
 }
 
 .room-body-fixed {
-  flex: 1;                   
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -79,5 +78,119 @@ body {
 }
 
 .room-btn {
-  margin-top: auto; 
+  margin-top: auto;
+}
+
+/* ===== Modal Đặt Phòng  ===== */
+
+#bookingModal .modal-content {
+  background-color: #fffaf3;
+  border-radius: 14px;
+  border: 1px solid #e0cfc1;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+#bookingModal .modal-header {
+  background: linear-gradient(135deg, #d4a373, #b08968);
+  color: #fff;
+  border-bottom: none;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+#bookingModal .modal-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#bookingModal .btn-close {
+  filter: invert(1);
+}
+
+/* Body */
+#bookingModal .modal-body {
+  padding: 1.8rem;
+  color: #5a4633;
+}
+
+/* Label */
+#bookingModal .form-label,
+#bookingModal label {
+  color: #7a5c3e;
+  font-weight: 600;
+}
+
+/* Input & Select */
+#bookingModal .form-control,
+#bookingModal .form-select {
+  border-radius: 10px;
+  border: 1px solid #e0cfc1;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+#bookingModal .form-control:focus,
+#bookingModal .form-select:focus {
+  border-color: #b08968;
+  box-shadow: 0 0 0 0.2rem rgba(176, 137, 104, 0.25);
+}
+
+/* Input group button */
+#bookingModal .input-group .btn {
+  border-radius: 0 10px 10px 0;
+  border: 1px solid #b08968;
+  color: #b08968;
+  font-weight: 500;
+}
+
+#bookingModal .input-group .btn:hover {
+  background-color: #b08968;
+  color: #fff;
+}
+
+/* Radio */
+#bookingModal input[type="radio"] {
+  accent-color: #b08968;
+  transform: scale(1.1);
+}
+
+/* Deposit box highlight */
+#depositAmountWrapper {
+  background-color: #f8efe6;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px dashed #d4a373;
+}
+
+/* Footer */
+#bookingModal .modal-footer {
+  border-top: none;
+  padding: 1.2rem 1.8rem;
+}
+
+/* Buttons */
+#bookingModal .btn-primary {
+  background-color: #b08968;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-weight: 600;
+}
+
+#bookingModal .btn-primary:hover {
+  background-color: #9c6f4e;
+}
+
+#bookingModal .btn-secondary {
+  background-color: #e6ccb2;
+  border: none;
+  color: #5a4633;
+  border-radius: 10px;
+  padding: 8px 18px;
+}
+
+#bookingModal .btn-secondary:hover {
+  background-color: #d4a373;
+  color: #fff;
 }

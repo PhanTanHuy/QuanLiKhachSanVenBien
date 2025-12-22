@@ -18,6 +18,7 @@ import userRoute from './routes/userRoute.js';
 import roomRoutes from './routes/roomRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 // Receptionist routes
 import pathRecep from './routes/receptionist/recepRoutes.js';
@@ -56,6 +57,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/account', accountRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Private routes
 app.use(protectedRoute);
