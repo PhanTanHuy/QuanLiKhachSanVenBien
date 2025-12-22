@@ -22,8 +22,8 @@ export const getRoomEnums = (req, res) => {
 // roomController.js
 export const getRooms = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
     const skip = (page - 1) * limit;
 
     const [rooms, total] = await Promise.all([

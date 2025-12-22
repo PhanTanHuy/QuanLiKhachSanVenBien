@@ -1,11 +1,11 @@
 import express from "express";
 import {
+    getRoomEnums,
     getRooms,
     getRoomById,
     createRoom,
     updateRoom,
     deleteRoom,
-    getRoomEnums,
     getRoomDetail,
     getRoomsForHome,
     getPromotionRoom
@@ -18,6 +18,9 @@ router.get("/home", getRoomsForHome);
 router.get("/promotion", getPromotionRoom);
 // CRUD
 router.get("/", getRooms);
+
+// ENUM
+router.get("/enums", getRoomEnums);
 //user
 router.get("/:id", getRoomDetail);
 router.get("/one/:id", getRoomById);
@@ -25,7 +28,7 @@ router.post("/", createRoom);
 router.put("/one/:id", updateRoom);
 router.delete("/one/:id", deleteRoom);
 
-// ENUM
-router.get("/enums", getRoomEnums);
+
+
 
 export default router;
