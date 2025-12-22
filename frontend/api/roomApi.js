@@ -5,13 +5,26 @@ export async function getRoomsApi() {
     try {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error("Lấy danh sách phòng thất bại");
-        return await res.json();
+        const result = await res.json();
+        // Handle new API format with data property
+        return result.data || result || [];
     } catch (err) {
         console.error(err);
         return [];
     }
 }
-
+export async function getAllRoomsApi() {
+    try {
+        const res = await fetch(`${API_URL}/all`);
+        if (!res.ok) throw new Error("Lấy danh sách phòng thất bại");
+        const result = await res.json();
+        // Handle new API format with data property
+        return result.data || result || [];
+    } catch (err) {
+        console.error(err);
+        return [];
+    }
+}
 // --- Thêm phòng ---
 export async function addRoomApi(room) {
     try {

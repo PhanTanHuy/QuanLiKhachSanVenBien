@@ -1,6 +1,6 @@
 // rooms.js
 import { Notify } from "../../../components/notification.js"; // đường dẫn tới notification.js
-import { getRoomsApi, addRoomApi, updateRoomApi, deleteRoomApi } from "../../../api/roomApi.js";
+import { getAllRoomsApi, addRoomApi, updateRoomApi, deleteRoomApi } from "../../../api/roomApi.js";
 import { createMaintenanceApi, getMaintenancesByRoomApi } from "../../../api/maintenanceApi.js";
 
 let roomsData = [];
@@ -79,9 +79,18 @@ function renderRooms(list) {
 async function loadEnums() {
     try {
         const res = await fetch("/api/rooms/enums");
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`HTTP ${res.status}: ${errorText}`);
+        }
         const data = await res.json();
-        ROOM_TYPES = data.types;
-        ROOM_STATUSES = data.statuses.map(st => ({ value: st, label: st }));
+        
+        if (!data.types || !data.statuses) {
+            throw new Error("Invalid enum data received");
+        }
+        
+        ROOM_TYPES = data.types || [];
+        ROOM_STATUSES = (data.statuses || []).map(st => ({ value: st, label: st }));
 
         // Populate dropdowns
         const newTypeSelect = document.getElementById("newRoomType");
@@ -122,6 +131,7 @@ async function loadEnums() {
         document.getElementById("statusFilter").onchange = () => filterRooms();
     } catch (err) {
         console.error("Lấy enum thất bại", err);
+        Notify.show("Lỗi khi tải danh sách enum: " + err.message, "error");
     }
 }
 
@@ -144,7 +154,7 @@ function filterRooms() {
 // --- INITIAL LOAD ---
 async function init() {
     await loadEnums();
-    roomsData = await getRoomsApi();
+    roomsData = await getAllRoomsApi();
     renderRooms(roomsData);
 }
 
@@ -407,7 +417,7 @@ document.getElementById("saveMaintenanceBtn").onclick = async () => {
             maintenancePopup.style.display = "none";
             
             // Reload lại danh sách phòng để cập nhật trạng thái
-            roomsData = await getRoomsApi();
+            roomsData = await getAllRoomsApi();
             renderRooms(roomsData);
         } else {
             Notify.show(result.message || "Tạo lịch bảo trì thất bại!", "error");

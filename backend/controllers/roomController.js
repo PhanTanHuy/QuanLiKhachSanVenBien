@@ -4,21 +4,29 @@ import { RoomType, RoomStatus } from "../configs/enum/roomEnum.js";
 
 // API trả enum cho frontend
 export const getRoomEnums = (req, res) => {
-    res.json({
-        types: Object.values(RoomType),
-        statuses: Object.values(RoomStatus)
-    });
+    try {
+        res.json({
+            types: Object.values(RoomType),
+            statuses: Object.values(RoomStatus)
+        });
+    } catch (err) {
+        console.error("Error in getRoomEnums:", err);
+        res.status(500).json({ 
+            error: "Failed to get room enums",
+            message: err.message 
+        });
+    }
 };
 
 // --- GET all rooms ---
-// export const getRooms = async (req, res) => {
-//     try {
-//         const rooms = await Room.find({});
-//         res.json(rooms);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
+export const getAllRooms = async (req, res) => {
+    try {
+        const rooms = await Room.find({});
+        res.json(rooms);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 // roomController.js
 export const getRooms = async (req, res) => {
   try {
