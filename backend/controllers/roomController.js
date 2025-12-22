@@ -11,13 +11,140 @@ export const getRoomEnums = (req, res) => {
 };
 
 // --- GET all rooms ---
+// export const getRooms = async (req, res) => {
+//     try {
+//         const rooms = await Room.find({});
+//         res.json(rooms);
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// };
+// roomController.js
 export const getRooms = async (req, res) => {
-    try {
-        const rooms = await Room.find({});
-        res.json(rooms);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const skip = (page - 1) * limit;
+
+    const [rooms, total] = await Promise.all([
+      Room.find({})
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 }),
+      Room.countDocuments()
+    ]);
+
+    res.json({
+      success: true,
+      data: rooms,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+// --- GET rooms for home page ---
+export const getRoomsForHome = async (req, res) => {
+  try {
+    const rooms = await Room.find(
+      { status: "AVAILABLE" },
+      {
+        type: 1,
+        price: 1,
+        img: 1,
+        isFeatured: 1
+      }
+    )
+      .sort({ isFeatured: -1, price: 1 }) // featured lên trước
+      .limit(5);
+
+    const formattedRooms = rooms.map(room => ({
+      id: room._id,
+      type: room.type,
+      price: room.price,
+      img: room.img,
+      isLarge: room.isFeatured //  frontend dùng
+    }));
+
+    res.json({
+      success: true,
+      data: formattedRooms
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+// GET /api/rooms/promotion
+export const getPromotionRoom = async (req, res) => {
+  try {
+    const room = await Room.findOne({
+      status: "Trống",
+      discounted: { $gt: 0 }
+    })
+      .sort({ discounted: -1 }) // giảm giá cao nhất
+      .limit(1);
+
+    if (!room) {
+      return res.json({
+        success: true,
+        data: null
+      });
     }
+
+    res.json({
+      success: true,
+      data: {
+        id: room._id,
+        type: room.type,
+        img: room.img,
+        discounted: room.discounted,
+        price: room.price,
+        finalPrice:
+          room.price - (room.price * room.discounted) / 100
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
+
+
+/**
+ * GET /api/rooms/:id
+ */
+export const getRoomDetail = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy phòng"
+      });
+    }
+
+    res.json({
+      success: true,
+      data: room
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
 
 // --- GET single room by id ---

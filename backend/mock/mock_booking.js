@@ -1,5 +1,5 @@
 import { PaymentMethod } from "../configs/enum/paymentEnum.js";
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
+import { RoomStatus } from "../configs/enum/roomEnum.js";
 
 // Dữ liệu giả lập chi tiết đặt phòng (10 records)
 export const mockBookings = [
@@ -22,7 +22,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-03T12:00:00Z"),
         pricePerNight: 500000,
         paymentMethod: PaymentMethod.CASH,
-        status: BookingStatus.PENDING
+        status: RoomStatus.RESERVED
     },
     {
         bookingCode: "BK-20251126-0002",
@@ -43,7 +43,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-08T12:00:00Z"),
         pricePerNight: 750000,
         paymentMethod: PaymentMethod.TRANSFER,
-        status: BookingStatus.PAID
+        status: RoomStatus.OCCUPIED
     },
     {
         bookingCode: "BK-20251126-0003",
@@ -64,7 +64,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-15T12:00:00Z"),
         pricePerNight: 1500000,
         paymentMethod: PaymentMethod.CASH,
-        status: BookingStatus.PENDING
+        status: RoomStatus.RESERVED
     },
     {
         bookingCode: "BK-20251126-0004",
@@ -85,7 +85,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-18T12:00:00Z"),
         pricePerNight: 500000,
         paymentMethod: PaymentMethod.TRANSFER,
-        status: BookingStatus.PAID
+        status: RoomStatus.OCCUPIED
     },
     {
         bookingCode: "BK-20251126-0005",
@@ -106,7 +106,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-24T12:00:00Z"),
         pricePerNight: 750000,
         paymentMethod: PaymentMethod.CASH,
-        status: BookingStatus.PENDING
+        status: RoomStatus.RESERVED
     },
     {
         bookingCode: "BK-20251126-0006",
@@ -127,7 +127,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-27T12:00:00Z"),
         pricePerNight: 1500000,
         paymentMethod: PaymentMethod.TRANSFER,
-        status: BookingStatus.PAID
+        status: RoomStatus.OCCUPIED
     },
     {
         bookingCode: "BK-20251126-0007",
@@ -148,7 +148,7 @@ export const mockBookings = [
         checkOutDate: new Date("2025-12-30T12:00:00Z"),
         pricePerNight: 500000,
         paymentMethod: PaymentMethod.CASH,
-        status: BookingStatus.PENDING
+        status: RoomStatus.RESERVED
     },
     {
         bookingCode: "BK-20251126-0008",
@@ -169,7 +169,7 @@ export const mockBookings = [
         checkOutDate: new Date("2026-01-05T12:00:00Z"),
         pricePerNight: 750000,
         paymentMethod: PaymentMethod.TRANSFER,
-        status: BookingStatus.PAID
+        status: RoomStatus.OCCUPIED
     },
     {
         bookingCode: "BK-20251126-0009",
@@ -190,7 +190,7 @@ export const mockBookings = [
         checkOutDate: new Date("2026-01-10T12:00:00Z"),
         pricePerNight: 1500000,
         paymentMethod: PaymentMethod.CASH,
-        status: BookingStatus.PENDING
+        status: RoomStatus.RESERVED
     },
     {
         bookingCode: "BK-20251126-0010",
@@ -211,6 +211,6 @@ export const mockBookings = [
         checkOutDate: new Date("2026-01-15T12:00:00Z"),
         pricePerNight: 500000,
         paymentMethod: PaymentMethod.TRANSFER,
-        status: BookingStatus.PAID
+        status: RoomStatus.OCCUPIED
     }
 ];

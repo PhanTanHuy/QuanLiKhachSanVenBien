@@ -1,7 +1,7 @@
 import BookingDetail from "../models/BookingDetail.js";
 import User from "../models/User.js";
 import Room from "../models/Room.js";
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
+import { RoomStatus } from "../configs/enum/roomEnum.js";
 
 // Hàm tạo mã đặt phòng tự động (format: BK-YYYYMMDD-XXXX)
 const generateBookingCode = async () => {
@@ -84,11 +84,11 @@ export const createBooking = async (req, res) => {
       bookingCode,
       user: userId,
       userSnapshot: {
-        name: name,
-        email: email,
-        phone: phone,
-        cccd: cccd,
-        address: address,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        cccd: user.cccd,
+        address: user.address,
       },
       room: room._id,
       roomSnapshot: {
@@ -116,6 +116,7 @@ export const createBooking = async (req, res) => {
     console.log("✅ Booking đã được tạo thành công");
 
     return res.status(201).json({
+      success: true,
       message: "Đặt phòng thành công",
       booking: savedBooking,
     });
@@ -295,17 +296,17 @@ export const getBookingsByUser = async (req, res) => {
   }
 };
 
-// Tính tổng doanh thu (chỉ lấy các booking đã thanh toán)
+// Tính tổng doanh thu (chỉ lấy các booking đang thuê)
 export const getRevenue = async (req, res) => {
   try {
-    const bookings = await BookingDetail.find({ status: BookingStatus.PAID });
+    const bookings = await BookingDetail.find({ status: RoomStatus.OCCUPIED });
 
     const totalRevenue = bookings.reduce((sum, item) => {
       return sum + (item.totalPrice || 0);
     }, 0);
 
     return res.status(200).json({
-      message: "Tổng doanh thu từ các đơn đã thanh toán",
+      message: "Tổng doanh thu từ các phòng đang thuê",
       totalBookings: bookings.length,
       totalRevenue: totalRevenue,
     });

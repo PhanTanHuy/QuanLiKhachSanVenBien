@@ -20,18 +20,21 @@
     <div class="login-box">
       <h1 class="login-title">ĐĂNG NHẬP</h1>
 
+
+      <div id="globalError" class="error-message hidden" style="text-align:center;font-size:15px;margin-bottom:10px;"></div>
       <form id="signInForm">
-        <!-- Username Input -->
+
+        <!-- Email Input -->
         <div class="input-group">
-          <span class="input-icon">👤</span>
+          <span class="input-icon">✉️</span>
           <input 
-            id="username" 
-            type="text" 
+            id="email" 
+            type="email" 
             class="input-field" 
-            placeholder="Username"
+            placeholder="Email"
             required
           >
-          <p id="errUsername" class="error-message"></p>
+          <p id="errEmail" class="error-message"></p>
         </div>
 
         <!-- Password Input -->
@@ -88,8 +91,6 @@
       </form>
     </div>
   </div>
-  <script src="../Auth/js/apiSignIn.js">
-    
-  </script>
+  <script type="module" src="../Auth/js/apiSignIn.js"></script>
 </body>
 </html>

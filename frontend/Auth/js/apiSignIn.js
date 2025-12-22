@@ -1,79 +1,76 @@
-const API_URL = "http://localhost:3000/api/auth/signin"; 
-
 const form = document.getElementById("signInForm");
-
+const globalError = document.getElementById("globalError");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const username = document.getElementById("username").value.trim();
+  // reset lỗi
+  globalError.classList.add("hidden");
+  globalError.textContent = "";
+
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  const errUser = document.getElementById("errUsername");
-  const errPass = document.getElementById("errPassword");
-
-  // Reset lỗi
-  errUser.textContent = "";
-  errPass.textContent = "";
-  errUser.classList.add("hidden");
-  errPass.classList.add("hidden");
-
-  let valid = true;
-
-  // =====  CHECK USERNAME =====
-  if (!username) {
-    errUser.textContent = "Vui lòng nhập tên đăng nhập";
-    errUser.classList.remove("hidden");
-    valid = false;
-  } 
-  else if (username.length < 3) {
-    errUser.textContent = "Tên đăng nhập phải có ít nhất 3 ký tự";
-    errUser.classList.remove("hidden");
-    valid = false;
-  }
-  else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-    errUser.textContent = "Tên đăng nhập chỉ được chứa chữ, số và dấu gạch dưới";
-    errUser.classList.remove("hidden");
-    valid = false;
+  if (!email || !password) {
+    globalError.textContent = "Vui lòng nhập đầy đủ email và mật khẩu";
+    globalError.classList.remove("hidden");
+    return;
   }
 
-  // =====  CHECK PASSWORD =====
-  if (!password) {
-    errPass.textContent = "Vui lòng nhập mật khẩu";
-    errPass.classList.remove("hidden");
-    valid = false;
-  }
-  else if (password.length < 6) {
-    errPass.textContent = "Mật khẩu phải có ít nhất 6 ký tự";
-    errPass.classList.remove("hidden");
-    valid = false;
-  }
-
-  // Nếu có lỗi → không gọi API
-  if (!valid) return;
-
-  // ===== CALL API =====
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch("/api/auth/signin", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       credentials: "include",
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ email, password }),
     });
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("Phản hồi server không hợp lệ");
+    }
 
     if (!res.ok) {
-      errPass.textContent = data.message || "Sai tài khoản hoặc mật khẩu";
-      errPass.classList.remove("hidden");
+      globalError.textContent = data.message || "Sai email hoặc mật khẩu";
+      globalError.classList.remove("hidden");
       return;
     }
 
-    alert("🎉 Đăng nhập thành công!");
-    window.location.href = "index.html";
+    // lưu access token
+    localStorage.setItem("accessToken", data.accessToken);
 
-  } catch (err) {
-    alert("Không thể kết nối tới server!");
-    console.error(err);
+    // const meRes = await fetch("/api/auth/me", {
+    //   headers: {
+    //     Authorization: "Bearer " + data.accessToken,
+    //   },
+    // });
+    const meRes = await fetch("/api/users/me", {
+      headers: {
+        Authorization: "Bearer " + data.accessToken,
+      },
+    });
+
+    if (!meRes.ok) {
+      throw new Error("Không lấy được thông tin user");
+    }
+
+    const meData = await meRes.json();
+
+
+    if (meData.user.role === "Admin") {
+      window.location.href = "/admin/dashboard";
+    } else if (meData.user.role === "Receptionist") {
+      window.location.href = "/receptionist";
+    } else {
+      window.location.href = "/user/home";
+    }
+  } catch (error) {
+    console.error(error);
+    globalError.textContent = error.message || "Không thể kết nối server";
+    globalError.classList.remove("hidden");
   }
 });

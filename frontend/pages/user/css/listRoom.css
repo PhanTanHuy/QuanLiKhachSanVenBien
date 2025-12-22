@@ -7,10 +7,6 @@ background-color: #F5E6D3;
 
 /* Filter Section */
 .filter-section {
-/* margin-top: 20px;
-    max-width: 1175px;
-    margin-left: auto;
-    margin-right: auto; */
 background-color: #4a2c1a;
 padding: 25px 50px;
 display: flex;
@@ -18,7 +14,7 @@ flex-wrap: wrap;
 gap: 20px;
 align-items: center;
 justify-content: center;
-/* border-radius: 10px; */
+
 }
 
 .filter-group {
@@ -203,6 +199,23 @@ color: #3d2516;
     background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);
     transform: translateX(5px);
     box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+}
+.pagination {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  margin: 0 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
 }
 
 

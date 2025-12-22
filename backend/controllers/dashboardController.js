@@ -2,7 +2,6 @@ import Room from "../models/Room.js";
 import BookingDetail from "../models/BookingDetail.js";
 import User from "../models/User.js";
 import { RoomStatus } from "../configs/enum/roomEnum.js";
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
 
 // Lấy thống kê tổng quan cho dashboard
 export const getDashboardStats = async (req, res) => {
@@ -18,12 +17,12 @@ export const getDashboardStats = async (req, res) => {
     
     // Đếm tổng số booking
     const totalBookings = await BookingDetail.countDocuments();
-    const paidBookings = await BookingDetail.countDocuments({ status: BookingStatus.PAID });
-    const pendingBookings = await BookingDetail.countDocuments({ status: BookingStatus.PENDING });
+    const occupiedBookings = await BookingDetail.countDocuments({ status: RoomStatus.OCCUPIED });
+    const reservedBookings = await BookingDetail.countDocuments({ status: RoomStatus.RESERVED });
     
-    // Tính tổng doanh thu (chỉ các booking đã thanh toán)
-    const paidBookingsList = await BookingDetail.find({ status: BookingStatus.PAID });
-    const totalRevenue = paidBookingsList.reduce((sum, booking) => sum + (booking.totalPrice || 0), 0);
+    // Tính tổng doanh thu (chỉ các booking đang thuê)
+    const occupiedBookingsList = await BookingDetail.find({ status: RoomStatus.OCCUPIED });
+    const totalRevenue = occupiedBookingsList.reduce((sum, booking) => sum + (booking.totalPrice || 0), 0);
     
     // Đếm tổng số user
     const totalUsers = await User.countDocuments();
@@ -40,12 +39,12 @@ export const getDashboardStats = async (req, res) => {
         },
         bookings: {
           total: totalBookings,
-          paid: paidBookings,
-          pending: pendingBookings
+          occupied: occupiedBookings,
+          reserved: reservedBookings
         },
         revenue: {
           total: totalRevenue,
-          paidBookings: paidBookings
+          occupiedBookings: occupiedBookings
         },
         users: {
           total: totalUsers

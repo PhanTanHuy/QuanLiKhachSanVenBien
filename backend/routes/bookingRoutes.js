@@ -9,7 +9,7 @@ import {
   getRevenue,
 } from "../controllers/bookingController.js";
 import { PaymentMethod } from "../configs/enum/paymentEnum.js";
-import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
+import { RoomStatus } from "../configs/enum/roomEnum.js";
 
 const router = express.Router();
 
@@ -39,9 +39,14 @@ router.get("/enum/payment-methods", (req, res) => {
   res.status(200).json({ paymentMethods: PaymentMethod });
 });
 
-// Lấy enum trạng thái đặt phòng
+// Lấy enum trạng thái booking (chỉ có Đã đặt cọc và Đang thuê)
 router.get("/enum/booking-statuses", (req, res) => {
-  res.status(200).json({ bookingStatuses: BookingStatus });
+  res.status(200).json({ 
+    bookingStatuses: {
+      RESERVED: RoomStatus.RESERVED,
+      OCCUPIED: RoomStatus.OCCUPIED
+    }
+  });
 });
 
 export default router;

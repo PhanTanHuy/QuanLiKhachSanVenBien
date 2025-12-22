@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header - Khách sạn Ven Biển</title>
+    <style>
+      :root {
+        --primary-color: #2c5f7e;
+        --primary-dark: #1a3a4d;
+        --primary-light: #3d7a9e;
+        --accent-color: #d4af37;
+        --text-dark: #050505;
+        --text-light: #65676b;
+        --text-white: #ffffff;
+        --bg-light: #f0f2f5;
+        --bg-hover: #e4e6eb;
+        --border-color: #ced0d4;
+        --shadow-dropdown: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* HEADER */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #f3e4d1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* TOP BAR */
+      .top-bar {
+        background-color: #4a2c1a;
+        color: white;
+        padding: 10px 0;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .top-bar-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 20px;
+      }
+
+      /* NAVIGATION */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 40px;
+
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        background-color: #6e4a1d;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 8px;
+      }
+
+      .nav-menu a {
+        display: block;
+        padding: 10px 20px;
+        color: var(--text-dark);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        transition: all 0.2s;
+      }
+
+      .nav-menu a:hover {
+        background: var(--bg-light);
+      }
+
+      /* USER MENU */
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+      }
+
+      .login-btn {
+        padding: 10px 24px;
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      .login-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+      }
+
+      /* USER WRAPPER */
+      #userWrapper {
+        position: relative;
+      }
+
+      /* USER ICON */
+      .user-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.2s;
+        position: relative;
+      }
+
+      .user-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .user-icon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.05);
+        opacity: 0;
+        transition: opacity 0.2s;
+        border-radius: 50%;
+      }
+
+      .user-icon:hover::before {
+        opacity: 1;
+      }
+
+      /* DROPDOWN MENU */
+      .user-dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: var(--shadow-dropdown);
+        min-width: 360px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px) scale(0.95);
+        transform-origin: top right;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+
+      .user-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+
+      /* USER INFO CARD */
+      .user-info-card {
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+        background: white;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .user-profile:hover {
+        background: var(--bg-light);
+      }
+
+      .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .user-details {
+        flex: 1;
+      }
+
+      .user-name {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+      }
+
+      .user-subtitle {
+        font-size: 13px;
+        color: var(--text-light);
+      }
+
+      /* VIEW PROFILE BUTTON */
+      .view-profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        margin: 8px;
+        background: var(--bg-light);
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--text-dark);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        text-decoration: none;
+      }
+
+      .view-profile-btn:hover {
+        background: var(--bg-hover);
+      }
+
+      .profile-icon {
+        width: 36px;
+        height: 36px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+
+      /* MENU DIVIDER */
+      .menu-divider {
+        height: 1px;
+        background: var(--border-color);
+        margin: 0 8px;
+      }
+
+      /* MENU OPTIONS */
+      .menu-options {
+        padding: 8px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .menu-item:hover {
+        background: var(--bg-light);
+      }
+
+      .menu-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--bg-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .menu-text {
+        flex: 1;
+      }
+
+      .menu-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+
+      .menu-subtitle {
+        font-size: 12px;
+        color: var(--text-light);
+      }
+
+      .menu-arrow {
+        font-size: 20px;
+        color: var(--text-light);
+      }
+
+      /* LOGOUT BUTTON */
+      .logout-item {
+        border-top: 1px solid var(--border-color);
+        margin-top: 4px;
+        padding-top: 4px;
+      }
+
+      .logout-item .menu-title {
+        color: #e4405f;
+      }
+
+      /* HIDDEN CLASS */
+      .hidden {
+        display: none !important;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .top-bar {
+          display: none;
+        }
+
+        nav {
+          flex-wrap: wrap;
+          padding: 12px 20px;
+        }
+
+        .nav-menu {
+          order: 3;
+          width: 100%;
+          flex-direction: column;
+          margin-top: 12px;
+        }
+
+        .user-dropdown {
+          min-width: 320px;
+          right: -10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-item">
+          <span>📞</span>
+          <span>0123456789</span>
+        </div>
+        <div class="top-bar-item">
+          <span>✉️</span>
+          <span>hotel@gmail.com</span>
+        </div>
+        <div class="top-bar-item">
+          <span>📍</span>
+          <span>280 An Dương Vương, Phường 4, TPHCM</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav>
+        <div class="logo">Khách sạn Ven Biển</div>
+        <ul class="nav-menu">
+          <li><a href="/user/home">Trang chủ</a></li>
+          <li><a href="/user/rooms">Phòng</a></li>
+          <li><a href="/user/services">Dịch vụ</a></li>
+          <li><a href="#booking">Lịch sử đặt phòng</a></li>
+          <li><a href="/user/contact">Liên hệ</a></li>
+        </ul>
+
+        <div class="user-menu">
+          <!-- Button đăng nhập -->
+          <a href="/signin" id="loginBtn" class="login-btn"> Đăng nhập </a>
+
+          <div id="userWrapper" class="hidden">
+            <div class="user-icon" id="userIcon">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXU1NT////R0dHV1dX09PTf39/8/Pzb29vu7u7x8fHl5eX5+fnc3Nzr6+vi4uLw8PCR9fa8AAAFQElEQVR4nO2d6ZKjMAyEjQzmSsj7v+2gMBnIHcCy2hl9Vbs/9qiaLtmSfDXOGYZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhbIOI/n59D97z76MmXw/dsS2Z9tgNtf/VOf2DvCFXd20fimtC33a1yzyYU3Sq5lbcQmZTLf5ljlDd9E/lTfRNnXEgq/KNvImy0v5Bt0HVu/AtAlllF0dPh7J4Pv9uCUVZU1aTkVzzsboLTU6Jdc0AncloqNKxWDFCL4z/45iHRPKfZdBHlD4DjVSvD98ikPDF0VO1Qx9ToefUvQJHidoSXkJV2DNGmRCgU+r+CIJHsY4isChqbSHP8Fvq/CN61GSzvQ7eUmpLeQh3MtEA7G58pCxzoQJc9++uE0tC0JZzB61fLr2mQRunh8gCi+KgLekaKmOOUSaUWEGMm2YmoFobilcKZ5CCuHvJ9BigIIqEECiIPlrHfUuNUvaj18ILODUxajszg9PYyOQZBiTX0ElM4QlkmMqMUQZkmEplUgZjP6MTjGGnLY6hVkxgUbQIE5Fi7T89okdQ6AUFFoV+U+MF1r5LDgCNWyeqECDVRN1EvAdgW1Gs7Z4AaL4FezYGoG8TWv1eAFgFm0JTaAoBFEo23hCt9z+oh8Jdm75CN4gqHLTlCW4HTyBsCn/7+pDX+IL7NBBrfMlyEQCKheMlsFQQA8IC2P2H/VISnIcQg/Q/nFt8/dmT3NEMyMGM84JnwAgFn5E7x0fh2+9iOKlcA5NnnND5E0RP+kcVvXMLUCEUmYlIs3CEBO6XYin8B3eEKXJjEwBflMa+q4/Ht7+3YNa83n5FAH0zM7an0d494TSk11C0t2uYYzTGE9kJ5IeyUSRCvyHdLTGgC9z9EjgEtGbtDu/2vsfHnYN/7PJU0P7hP2NzdwPaydzjN3ubZBJCx+4fG/xpcnD9WMAeQ2so4XPoPcQ+WJ/k1cBeWPnp4+N3+tjri7K1bKP6+Nav7QjbZ3+Cd+QOp9eee5Rr+H7hwUrsm3gfvLarKd/heQP7XLL3ZdMyJ/a+/DKPzylSZ+dSOjuYum+JnWEYhmEYf0xlnr27L8x/lj+jDH/omrbvF9uMIfR923QH7zJXSZNZ+au109m2PFeV5IZ2Ctuz5dPv37YD4IHvS85dth/WbNSUg8+rG6f6hdX8k3hm5M1ONGw7Ku2HPGbktu3gX434e27TdvfWs5mAr5Hq/be/SuT5GOnCCeYBjeePBUS7i3EgD1c5KPqNIbRAstd8vJtt4ew/jxTFcYRGv0GLdRhF8V93haIDOjAV8jfByal0EnmfF2CePVEr9AAxYNz19qKmCi3CXBwjKPYAMRStsjovbalwvtGuGsZRoNwLUiYoX9pnywhphYrGEV72kfNMrbaBQ07SUHCmV+vChc13ZrTKorBvyxKlqbjrquw6gsbzBNle5pZSo7dJN0aZ9AYZ3qcbo0xI/lVd8W7tluStTZpavyRxshF2aXtEYjOe9CFMHMT4n5V5T9oPz9TCK4qHClMGUdh39hkpN6bSR5AJ6Upi2nZmJlljk7QjXZIs12jkGSZZrqGjmsJE+/yiH0N4TSLLGo1+5kKaYaqVSZkk2VQtkzJpsqlOmplI4lGnOQ3TTEQ5u9L3JDE0Tb59cU2CzQzVRJMm1ejVe6aXF+gVpyFPRPkVlOzHj94j/5lgWZP594jb0At//Og90ssLOb/ZTxH3pVXahJoR345SLofyBTHtqeFjhdKjVF+hrEBTaApzUJj+4PAa8WNEgIovrNCpd23SAhNehHrM6utRP3IESPnqlEjaAAAAAElFTkSuQmCC"
+                alt="User Avatar"
+                id="userIconImg"
+              />
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+              <!-- User Info Card -->
+              <div class="user-info-card">
+                <a href="/user/profile" class="user-profile">
+                  <div class="user-avatar">
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXU1NT////R0dHV1dX09PTf39/8/Pzb29vu7u7x8fHl5eX5+fnc3Nzr6+vi4uLw8PCR9fa8AAAFQElEQVR4nO2d6ZKjMAyEjQzmSsj7v+2gMBnIHcCy2hl9Vbs/9qiaLtmSfDXOGYZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhbIOI/n59D97z76MmXw/dsS2Z9tgNtf/VOf2DvCFXd20fimtC33a1yzyYU3Sq5lbcQmZTLf5ljlDd9E/lTfRNnXEgq/KNvImy0v5Bt0HVu/AtAlllF0dPh7J4Pv9uCUVZU1aTkVzzsboLTU6Jdc0AncloqNKxWDFCL4z/45iHRPKfZdBHlD4DjVSvD98ikPDF0VO1Qx9ToefUvQJHidoSXkJV2DNGmRCgU+r+CIJHsY4isChqbSHP8Fvq/CN61GSzvQ7eUmpLeQh3MtEA7G58pCxzoQJc9++uE0tC0JZzB61fLr2mQRunh8gCi+KgLekaKmOOUSaUWEGMm2YmoFobilcKZ5CCuHvJ9BigIIqEECiIPlrHfUuNUvaj18ILODUxajszg9PYyOQZBiTX0ElM4QlkmMqMUQZkmEplUgZjP6MTjGGnLY6hVkxgUbQIE5Fi7T89okdQ6AUFFoV+U+MF1r5LDgCNWyeqECDVRN1EvAdgW1Gs7Z4AaL4FezYGoG8TWv1eAFgFm0JTaAoBFEo23hCt9z+oh8Jdm75CN4gqHLTlCW4HTyBsCn/7+pDX+IL7NBBrfMlyEQCKheMlsFQQA8IC2P2H/VISnIcQg/Q/nFt8/dmT3NEMyMGM84JnwAgFn5E7x0fh2+9iOKlcA5NnnND5E0RP+kcVvXMLUCEUmYlIs3CEBO6XYin8B3eEKXJjEwBflMa+q4/Ht7+3YNa83n5FAH0zM7an0d494TSk11C0t2uYYzTGE9kJ5IeyUSRCvyHdLTGgC9z9EjgEtGbtDu/2vsfHnYN/7PJU0P7hP2NzdwPaydzjN3ubZBJCx+4fG/xpcnD9WMAeQ2so4XPoPcQ+WJ/k1cBeWPnp4+N3+tjri7K1bKP6+Nav7QjbZ3+Cd+QOp9eee5Rr+H7hwUrsm3gfvLarKd/heQP7XLL3ZdMyJ/a+/DKPzylSZ+dSOjuYum+JnWEYhmEYf0xlnr27L8x/lj+jDH/omrbvF9uMIfR923QH7zJXSZNZ+au109m2PFeV5IZ2Ctuz5dPv37YD4IHvS85dth/WbNSUg8+rG6f6hdX8k3hm5M1ONGw7Ku2HPGbktu3gX434e27TdvfWs5mAr5Hq/be/SuT5GOnCCeYBjeePBUS7i3EgD1c5KPqNIbRAstd8vJtt4ew/jxTFcYRGv0GLdRhF8V93haIDOjAV8jfByal0EnmfF2CePVEr9AAxYNz19qKmCi3CXBwjKPYAMRStsjovbalwvtGuGsZRoNwLUiYoX9pnywhphYrGEV72kfNMrbaBQ07SUHCmV+vChc13ZrTKorBvyxKlqbjrquw6gsbzBNle5pZSo7dJN0aZ9AYZ3qcbo0xI/lVd8W7tluStTZpavyRxshF2aXtEYjOe9CFMHMT4n5V5T9oPz9TCK4qHClMGUdh39hkpN6bSR5AJ6Upi2nZmJlljk7QjXZIs12jkGSZZrqGjmsJE+/yiH0N4TSLLGo1+5kKaYaqVSZkk2VQtkzJpsqlOmplI4lGnOQ3TTEQ5u9L3JDE0Tb59cU2CzQzVRJMm1ejVe6aXF+gVpyFPRPkVlOzHj94j/5lgWZP594jb0At//Og90ssLOb/ZTxH3pVXahJoR345SLofyBTHtqeFjhdKjVF+hrEBTaApzUJj+4PAa8WNEgIovrNCpd23SAhNehHrM6utRP3IESPnqlEjaAAAAAElFTkSuQmCC"
+                      alt="User Avatar"
+                      id="userAvatarImg"
+                    />
+                  </div>
+                  <div class="user-details">
+                    <div class="user-name" id="userName"></div>
+                    <div class="user-subtitle">Xem trang cá nhân của bạn</div>
+                  </div>
+                </a>
+              </div>
+
+              <!-- Divider -->
+              <div class="menu-divider"></div>
+
+              <!-- Menu Options -->
+              <div class="menu-options">
+                <!-- Logout -->
+                <div class="menu-item logout-item" id="logoutBtn">
+                  <div class="menu-icon">🚪</div>
+                  <div class="menu-text">
+                    <div class="menu-title">Đăng xuất</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <script>
+      // Kiểm tra trạng thái đăng nhập
+      const isLoggedIn = true;
+
+      const loginBtn = document.getElementById("loginBtn");
+      const userWrapper = document.getElementById("userWrapper");
+      const userIcon = document.getElementById("userIcon");
+      const userDropdown = document.getElementById("userDropdown");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userNameElement = document.getElementById("userName");
+
+      if (isLoggedIn) {
+        loginBtn.classList.add("hidden");
+        userWrapper.classList.remove("hidden");
+        userNameElement.textContent = userName;
+      } else {
+        loginBtn.classList.remove("hidden");
+        userWrapper.classList.add("hidden");
+      }
+
+      // Toggle dropdown khi click vào avatar
+      userIcon?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        userDropdown?.classList.toggle("show");
+      });
+
+      // Đóng dropdown khi click ra ngoài
+      document.addEventListener("click", (e) => {
+        if (!userWrapper?.contains(e.target)) {
+          userDropdown?.classList.remove("show");
+        }
+      });
+
+      // Xử lý đăng xuất
+      logoutBtn?.addEventListener("click", () => {
+        if (confirm("Bạn có chắc muốn đăng xuất?")) {
+          // Gọi API đăng xuất
+          window.location.href = "/signout";
+        }
+      });
+
+      // Đóng dropdown khi click vào menu item
+      document.querySelectorAll(".menu-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          userDropdown?.classList.remove("show");
+        });
+      });
+    </script>
+  </body>
+</html>
+<script src="/user/js/signout.js" defer></script>
