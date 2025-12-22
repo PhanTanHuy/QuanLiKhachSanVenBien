@@ -80,3 +80,38 @@ body {
 .room-btn {
   margin-top: auto;
 }
+
+/* Modal nền */
+#tenantModal .modal-content {
+  background-color: #f6e8d6;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Item thông tin */
+.tenant-item {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+/* Icon */
+.tenant-item i {
+  font-size: 1.2rem;
+  color: #8b5e3c;
+}
+
+/* Booking code nổi bật */
+.booking-badge {
+  text-align: center;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #e7c9a9;
+  color: #5a3b1f;
+  letter-spacing: 1px;
+}

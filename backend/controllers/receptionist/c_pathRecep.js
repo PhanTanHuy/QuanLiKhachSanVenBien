@@ -19,7 +19,10 @@ class pathRecep {
         const adminPath = path.resolve(__dirname, '../../../frontend/pages/receptionist/profileRecep.html');
         res.sendFile(adminPath);
     };
-    
+    getPaymentPage = (req, res) => {
+        const adminPath = path.resolve(__dirname, '../../../frontend/pages/receptionist/paymentPage.html');
+        res.sendFile(adminPath);
+    }
 }
 
 export default new pathRecep();

@@ -23,43 +23,57 @@ const generateBookingCode = async () => {
 // Tạo chi tiết đặt phòng mới
 export const createBooking = async (req, res) => {
   try {
-    const { userId, roomId, checkInDate, checkOutDate, paymentMethod, status } =
-      req.body;
+    console.log("Đang tiến hành create-booking");
 
-    // Validate required fields
-    if (!userId || !roomId || !checkInDate || !checkOutDate) {
-      return res.status(400).json({
-        message:
-          "Thiếu thông tin bắt buộc: userId, roomId, checkInDate, checkOutDate",
+    let userId;
+    const {
+      email,
+      name,
+      phone,
+      cccd,
+      address,
+      roomId,
+      checkInDate,
+      checkOutDate,
+      paymentMethod,
+      status,
+      deposit,
+      accountType, // giúp be biết cần tạo user hay dùng user hiện có
+    } = req.body;
+
+    // Xử lý thông tin user
+    if (accountType === "new") {
+      // Tạo user mới
+      const existingUser = await User.findOne({ email: email });
+      if (existingUser) {
+        return res.status(400).json({
+          message:
+            "Email đã tồn tại, vui lòng sử dụng email khác hoặc chọn tài khoản hiện có",
+        });
+      }
+      const user = new User({
+        // Tạo user mới với thông tin từ form
       });
-    }
-    else if (accountType === "old") {
+      await user.save();
+      userId = user._id;
+    } else if (accountType === "old") {
       // Tìm user hiện có theo email
       const existingUser = await User.findOne({ email: email });
       if (!existingUser) {
-        return res.status(404).json({ message: "Không tìm thấy tài khoản với email đã cho" });
+        return res
+          .status(404)
+          .json({ message: "Không tìm thấy tài khoản với email đã cho" });
       }
       userId = existingUser._id;
-    }
-    else {
+    } else {
       return res.status(400).json({ message: "Loại tài khoản không hợp lệ" });
     }
     console.log("📌 Tìm thấy userId:", userId);
     // Xử lý thông tin phòng
     const room = await Room.findOne({ id: roomId });
-    
+
     if (!room) {
       return res.status(404).json({ message: "Không tìm thấy phòng" });
-    }
-
-    // Validate dates
-    const checkIn = new Date(checkInDate);
-    const checkOut = new Date(checkOutDate);
-
-    if (checkOut <= checkIn) {
-      return res.status(400).json({
-        message: "Ngày trả phòng phải sau ngày nhận phòng",
-      });
     }
 
     // Tạo mã đặt phòng tự động
@@ -86,8 +100,9 @@ export const createBooking = async (req, res) => {
       checkInDate: checkInDate,
       checkOutDate: checkOutDate,
       pricePerNight: room.price,
-      paymentMethod: paymentMethod || "Tiền mặt",
-      status: status || BookingStatus.PENDING,
+      paymentMethod: paymentMethod,
+      status: status,
+      //deposit: deposit,
       // totalPrice, deposit, nights sẽ được tính tự động trong pre-validate hook
     });
 
@@ -98,6 +113,8 @@ export const createBooking = async (req, res) => {
       .populate("user", "-hashedPassword")
       .populate("room");
 
+    console.log("✅ Booking đã được tạo thành công");
+
     return res.status(201).json({
       success: true,
       message: "Đặt phòng thành công",
@@ -105,6 +122,46 @@ export const createBooking = async (req, res) => {
     });
   } catch (error) {
     console.error("Lỗi khi tạo booking:", error);
+    return res.status(500).json({
+      message: "Lỗi hệ thống",
+      error: error.message,
+    });
+  }
+};
+
+// Cập nhật chi tiết đặt phòng
+export const updateBooking = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    console.log(bookingId);
+    
+    const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({
+        message: "Thiếu trạng thái booking",
+      });
+    }
+
+    const updatedBooking = await BookingDetail.findByIdAndUpdate(
+      bookingId,
+      { status },
+      { new: true }
+    )
+      .populate("user", "-hashedPassword")
+      .populate("room");
+
+    if (!updatedBooking) {
+      return res.status(404).json({
+        message: "Không tìm thấy chi tiết đặt phòng để cập nhật",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Cập nhật booking thành công",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật booking:", error);
     return res.status(500).json({
       message: "Lỗi hệ thống",
       error: error.message,

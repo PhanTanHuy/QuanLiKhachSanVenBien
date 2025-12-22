@@ -1,5 +1,13 @@
 import express from "express";
-import { createBooking, getAllBookings, getBookingByCode, getRevenue, getBookingsByRoom, getBookingsByUser } from "../controllers/bookingController.js";
+import {
+  createBooking,
+  updateBooking,
+  getAllBookings,
+  getBookingByCode,
+  getBookingsByRoom,
+  getBookingsByUser,
+  getRevenue,
+} from "../controllers/bookingController.js";
 import { PaymentMethod } from "../configs/enum/paymentEnum.js";
 import { RoomStatus } from "../configs/enum/roomEnum.js";
 
@@ -7,6 +15,9 @@ const router = express.Router();
 
 // Tạo booking mới
 router.post("/", createBooking);
+
+// Cập nhật chi tiết đặt phòng
+router.put("/:bookingId", updateBooking);
 
 // Lấy tất cả chi tiết đặt phòng
 router.get("/", getAllBookings);
