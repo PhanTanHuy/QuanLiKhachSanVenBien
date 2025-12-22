@@ -37,7 +37,7 @@ const RoomStatus = Object.keys(STATUS_LABELS).reduce((acc, k) => {
 async function getRoomsApi() {
   const response = await fetch(apiURL);
   const data = await response.json();
-  return data;
+  return data.data || [];
 }
 
 // Load ENUMS
@@ -45,7 +45,7 @@ async function addRoomTypes() {
   try {
     const res = await fetch("/api/rooms/enums");
     const data = await res.json();
-
+    
     const types = data.types || [];
     ROOM_STATUSES = (data.statuses || []).map((st) => ({
       value: st,
@@ -100,6 +100,7 @@ function initStatusFilter() {
 // Hàm filters
 function applyFilters() {
   let rooms = [...ALL_ROOMS];
+  console.log("APPLY FILTERS:", rooms);
 
   if (currentFilter !== "all") {
     rooms = rooms.filter((r) => normalizeStatus(r.status) === currentFilter);
