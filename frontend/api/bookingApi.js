@@ -95,6 +95,43 @@ export async function getBookingsByUserApi(userIdentifier) {
     }
 }
 
+// --- Lấy danh sách booking của user hiện tại ---
+export async function getMyBookingsApi() {
+    try {
+        // Bước 1: Lấy accessToken từ localStorage
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+            throw new Error("Vui lòng đăng nhập để xem lịch sử đặt phòng");
+        }
+
+        // Bước 2: Lấy thông tin user hiện tại
+        const meRes = await fetch("/api/users/me", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        if (!meRes.ok) {
+            throw new Error("Không thể lấy thông tin người dùng");
+        }
+
+        const meData = await meRes.json();
+        const userEmail = meData.user.email;
+
+        // Bước 3: Lấy danh sách booking của user đó
+        const bookingsRes = await fetch(`${API_URL}/by-user/${userEmail}`);
+        
+        if (!bookingsRes.ok) {
+            throw new Error("Lấy danh sách booking thất bại");
+        }
+
+        return await bookingsRes.json();
+    } catch (err) {
+        console.error("Lỗi khi lấy booking của user:", err);
+        throw err;
+    }
+}
+
 // --- Lay danhh thu---
 export async function getRevenue() {
     try {
