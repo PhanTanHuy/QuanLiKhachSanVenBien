@@ -1,12 +1,12 @@
 import express from "express";
 import {
+    getRoomEnums,
     getRooms,
     getAllRooms,
     getRoomById,
     createRoom,
     updateRoom,
     deleteRoom,
-    getRoomEnums,
     getRoomDetail,
     getRoomsForHome,
     getPromotionRoom
