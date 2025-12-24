@@ -39,7 +39,7 @@ const RoomStatus = Object.keys(STATUS_LABELS).reduce((acc, k) => {
 async function getRoomsApi() {
   const response = await fetch(apiURL);
   const data = await response.json();
-  return data;
+  return data.data || [];
 }
 
 // Load ENUMS

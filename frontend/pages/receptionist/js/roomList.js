@@ -45,7 +45,7 @@ async function addRoomTypes() {
   try {
     const res = await fetch("/api/rooms/enums");
     const data = await res.json();
-    
+
     const types = data.types || [];
     ROOM_STATUSES = (data.statuses || []).map((st) => ({
       value: st,
@@ -372,12 +372,61 @@ function toggleDepositAmount() {
     const depositAmount = Math.round(totalRent * 0.3);
 
     input.value = depositAmount > 0 ? depositAmount : "";
+    updateQR();
   } else {
     wrapper.classList.add("d-none");
     input.required = false;
     input.value = "";
+    hideQR();
   }
 }
+
+document.getElementById("paymentMethod").addEventListener("change", updateQR);
+document.getElementById("depositAmount").addEventListener("input", updateQR);
+
+
+// Xử lý QR Code
+function updateQR() {
+    const bookingType = document.querySelector('input[name="bookingType"]:checked').value;
+    const paymentMethod = document.getElementById("paymentMethod").value;
+    const depositAmount = document.getElementById("depositAmount").value;
+    const qrWrapper = document.getElementById("qrWrapper");
+
+    if (
+        bookingType === "deposit" &&
+        paymentMethod === "Chuyển khoản" &&
+        depositAmount > 0
+    ) {
+        showQR(depositAmount);
+    } else {
+        hideQR();
+    }
+}
+
+// Hiện QR code
+function showQR(amount) {
+    const qrWrapper = document.getElementById("qrWrapper");
+    const qrImage = document.getElementById("qrImage");
+    const qrAmount = document.getElementById("qrAmount");
+
+    // Ví dụ VietQR (thay STK, bank, tên)
+    const bankId = "VCB";
+    const accountNo = "0123456789";
+    const accountName = "NGUYEN VAN A";
+
+    const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact.png?amount=${amount}&addInfo=DAT+COC+PHONG&accountName=${encodeURIComponent(accountName)}`;
+
+    qrImage.src = qrUrl;
+    qrAmount.innerText = Number(amount).toLocaleString("vi-VN");
+
+    qrWrapper.classList.remove("d-none");
+}
+
+function hideQR() {
+    const qrWrapper = document.getElementById("qrWrapper");
+    qrWrapper.classList.add("d-none");
+}
+
 
 function calculateTotalRent() {
   const checkIn = document.getElementById("checkInDate").value;

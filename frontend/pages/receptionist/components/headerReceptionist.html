@@ -36,9 +36,17 @@
                         <a class="nav-link" href="/receptionist/payment">Hóa đơn – Thanh toán</a>
                     </li>
 
-                    <li class="nav-item d-flex align-items-center ms-2">
-                        <a class="nav-item" href="/receptionist/profile"><i class="bi bi-person-circle fs-4"></i></a>
+                    <li class="nav-item d-flex align-items-center ms-2 position-relative">
+                        <a href="/receptionist/profile" class="me-2">
+                            <i class="bi bi-person-circle fs-4"></i>
+                        </a>
+
+                        <!-- Logout button -->
+                        <button id="logoutBtn" class="btn btn-sm btn-outline-danger d-none">
+                            Đăng xuất
+                        </button>
                     </li>
+
                 </ul>
             </div>
 
@@ -76,5 +84,10 @@
 
     .navbar-toggler {
         border-color: #502d0e;
+    }
+
+    #logoutBtn {
+        font-size: 13px;
+        padding: 4px 8px;
     }
 </style>
