@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
-import dotenv from "dotenv";
 import cors from "cors";
 
 
@@ -27,8 +26,6 @@ import receptionistApiRoute from './routes/receptionist/receptionistApiRoute.js'
 // Receptionist routes
 import pathRecep from './routes/receptionist/recepRoutes.js';
 
-
-dotenv.config();
 const app = express();
 
 // Middleware
@@ -73,6 +70,19 @@ app.get("/user/rooms/:id", (req, res) => {
   );
 });
 
+// User profile page
+app.get("/user/profile", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/pages/user/profile.html")
+  );
+});
+
+// History page
+app.get("/user/history", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/pages/user/history.html")
+  );
+});
 
 app.use("/api/admin", adminApiRoute);
 app.use("/api/receptionist", receptionistApiRoute);
