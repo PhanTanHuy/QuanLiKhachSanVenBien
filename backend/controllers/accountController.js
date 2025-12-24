@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import { UserRole } from "../configs/enum/userEnum.js";
 
+import bcrypt from "bcryptjs";
+
 // Lấy tất cả user
 export const getAllUsers = async (req, res) => {
   try {
@@ -8,7 +10,7 @@ export const getAllUsers = async (req, res) => {
     return res.status(200).json({
       message: "Danh sách tất cả user",
       count: users.length,
-      users
+      users,
     });
   } catch (error) {
     console.error("Lỗi khi gọi getAllUsers", error);
@@ -22,7 +24,7 @@ export const getUserRoles = async (req, res) => {
     const roles = Object.values(UserRole);
     return res.status(200).json({
       message: "Danh sách vai trò",
-      roles
+      roles,
     });
   } catch (error) {
     console.error("Lỗi khi gọi getUserRoles", error);
@@ -35,15 +37,25 @@ export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
     // For testing: skip role-based authorization. Accept provided fields.
-    const { name, phone, address, cccd, role } = req.body;
+    const { name, phone, address, cccd, role, password } = req.body;
     const update = { name, phone, address, cccd };
 
     if (role) update.role = role;
 
-    const updated = await User.findByIdAndUpdate(userId, update, { new: true }).select("-hashedPassword");
-    if (!updated) return res.status(404).json({ message: "User không tồn tại" });
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      update.hashedPassword = await bcrypt.hash(password, salt);
+    }
 
-    return res.status(200).json({ message: "Cập nhật user thành công", user: updated });
+    const updated = await User.findByIdAndUpdate(userId, update, {
+      new: true,
+    }).select("-hashedPassword");
+    if (!updated)
+      return res.status(404).json({ message: "User không tồn tại" });
+
+    return res
+      .status(200)
+      .json({ message: "Cập nhật user thành công", user: updated });
   } catch (error) {
     console.error("Lỗi khi cập nhật user", error);
     return res.status(500).json({ message: "Lỗi hệ thống" });
@@ -56,7 +68,8 @@ export const deleteUser = async (req, res) => {
     const userId = req.params.id;
     // For testing: skip role-based authorization and just delete the user
     const deleted = await User.findByIdAndDelete(userId);
-    if (!deleted) return res.status(404).json({ message: "User không tồn tại" });
+    if (!deleted)
+      return res.status(404).json({ message: "User không tồn tại" });
 
     return res.status(200).json({ message: "Xóa user thành công" });
   } catch (error) {

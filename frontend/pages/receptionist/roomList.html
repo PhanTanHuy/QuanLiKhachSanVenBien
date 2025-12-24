@@ -164,10 +164,20 @@
                         <select id="paymentMethod" class="form-select">
                             <option value="Tiền mặt">Tiền mặt</option>
                             <option value="Chuyển khoản">Chuyển khoản</option>
-                            <option value="Momo">Momo</option>
-                            <option value="ZaloPay">ZaloPay</option>
                         </select>
                     </div>
+
+                    <!-- QR Thanh toán -->
+                    <div class="mb-3 d-none text-center" id="qrWrapper">
+                        <label class="form-label fw-bold">Quét mã QR để thanh toán</label>
+                        <div>
+                            <img id="qrImage" src="" alt="QR Code" style="max-width: 250px;">
+                        </div>
+                        <p class="mt-2 text-muted">
+                            Số tiền: <strong id="qrAmount">0</strong> VND
+                        </p>
+                    </div>
+
 
                 </div>
 
@@ -193,8 +203,8 @@
     <script src="/pages/receptionist/js/roomList.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    
-  
+
+
 </body>
 
 </html>

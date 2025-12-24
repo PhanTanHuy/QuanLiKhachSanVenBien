@@ -122,12 +122,16 @@ function payBooking(bookingId) {
   const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
 
   const pricePerDay = booking.room.price;
-  const total = days * pricePerDay;
+  const deposit = booking.deposit;
+  const total = days * pricePerDay - deposit;
 
   document.getElementById("payRoom").innerText = booking.room.id;
   document.getElementById("payDays").innerText = days + " ngày";
   document.getElementById("payPrice").innerText =
     pricePerDay.toLocaleString("vi-VN") + " ₫";
+  document.getElementById("payDeposit").innerText =
+    booking.deposit.toLocaleString("vi-VN") + " ₫";
+
   document.getElementById("payTotal").innerText =
     total.toLocaleString("vi-VN") + " ₫";
   document.getElementById("payDate").innerText = new Date().toLocaleDateString(
@@ -190,13 +194,13 @@ function viewInvoice(bookingCode) {
       document.getElementById("invRoom").innerText = booking?.room?.id || "-";
 
       document.getElementById("invAmount").innerText =
-        payment.amount.toLocaleString("vi-VN") + " ₫";
+        payment.totalPrice.toLocaleString("vi-VN") + " ₫";
 
       document.getElementById("invDeposit").innerText =
         (payment.depositAmount || 0).toLocaleString("vi-VN") + " ₫";
 
       document.getElementById("invTotal").innerText =
-        payment.totalPrice.toLocaleString("vi-VN") + " ₫";
+        (payment.totalPrice + payment.depositAmount).toLocaleString("vi-VN") + " ₫";
 
       document.getElementById("invMethod").innerText = payment.paymentMethod;
 

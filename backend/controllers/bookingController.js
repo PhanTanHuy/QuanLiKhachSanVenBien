@@ -53,6 +53,12 @@ export const createBooking = async (req, res) => {
       }
       const user = new User({
         // Tạo user mới với thông tin từ form
+        hashedPassword: "1", // Đặt mật khẩu rỗng, có thể yêu cầu đổi mật khẩu sau
+        email,
+        name,
+        phone,
+        cccd,
+        address,
       });
       await user.save();
       userId = user._id;
@@ -84,11 +90,11 @@ export const createBooking = async (req, res) => {
       bookingCode,
       user: userId,
       userSnapshot: {
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        cccd: user.cccd,
-        address: user.address,
+        name: name,
+        email: email,
+        phone: phone,
+        cccd: cccd,
+        address: address,
       },
       room: room._id,
       roomSnapshot: {

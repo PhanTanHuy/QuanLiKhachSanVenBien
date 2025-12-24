@@ -10,6 +10,7 @@ const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000; // 14 ngày
 
 export const signUp = async (req, res) => {
   try {
+    console.log("Đang tiến hành sign-up: ", req.body);
     const { password, email, phone, name, cccd, address } = req.body;
 
     if (!password || !email || !phone) {

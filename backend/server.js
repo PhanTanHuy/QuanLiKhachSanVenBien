@@ -81,6 +81,7 @@ app.use("/api/receptionist", receptionistApiRoute);
 app.use('/admin', adminRoutes);
 app.use('/receptionist', pathRecep);
 
+
 //Route api
 app.use('/api/rooms', roomRoutes);
 app.use('/api/auth', authRoute);
@@ -89,6 +90,9 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 app.use('/api/users', userRoute);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
+app.use('/', homeRoutes);
 
 
 const PORT = 3000;
