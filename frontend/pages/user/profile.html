@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/pages/user/css/base.css">
+    <link rel="stylesheet" href="/pages/user/css/profile.css">
+    
+    <style>
+        body { background-color: #f7e8d8; }
+        .form-control:disabled { background-color: #dcdcdc; cursor: not-allowed; }
+    </style>
+</head>
+
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div class="container py-4">
+            <div class="header-bar mb-4">Hồ sơ của tôi</div>
+
+            <div class="profile-container">
+                <div class="text-center mb-4">
+                    <div class="avatar-wrapper">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.h3U-yGZNxT8PkF5vlRnnxgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+                            class="img-avatar" id="avatar-img" alt="Avatar">
+                        <i class="bi bi-camera-fill"></i>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="name" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" id="phone" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">CCCD / CMND</label>
+                            <input type="text" class="form-control" id="cccd" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" disabled>
+                        </div>
+                        
+                        <input type="hidden" id="userId">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-3 mt-3">
+                    <button class="btn btn-brown" id="btn-edit">
+                        <i class="bi bi-pencil-square me-1"></i> Chỉnh sửa
+                    </button>
+                    <button class="btn btn-brown" id="btn-save" style="display: none;">
+                        <i class="bi bi-save2 me-1"></i> Lưu thay đổi
+                    </button>
+                    <button class="btn btn-secondary" id="btn-cancel" style="display: none;">
+                        Hủy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/pages/user/js/profile.js"></script>
+
+    <script>
+        fetch('/pages/user/component/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error("Không tìm thấy header");
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+
+            })
+            .catch(error => console.error('Lỗi tải header:', error));
+
+        fetch('/pages/user/component/footer.html')
+            .then(response => {
+                if (!response.ok) throw new Error("Không tìm thấy footer");
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => console.error('Lỗi tải footer:', error));
+    </script>
+</body>
+</html>
