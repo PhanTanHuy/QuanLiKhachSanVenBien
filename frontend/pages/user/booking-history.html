@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lịch sử đặt phòng</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/pages/user/css/base.css" />
+    <link rel="stylesheet" href="/pages/user/css/bookingHistory.css" />
+
+    <!-- JS -->
+    <script src="/pages/user/js/booking-history.js" defer></script>
+    <script src="/pages/user/js/userLayout.js" defer></script>
+  </head>
+
+  <body>
+    <div id="header-container"></div>
+    <div id="filter-section"></div>
+
+    <!-- Booking Section -->
+    <div class="booking-section">
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <div class="filter-tab active" data-status="">Tất cả</div>
+        <div class="filter-tab" data-status="RESERVED">Đã đặt</div>
+        <div class="filter-tab" data-status="OCCUPIED">Đang ở</div>
+        <div class="filter-tab" data-status="COMPLETED">Hoàn tất</div>
+        <div class="filter-tab" data-status="CANCELLED">Đã hủy</div>
+      </div>
+
+      <!-- Rooms render bằng JS -->
+      <div class="rooms-container"></div>
+    </div>
+
+    <div id="footer-container"></div>
+  </body>
+</html>
+
+

@@ -135,6 +135,7 @@ export const createBooking = async (req, res) => {
   }
 };
 
+
 // Cập nhật chi tiết đặt phòng
 export const updateBooking = async (req, res) => {
   try {
@@ -174,6 +175,155 @@ export const updateBooking = async (req, res) => {
     });
   }
 };
+
+// Tạo chi tiết đặt phòng cho user 
+export const createBookingByUser = async (req, res) => {
+  try {
+    const user = req.user;
+    const { roomId, checkInDate, checkOutDate, paymentMethod } = req.body;
+
+    /* 1. Validate */
+    if (!roomId || !checkInDate || !checkOutDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Thiếu thông tin bắt buộc",
+      });
+    }
+
+    /* 2. Tìm phòng */
+    const room = await Room.findById(roomId);
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy phòng",
+      });
+    }
+
+    /* 3. Validate ngày */
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+
+    if (isNaN(checkIn) || isNaN(checkOut) || checkOut <= checkIn) {
+      return res.status(400).json({
+        success: false,
+        message: "Ngày không hợp lệ",
+      });
+    }
+
+    /* 4. Check trùng lịch */
+    const conflict = await BookingDetail.findOne({
+      room: room._id,
+      status: { $in: [BookingStatus.RESERVED, BookingStatus.OCCUPIED] },
+      checkInDate: { $lt: checkOut },
+      checkOutDate: { $gt: checkIn },
+    });
+
+    if (conflict) {
+      return res.status(409).json({
+        success: false,
+        message: "Phòng đã được đặt trong thời gian này",
+      });
+    }
+
+    /* 5. Tạo booking */
+    const bookingCode = await generateBookingCode();
+
+    const booking = await BookingDetail.create({
+      bookingCode,
+      user: user._id,
+      userSnapshot: {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+      },
+      room: room._id,
+      roomSnapshot: {
+        roomId: room._id,
+        code: room.code || room.id,
+        type: room.type,
+        description: room.desc,
+        pricePerNight: room.price,
+      },
+      checkInDate: checkIn,
+      checkOutDate: checkOut,
+      pricePerNight: room.price,
+      paymentMethod,
+      status: BookingStatus.RESERVED,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Đặt phòng thành công",
+      booking,
+    });
+  } catch (err) {
+    console.error("createBooking error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Lỗi hệ thống",
+    });
+  }
+};
+
+// GET /api/bookings/my
+export const getMyBookings = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { status } = req.query;
+
+    const filter = { user: userId };
+    if (status) filter.status = status;
+
+    const bookings = await BookingDetail.find(filter)
+      .populate("room")
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      data: bookings,
+    });
+  } catch (err) {
+    console.error("getMyBookings error", err);
+    res.status(500).json({ success: false, message: "Lỗi hệ thống" });
+  }
+};
+//huy dat phong
+export const cancelBooking = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { bookingCode } = req.params;
+
+    const booking = await BookingDetail.findOne({ bookingCode });
+    if (!booking) {
+      return res.status(404).json({ message: "Không tìm thấy booking" });
+    }
+
+    if (booking.user.toString() !== userId.toString()) {
+      return res.status(403).json({ message: "Không có quyền hủy booking này" });
+    }
+
+    if (booking.status !== BookingStatus.RESERVED) {
+      return res.status(400).json({
+        message: "Chỉ được hủy khi chưa check-in",
+      });
+    }
+
+    booking.status = BookingStatus.CANCELLED;
+    await booking.save();
+
+    return res.json({
+      success: true,
+      message: "Hủy đặt phòng thành công",
+    });
+  } catch (err) {
+    console.error("cancelBooking error", err);
+    res.status(500).json({ message: "Lỗi hệ thống" });
+  }
+};
+
+
+
 
 // Lấy tất cả chi tiết đặt phòng (có populate user và room)
 export const getAllBookings = async (req, res) => {

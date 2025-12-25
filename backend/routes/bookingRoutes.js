@@ -18,6 +18,12 @@ router.post("/", createBooking);
 
 // Cập nhật chi tiết đặt phòng
 router.put("/:bookingId", updateBooking);
+// Tạo booking mới cho user
+router.post("/", protectedRoute, createBookingByUser);
+// Lấy danh sách booking của user hiện tại
+router.get("/my", protectedRoute, getMyBookings);
+// Hủy đặt phòng
+router.patch("/cancel/:bookingCode", protectedRoute, cancelBooking);
 
 // Lấy tất cả chi tiết đặt phòng
 router.get("/", getAllBookings);
