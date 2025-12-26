@@ -69,6 +69,22 @@ app.get("/user/rooms/:id", (req, res) => {
     path.join(__dirname, "../frontend/pages/user/detailRoom.html")
   );
 });
+//  booking page
+app.get("/user/booking", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/pages/user/booking.html")
+  );
+});
+// contact page
+app.get("/user/contact", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/pages/user/contact.html"));
+});
+//history booking page
+app.get("/user/booking-history", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/pages/user/booking-history.html")
+  );
+});
 
 // User profile page
 app.get("/user/profile", (req, res) => {

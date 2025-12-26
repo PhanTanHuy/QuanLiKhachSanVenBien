@@ -18,7 +18,7 @@ async function fetchBookings() {
 
     // 🔥 LẤY CẢ 2 TRẠNG THÁI
     FILTERED_BOOKINGS = ALL_BOOKINGS.filter(
-      (b) => b.status === "Chờ thanh toán" || b.status === "Đã thanh toán"
+      (b) => b.status === "Đã đặt cọc" || b.status === "Đã thanh toán"
     );
 
     totalPages = Math.ceil(FILTERED_BOOKINGS.length / rowsPerPage);
@@ -40,7 +40,7 @@ function renderTable() {
 
   bookingsToDisplay.forEach((booking) => {
     const actionButton =
-      booking.status === "Chờ thanh toán"
+      booking.status === "Đã đặt cọc"
         ? `
           <button class="btn btn-sm btn-danger"
             onclick="payBooking('${booking.bookingCode}')">
@@ -63,7 +63,7 @@ function renderTable() {
       <td>${booking.userSnapshot?.cccd || "-"}</td>
       <td>
         <span class="badge ${
-          booking.status === "Chờ thanh toán"
+          booking.status === "Đã đặt cọc"
             ? "bg-warning text-dark"
             : "bg-success"
         }">
@@ -143,35 +143,50 @@ function payBooking(bookingId) {
   modal.show();
 }
 
-function confirmPayment() {
+async function confirmPayment() {
   if (!CURRENT_BOOKING) return;
 
-  // 👉 Gợi ý xử lý:
-  // 1. Tạo record PaymentTable
-  const paymentData = {
-    BookingID: CURRENT_BOOKING.bookingCode,
-    Amount: CURRENT_BOOKING.pricePerNight,
-    PaymentMethod: CURRENT_BOOKING.paymentMethod,
-    DepositAmount: CURRENT_BOOKING.deposit,
-    TotalPrice: CURRENT_BOOKING.totalPrice - CURRENT_BOOKING.deposit,
-  };
+  console.log("Confirm payment for booking:", CURRENT_BOOKING);
+  console.log("Booking ID:", CURRENT_BOOKING._id);
+  console.log("Booking Code:", CURRENT_BOOKING.bookingCode);
 
-  console.log("Gửi dữ liệu thanh toán:", paymentData);
+  try {
+    const token = localStorage.getItem("accessToken");
+    // Cập nhật booking status thành PAID
+    const bookingResponse = await fetch(`/api/bookings/${CURRENT_BOOKING.bookingCode}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ status: "Đã thanh toán" }),
+    });
 
-  fetch("/api/payment/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(paymentData),
-  });
+    if (!bookingResponse.ok) {
+      throw new Error("Lỗi cập nhật booking");
+    }
 
-  fetch(`/api/bookings/${CURRENT_BOOKING._id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status: "Đã thanh toán" }),
-  });
-  alert("Thanh toán thành công!");
+    // Cập nhật room status thành OCCUPIED
+    const roomResponse = await fetch(`/api/rooms/${CURRENT_BOOKING.room._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Đang thuê" }),
+    });
+
+    if (!roomResponse.ok) {
+      throw new Error("Lỗi cập nhật phòng");
+    }
+
+    alert("Thanh toán thành công!");
+    // Refresh data
+    fetchBookings();
+    // Close modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById("paymentModal"));
+    modal.hide();
+  } catch (error) {
+    console.error("Lỗi thanh toán:", error);
+    alert("Lỗi thanh toán: " + error.message);
+  }
 }
 
 function viewInvoice(bookingCode) {
@@ -222,5 +237,28 @@ function viewInvoice(bookingCode) {
 // Khởi tạo
 function init() {
   fetchBookings();
+
+  // Filter click
+  document.querySelectorAll('.filter-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      const filterText = item.textContent;
+      if (filterText === 'Tất cả') {
+        FILTERED_BOOKINGS = ALL_BOOKINGS.filter(
+          (b) => b.status === "Đã đặt cọc" || b.status === "Đã thanh toán"
+        );
+      } else if (filterText === 'Đã đặt cọc') {
+        FILTERED_BOOKINGS = ALL_BOOKINGS.filter(b => b.status === "Đã đặt cọc");
+      } else if (filterText === 'Đã thanh toán') {
+        FILTERED_BOOKINGS = ALL_BOOKINGS.filter(b => b.status === "Đã thanh toán");
+      }
+
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    });
+  });
 }
 init();

@@ -10,14 +10,22 @@ import {
 } from "../controllers/bookingController.js";
 import { PaymentMethod } from "../configs/enum/paymentEnum.js";
 import { RoomStatus } from "../configs/enum/roomEnum.js";
+import { protectedRoute } from "../middlewares/authMiddleware.js";
+import { authorize } from "../middlewares/roleMiddle.js";
+import {
+  createBookingByUser,
+  getMyBookings,
+  cancelBooking,
+} from "../controllers/bookingController.js";
 
 const router = express.Router();
 
-// Tạo booking mới
-router.post("/", createBooking);
+// Tạo booking mới (cho admin và receptionist)
+router.post("/admin", protectedRoute, authorize("admin", "receptionist"), createBooking);
 
-// Cập nhật chi tiết đặt phòng
-router.put("/:bookingId", updateBooking);
+// Cập nhật booking
+router.put("/:bookingId", protectedRoute, updateBooking);
+
 // Tạo booking mới cho user
 router.post("/", protectedRoute, createBookingByUser);
 // Lấy danh sách booking của user hiện tại

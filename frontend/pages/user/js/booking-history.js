@@ -49,7 +49,7 @@ function renderBookings(bookings) {
   }
 
   bookings.forEach(b => {
-    const canCancel = b.status === "RESERVED";
+    const canCancel = b.status === "Đã đặt cọc";
 
     const roomImage =
       b.room?.img ||
@@ -118,10 +118,10 @@ function formatDate(date) {
 
 function translateStatus(status) {
   switch (status) {
-    case "RESERVED": return "Đã đặt";
-    case "OCCUPIED": return "Đang ở";
-    case "COMPLETED": return "Hoàn tất";
-    case "CANCELLED": return "Đã hủy";
+    case "Đã đặt cọc": return "Đã đặt";
+    case "Đang thuê": return "Đang ở";
+    case "Đã thanh toán": return "Hoàn tất";
+    case "Đã hủy": return "Đã hủy";
     default: return status;
   }
 }

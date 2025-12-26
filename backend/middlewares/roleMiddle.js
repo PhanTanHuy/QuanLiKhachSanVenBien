@@ -4,7 +4,10 @@ export const authorize = (...roles) => {
       return res.status(401).json({ message: "Chưa xác thực" });
     }
 
-    if (!roles.includes(req.user.role)) {
+    const userRole = req.user.role.toLowerCase();
+    const allowedRoles = roles.map(role => role.toLowerCase());
+
+    if (!allowedRoles.includes(userRole)) {
       return res.status(403).json({
         message: "Bạn không có quyền truy cập"
       });

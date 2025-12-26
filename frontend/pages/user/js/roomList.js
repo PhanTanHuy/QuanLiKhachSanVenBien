@@ -1,9 +1,16 @@
 let currentPage = 1;
 const limit = 6;
+let currentFilters = {};
 
-async function loadRooms(page = 1) {
+async function loadRooms(page = 1, filters = {}) {
   try {
-    const res = await fetch(`http://localhost:3000/api/rooms?page=${page}&limit=${limit}`);
+    const queryParams = new URLSearchParams({
+      page: page,
+      limit: limit,
+      ...filters
+    });
+
+    const res = await fetch(`http://localhost:3000/api/rooms?${queryParams}`);
     const result = await res.json();
 
     if (!result.success) {
@@ -93,12 +100,37 @@ function renderPagination({ page, totalPages }) {
 
 function changePage(page) {
   currentPage = page;
-  loadRooms(currentPage);
+  loadRooms(currentPage, currentFilters);
 }
 
 
 function viewRoom(roomId) {
- window.location.href = `/user/rooms/${roomId}`;
+  window.location.href = `/user/rooms/${roomId}`;
 }
 
-loadRooms();
+function applyFilters() {
+  const type = document.getElementById('roomType').value;
+  const priceRange = document.getElementById('priceRange').value;
+
+  currentFilters = {};
+  if (type) currentFilters.type = type;
+  if (priceRange) currentFilters.priceRange = priceRange;
+
+  currentPage = 1; // Reset to first page when filtering
+  loadRooms(currentPage, currentFilters);
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  loadRooms();
+
+  // Filter button
+  const filterBtn = document.querySelector('.btn-filter');
+  if (filterBtn) {
+    filterBtn.addEventListener('click', applyFilters);
+  }
+
+  // Optional: Auto filter on select change
+  document.getElementById('roomType').addEventListener('change', applyFilters);
+  document.getElementById('priceRange').addEventListener('change', applyFilters);
+});

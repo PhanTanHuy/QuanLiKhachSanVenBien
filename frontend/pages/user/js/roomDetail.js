@@ -10,7 +10,11 @@ async function loadRoomDetail() {
     }
 
     renderRoom(result.data);
-    loadReviews?.(roomId); // nếu có
+    loadReviews?.(roomId);
+
+    // 
+    bindBookingButton();
+
   } catch (err) {
     console.error(err);
     alert("Lỗi tải thông tin phòng");
@@ -34,7 +38,18 @@ function renderRoom(room) {
     room.img || "https://via.placeholder.com/1000";
 }
 
+// 👇 tách riêng cho clean code
+function bindBookingButton() {
+  const btn = document.querySelector(".book-button");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+      window.location.href = `/user/booking?roomId=${roomId}`;
+  });
+}
+
 loadRoomDetail();
+
 
 // ================= REVIEWS =================
 async function loadReviews(roomId) {
@@ -89,48 +104,11 @@ document.querySelector(".submit-review-btn")
   });
 
 loadRoomDetail();
-const bookBtn = document.getElementById("bookBtn");
+function bindBookingButton() {
+  const btn = document.querySelector(".book-button");
+  if (!btn) return;
 
-bookBtn.addEventListener("click", async () => {
-  const checkInDate = document.getElementById("checkInDate").value;
-  const checkOutDate = document.getElementById("checkOutDate").value;
-
-  if (!checkInDate || !checkOutDate) {
-    alert("Vui lòng chọn ngày nhận & trả phòng");
-    return;
-  }
-
-  // ⚠️ demo – sau này thay bằng user đăng nhập
-  const userId = localStorage.getItem("userId");
-
-  if (!userId) {
-    alert("Vui lòng đăng nhập để đặt phòng");
-    window.location.href = "/signin";
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        roomId,
-        checkInDate,
-        checkOutDate,
-        paymentMethod: "Tiền mặt"
-      })
-    });
-
-    const result = await res.json();
-
-    if (!res.ok) {
-      throw new Error(result.message);
-    }
-
-    alert("🎉 Đặt phòng thành công!\nMã: " + result.booking.bookingCode);
-
-  } catch (err) {
-    alert("❌ Lỗi đặt phòng: " + err.message);
-  }
-});
+  btn.addEventListener("click", () => {
+    window.location.href = `/user/booking?roomId=${roomId}`;
+  });
+}

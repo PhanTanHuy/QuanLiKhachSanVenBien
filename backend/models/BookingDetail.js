@@ -53,7 +53,7 @@ const bookingSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: Object.values(BookingStatus),
-      default: BookingStatus.PENDING,
+      default: BookingStatus.RESERVED,
     },
   },
   { timestamps: true }

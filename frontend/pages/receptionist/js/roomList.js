@@ -1,4 +1,4 @@
-const apiURL = "/api/rooms";
+const apiURL = "/api/rooms/all";
 
 let ALL_ROOMS = [];
 let currentFilter = "all";
@@ -519,7 +519,7 @@ async function submitBooking() {
   console.log("📌 DATA GỬI API:", payload);
 
   try {
-    const res = await fetch("/api/bookings/", {
+    const res = await fetch("/api/bookings/admin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

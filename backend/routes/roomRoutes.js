@@ -27,6 +27,7 @@ router.get("/all", getAllRooms);
 router.get("/:id", getRoomDetail);
 router.get("/one/:id", getRoomById);
 router.post("/", createRoom);
+router.put("/:id", updateRoom);
 router.put("/one/:id", updateRoom);
 router.delete("/one/:id", deleteRoom);
 

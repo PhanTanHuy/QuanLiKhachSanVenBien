@@ -1,4 +1,4 @@
-const apiURL = "/api/rooms";
+const apiURL = "/api/rooms/all";
 
 let ALL_ROOMS = [];
 let currentFilter = "all";
@@ -312,7 +312,7 @@ function openTenantInfo(roomId) {
   if (status === "đã đặt cọc") {
     footerEl.innerHTML += `
     <button class="btn btn-success px-4"
-      onclick="checkIn('${booking._id}')">
+      onclick="checkIn('${booking.bookingCode}')">
       Check in
     </button>
   `;
@@ -321,7 +321,7 @@ function openTenantInfo(roomId) {
   if (status === "đang thuê") {
     footerEl.innerHTML += `
     <button class="btn btn-danger px-4"
-      onclick="checkOut('${booking._id}')">
+      onclick="checkOut('${booking.bookingCode}')">
       Check out
     </button>
   `;
@@ -337,23 +337,33 @@ function formatDate(dateStr) {
 }
 
 // Hàm check in, check out
-async function checkIn(bookingId) {
+async function checkIn(bookingCode) {
+  console.log("Check in for bookingCode:", bookingCode);
   if (!confirm("Xác nhận check in cho khách?")) return;
 
   try {
     // Update BOOKING
-    const bookingRes = await fetch(`/api/bookings/${bookingId}`, {
+    const token = localStorage.getItem("accessToken");
+    const bookingRes = await fetch(`/api/bookings/${bookingCode}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({ status: "Đang thuê" }),
     });
 
-    if (!bookingRes.ok) throw new Error("Update booking thất bại");
+    if (!bookingRes.ok) {
+      const error = await bookingRes.text();
+      console.error("Booking update error:", error);
+      throw new Error("Update booking thất bại");
+    }
     const data = await bookingRes.json();
     const booking = data.booking;
+    console.log("Booking updated:", booking);
     // Update ROOM
     const roomId = booking.room.id;
-    console.log(roomId);
+    console.log("Room ID:", roomId);
 
     const roomRes = await fetch(`/api/rooms/one/${roomId}`, {
       method: "PUT",
@@ -361,7 +371,11 @@ async function checkIn(bookingId) {
       body: JSON.stringify({ status: "Đang thuê" }),
     });
 
-    if (!roomRes.ok) throw new Error("Update room thất bại");
+    if (!roomRes.ok) {
+      const error = await roomRes.text();
+      console.error("Room update error:", error);
+      throw new Error("Update room thất bại");
+    }
 
     alert("Check in thành công");
     ALL_BOOKINGS = await getBookingsApi();
@@ -374,31 +388,53 @@ async function checkIn(bookingId) {
 }
 
 async function checkOut(bookingId) {
+  console.log("Check out for bookingId:", bookingId);
   if (!confirm("Xác nhận check out cho khách?")) return;
 
-  const bookingRes = await fetch(`/api/bookings/${bookingId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status: "Chờ thanh toán" }),
-  });
+  try {
+    const token = localStorage.getItem("accessToken");
+    const bookingRes = await fetch(`/api/bookings/${bookingId}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ status: "Chờ thanh toán" }),
+    });
 
-  if (!bookingRes.ok) throw new Error("Update booking thất bại");
-  const data = await bookingRes.json();
-  const booking = data.booking;
-  // Update ROOM
-  const roomId = booking.room.id;
+    if (!bookingRes.ok) {
+      const error = await bookingRes.text();
+      console.error("Booking update error:", error);
+      throw new Error("Update booking thất bại");
+    }
+    const data = await bookingRes.json();
+    const booking = data.booking;
+    console.log("Booking updated:", booking);
+    // Update ROOM
+    const roomId = booking.room.id;
+    console.log("Room ID:", roomId);
 
-  await fetch(`/api/rooms/one/${roomId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status: "Đang bảo trì" }),
-  });
+    const roomRes = await fetch(`/api/rooms/one/${roomId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Đang bảo trì" }),
+    });
 
-  ALL_BOOKINGS = await getBookingsApi();
-  ALL_ROOMS = await getRoomsApi();
+    if (!roomRes.ok) {
+      const error = await roomRes.text();
+      console.error("Room update error:", error);
+      throw new Error("Update room thất bại");
+    }
 
-  alert("Check out thành công");
-  applyFilters();
+    ALL_BOOKINGS = await getBookingsApi();
+    ALL_ROOMS = await getRoomsApi();
+
+    alert("Check out thành công");
+    applyFilters();
+  } catch (err) {
+    console.error(err);
+    alert("Check out thất bại");
+  }
 }
 
 // Hàm render phân trang

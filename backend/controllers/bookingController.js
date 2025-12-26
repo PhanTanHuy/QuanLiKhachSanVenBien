@@ -2,6 +2,7 @@ import BookingDetail from "../models/BookingDetail.js";
 import User from "../models/User.js";
 import Room from "../models/Room.js";
 import { RoomStatus } from "../configs/enum/roomEnum.js";
+import { BookingStatus } from "../configs/enum/bookingStatusEnum.js";
 
 // Hàm tạo mã đặt phòng tự động (format: BK-YYYYMMDD-XXXX)
 const generateBookingCode = async () => {
@@ -119,6 +120,10 @@ export const createBooking = async (req, res) => {
       .populate("user", "-hashedPassword")
       .populate("room");
 
+    // Cập nhật trạng thái phòng
+    const roomStatus = status === "Đang thuê" ? RoomStatus.OCCUPIED : RoomStatus.RESERVED;
+    await Room.findByIdAndUpdate(room._id, { status: roomStatus });
+
     console.log("✅ Booking đã được tạo thành công");
 
     return res.status(201).json({
@@ -140,24 +145,32 @@ export const createBooking = async (req, res) => {
 export const updateBooking = async (req, res) => {
   try {
     const { bookingId } = req.params;
-    console.log(bookingId);
+    console.log("Update booking ID:", bookingId);
     
     const { status } = req.body;
+    console.log("Update status:", status);
     if (!status) {
       return res.status(400).json({
         message: "Thiếu trạng thái booking",
       });
     }
 
-    const updatedBooking = await BookingDetail.findByIdAndUpdate(
-      bookingId,
+    // Find by bookingCode (case insensitive)
+    const updatedBooking = await BookingDetail.findOneAndUpdate(
+      { bookingCode: new RegExp(`^${bookingId}$`, 'i') },
       { status },
       { new: true }
     )
       .populate("user", "-hashedPassword")
       .populate("room");
 
+    console.log("Find by bookingCode result:", updatedBooking ? updatedBooking.bookingCode : "null");
+
     if (!updatedBooking) {
+      console.log("Booking not found for update");
+      // Log all booking codes for debug
+      const allBookings = await BookingDetail.find({}, 'bookingCode');
+      console.log("All booking codes in DB:", allBookings.map(b => b.bookingCode));
       return res.status(404).json({
         message: "Không tìm thấy chi tiết đặt phòng để cập nhật",
       });
@@ -182,8 +195,12 @@ export const createBookingByUser = async (req, res) => {
     const user = req.user;
     const { roomId, checkInDate, checkOutDate, paymentMethod } = req.body;
 
+    console.log("📌 createBookingByUser called with:", { roomId, checkInDate, checkOutDate, paymentMethod });
+    console.log("📌 User:", user._id);
+
     /* 1. Validate */
     if (!roomId || !checkInDate || !checkOutDate) {
+      console.log("❌ Missing required fields");
       return res.status(400).json({
         success: false,
         message: "Thiếu thông tin bắt buộc",
@@ -192,7 +209,9 @@ export const createBookingByUser = async (req, res) => {
 
     /* 2. Tìm phòng */
     const room = await Room.findById(roomId);
+    console.log("📌 Room found:", room ? room.id : "null");
     if (!room) {
+      console.log("❌ Room not found");
       return res.status(404).json({
         success: false,
         message: "Không tìm thấy phòng",
@@ -202,8 +221,10 @@ export const createBookingByUser = async (req, res) => {
     /* 3. Validate ngày */
     const checkIn = new Date(checkInDate);
     const checkOut = new Date(checkOutDate);
+    console.log("📌 Dates parsed:", { checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString() });
 
     if (isNaN(checkIn) || isNaN(checkOut) || checkOut <= checkIn) {
+      console.log("❌ Invalid dates");
       return res.status(400).json({
         success: false,
         message: "Ngày không hợp lệ",
@@ -217,8 +238,10 @@ export const createBookingByUser = async (req, res) => {
       checkInDate: { $lt: checkOut },
       checkOutDate: { $gt: checkIn },
     });
+    console.log("📌 Conflict check:", conflict ? "conflict found" : "no conflict");
 
     if (conflict) {
+      console.log("❌ Booking conflict");
       return res.status(409).json({
         success: false,
         message: "Phòng đã được đặt trong thời gian này",
@@ -227,6 +250,14 @@ export const createBookingByUser = async (req, res) => {
 
     /* 5. Tạo booking */
     const bookingCode = await generateBookingCode();
+
+    // Tính toán số đêm, tổng tiền, cọc
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const nights = Math.ceil((checkOut - checkIn) / msPerDay);
+    const totalPrice = room.price * nights;
+    const deposit = Math.round(totalPrice * 0.3);
+
+    console.log("📌 Calculated values:", { nights, totalPrice, deposit });
 
     const booking = await BookingDetail.create({
       bookingCode,
@@ -247,10 +278,19 @@ export const createBookingByUser = async (req, res) => {
       },
       checkInDate: checkIn,
       checkOutDate: checkOut,
+      nights,
       pricePerNight: room.price,
+      totalPrice,
+      deposit,
       paymentMethod,
       status: BookingStatus.RESERVED,
     });
+
+    console.log("📌 Booking created:", booking._id);
+
+    // Cập nhật trạng thái phòng thành RESERVED
+    await Room.findByIdAndUpdate(room._id, { status: RoomStatus.RESERVED });
+    console.log("📌 Room status updated");
 
     return res.status(201).json({
       success: true,
@@ -258,7 +298,7 @@ export const createBookingByUser = async (req, res) => {
       booking,
     });
   } catch (err) {
-    console.error("createBooking error:", err);
+    console.error("❌ createBooking error:", err);
     return res.status(500).json({
       success: false,
       message: "Lỗi hệ thống",
@@ -311,6 +351,9 @@ export const cancelBooking = async (req, res) => {
 
     booking.status = BookingStatus.CANCELLED;
     await booking.save();
+
+    // Cập nhật trạng thái phòng về available
+    await Room.findByIdAndUpdate(booking.room, { status: RoomStatus.AVAILABLE });
 
     return res.json({
       success: true,

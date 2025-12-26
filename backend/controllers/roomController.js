@@ -22,7 +22,7 @@ export const getRoomEnums = (req, res) => {
 export const getAllRooms = async (req, res) => {
     try {
         const rooms = await Room.find({});
-        res.json(rooms);
+        res.json({ data: rooms });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -30,16 +30,37 @@ export const getAllRooms = async (req, res) => {
 // roomController.js
 export const getRooms = async (req, res) => {
   try {
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
     const skip = (page - 1) * limit;
 
+    // Build filter query
+    let query = {};
+
+    // Filter by type
+    if (req.query.type && req.query.type !== '') {
+      query.type = req.query.type;
+    }
+
+    // Filter by price range
+    if (req.query.priceRange && req.query.priceRange !== '') {
+      const [min, max] = req.query.priceRange.split('-').map(p => parseInt(p));
+      if (max) {
+        query.price = { $gte: min, $lte: max };
+      } else {
+        query.price = { $gte: min };
+      }
+    }
+
+    // Filter by status (only available rooms for users)
+    query.status = RoomStatus.AVAILABLE;
+
     const [rooms, total] = await Promise.all([
-      Room.find({})
+      Room.find(query)
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 }),
-      Room.countDocuments()
+      Room.countDocuments(query)
     ]);
 
     res.json({
@@ -184,14 +205,27 @@ export const createRoom = async (req, res) => {
 // --- UPDATE room ---
 export const updateRoom = async (req, res) => {
     try {
-        const room = await Room.findOneAndUpdate(
+        console.log("Update room:", req.params.id, req.body);
+        let room;
+        // Try to find by id field first
+        room = await Room.findOneAndUpdate(
             { id: req.params.id },
             req.body,
             { new: true }
         );
+        // If not found, try by _id
+        if (!room) {
+            room = await Room.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
+        }
         if (!room) return res.status(404).json({ message: "Room not found" });
+        console.log("Room updated:", room);
         res.json(room);
     } catch (err) {
+        console.error("Update room error:", err);
         res.status(500).json({ error: err.message });
     }
 };
